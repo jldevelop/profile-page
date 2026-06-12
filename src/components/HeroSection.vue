@@ -8,6 +8,7 @@ const portraitEl = ref(null)
 let portraitObserver = null
 
 onMounted(() => {
+  console.log('mounted!')
   if (!profile.photo || !window.matchMedia('(hover: none)').matches) return
   portraitObserver = new IntersectionObserver(
     ([entry]) => {
