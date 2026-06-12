@@ -39,6 +39,7 @@ onUnmounted(() => portraitObserver?.disconnect())
         <div class="quick-links">
           <a class="link-arrow" :href="profile.linkedin" target="_blank" rel="noopener">LinkedIn ↗</a>
           <a class="link-arrow" :href="profile.upwork" target="_blank" rel="noopener">Upwork ↗</a>
+          <a class="link-arrow" :href="profile.github" target="_blank" rel="noopener">GitHub ↗</a>
           <a class="link-arrow" :href="`mailto:${profile.email}`">{{ profile.email }}</a>
         </div>
       </div>

@@ -11,6 +11,7 @@ export const profile = {
   email: 'josip.lukacevic@gmail.com',
   linkedin: 'https://www.linkedin.com/in/jlukacevic/',
   upwork: 'https://www.upwork.com/freelancers/josiplukacevic',
+  github: 'https://github.com/jldevelop',
   cvPath: '/Josip-Lukacevic-CV.pdf',
   cvFileName: 'Josip-Lukacevic-CV.pdf',
   // Color headshot (PNG original in ../profile-page-assets-originals/), rendered

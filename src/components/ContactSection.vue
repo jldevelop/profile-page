@@ -40,6 +40,7 @@ async function submit(event) {
           </li>
           <li><a :href="profile.linkedin" target="_blank" rel="noopener">LinkedIn ↗</a></li>
           <li><a :href="profile.upwork" target="_blank" rel="noopener">Upwork ↗</a></li>
+          <li><a :href="profile.github" target="_blank" rel="noopener">GitHub ↗</a></li>
           <li><a :href="profile.cvPath" :download="profile.cvFileName">Download CV ↓</a></li>
         </ul>
       </div>
