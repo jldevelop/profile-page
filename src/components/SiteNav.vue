@@ -5,9 +5,8 @@ import { profile, navLinks } from '@/content.js'
 <template>
   <header class="nav">
     <div class="container nav-row">
-      <a href="#top" class="brand">
-        <span class="brand-mark">{{ profile.monogram }}</span>
-        <span class="brand-name">{{ profile.name }}</span>
+      <a href="#top" class="brand" aria-label="jCode — home">
+        <img class="brand-logo" src="/images/logo/jcode-logotype-transparent.png" alt="jCode" />
       </a>
       <nav class="links" aria-label="Sections">
         <a v-for="link in navLinks" :key="link.href" :href="link.href">{{ link.label }}</a>
@@ -41,28 +40,22 @@ import { profile, navLinks } from '@/content.js'
 .brand {
   display: flex;
   align-items: center;
-  gap: 10px;
   text-decoration: none;
   margin-right: auto;
 }
 
-.brand-mark {
-  display: grid;
-  place-items: center;
-  width: 34px;
-  height: 34px;
+.brand-logo {
+  display: block;
+  height: 38px;
+  width: auto;
   border-radius: 9px;
-  background: var(--ink);
-  color: var(--bg);
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 15px;
+  border: 1px solid;
+  color: #15224b;
+  background-color: #fff;
 }
 
-.brand-name {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 16px;
+.brand-logo:hover {
+  background-color: #eff5ff;
 }
 
 .links {
@@ -84,10 +77,6 @@ import { profile, navLinks } from '@/content.js'
 
 @media (max-width: 820px) {
   .links {
-    display: none;
-  }
-
-  .brand-name {
     display: none;
   }
 }
