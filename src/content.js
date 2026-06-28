@@ -115,7 +115,7 @@ const josip = {
   eyebrow: 'Founder & Engineering Lead · Full-Stack · Barcelona',
   tagline: 'My job is making teams ship.',
   intro:
-    `${YEARS.josip}+ years in web engineering — first as a developer, then leading the team at FaZe Clan, most recently as Co-Founder & CTO of cloaq.ai. Through jCode I take on websites, web apps and mobile apps end-to-end.`,
+    `${YEARS.josip}+ years in web engineering — first as a developer, then as an engineering manager leading a web team, most recently as co-founder & CTO of a startup. Through jCode I take on websites, web apps and mobile apps end-to-end.`,
   photo: '/images/profile_photo_color2.webp',
   email: 'info@jcode.hr',
   linkedin: 'https://www.linkedin.com/in/jlukacevic/',
@@ -123,15 +123,15 @@ const josip = {
 
   stats: [
     { value: `${YEARS.josip}+`, label: 'years in web engineering' },
-    { value: '5.5', label: 'years leading engineering at FaZe Clan' },
-    { value: 'Millions', label: 'of users reached across products' },
+    { value: '5.5', label: 'years leading a web engineering team' },
+    { value: 'Millions', label: 'of users reached across the products he’s shipped' },
   ],
 
   about: {
     title: 'An engineering manager who never stopped being an engineer',
     paragraphs: [
       'I’ve shipped production code in JavaScript/Vue, Node.js, PHP/Laravel and on AWS for over a decade — so I can review a PR, unblock a developer, challenge an estimate, and talk credibly to both the CEO and the junior dev. I manage by understanding the work, not by managing the ticket board.',
-      'At FaZe Clan I joined as a developer; within two years I was running the dev and QA teams — hiring, planning, code reviews and delivery for web properties serving a fanbase of millions. Since then I’ve been on the founder side as Co-Founder & CTO of cloaq.ai, where I learned what shipping looks like when there’s no one above you to escalate to.',
+      'I joined one company as a developer and within two years was running its dev and QA teams — hiring, planning, code reviews and delivery for web properties serving a fanbase of millions. Since then I’ve been on the founder side as a co-founder & CTO, where I learned what shipping looks like when there’s no one above you to escalate to.',
       'One thing I care about: arguments, not egos. I don’t need to be right — I need the best-supported idea to win. I’ll defend a decision with data and reasoning, and change my mind just as quickly when someone brings better ones.',
     ],
     callout:
@@ -236,7 +236,7 @@ const oleg = {
 
   stats: [
     { value: `${YEARS.oleg}+`, label: 'years of commercial experience' },
-    { value: '50+', label: 'devices running his desktop client (KEYO)' },
+    { value: '50+', label: 'devices running his desktop client' },
     { value: '41%', label: 'faster page loads after a Vue.js rebuild' },
     { value: '10k+', label: 'API requests/day served, stable' },
   ],
@@ -245,7 +245,7 @@ const oleg = {
     title: 'A full-stack engineer for real-time and high-load systems',
     paragraphs: [
       `I work full-cycle — architecture, frontend and backend, performance and cloud deployment. Over ${YEARS.oleg}+ years I’ve built scalable web platforms, cross-platform desktop clients, biometric and security systems, and high-load backend services, in both product companies and freelance teams.`,
-      'At KEYO I designed a cross-platform Electron desktop client driving palm-scanning hardware on 50+ deployed devices, and built a NestJS user-management service handling 10,000+ requests a day. Earlier I built real-time chat interfaces and high-frequency messaging UIs over WebSockets.',
+      'I designed a cross-platform Electron desktop client driving palm-scanning hardware on 50+ deployed devices, and built a NestJS user-management service handling 10,000+ requests a day. Earlier I built real-time chat interfaces and high-frequency messaging UIs over WebSockets.',
     ],
     callout:
       'Deep experience in real-time communication (WebSockets), Electron desktop apps, cloud infrastructure and UI performance optimization — delivering measurable gains in reliability, speed and user experience.',
@@ -320,7 +320,7 @@ const danijel = {
   eyebrow: 'Senior Mobile Developer · Android · iOS · Node.js',
   tagline: 'Mobile apps businesses run on, built to last.',
   intro:
-    `${YEARS.danijel}+ years building Android and iOS applications — retail point-of-sale systems, a taxi-services platform and business apps — with team-lead, Node.js back-end and AWS DevOps experience, including back-end work at FaZe Clan.`,
+    `${YEARS.danijel}+ years building Android and iOS applications — retail point-of-sale systems, a taxi-services platform and business apps — with team-lead, Node.js back-end and AWS DevOps experience.`,
   photo: '/images/danijel-popic.webp',
   linkedin: 'https://www.linkedin.com/in/dpopic',
 
@@ -328,14 +328,14 @@ const danijel = {
     { value: `${YEARS.danijel}+`, label: 'years in mobile development' },
     { value: '3', label: 'engineering teams led' },
     { value: '5.0', label: 'GPA — graduated top of his class' },
-    { value: '5 yrs', label: 'lecturing Android dev at Algebra' },
+    { value: '5 yrs', label: 'lecturing Android development' },
   ],
 
   about: {
     title: 'A mobile engineer who builds and leads',
     paragraphs: [
       `I’ve spent ${YEARS.danijel}+ years building Android and iOS applications — retail point-of-sale systems used across Croatia and Slovenia, a complex taxi-services platform, and business apps for management, procurement, hospitality and industry. I work from architecture through to the store, in Kotlin, Java and Swift.`,
-      'I’ve led Android teams and projects at several companies, and I work well beyond the app — most recently as a Node.js back-end developer and AWS DevOps engineer at FaZe Clan, where I also took on team management. For five years I taught Android development as a lecturer at Algebra.',
+      'I’ve led Android teams and projects at several companies, and I work well beyond the app — most recently as a Node.js back-end developer and AWS DevOps engineer, where I also took on team management. For five years I taught Android development as a lecturer.',
     ],
     callout:
       'Strong across native mobile (Android & iOS), Node.js back-ends and AWS infrastructure — and experienced leading teams and shipping production apps that businesses depend on daily.',
@@ -347,7 +347,7 @@ const danijel = {
     { title: 'Back-end & DevOps', desc: 'Node.js back-end services and AWS infrastructure — full delivery beyond the app itself.' },
     { title: 'Business systems', desc: 'POS / register systems and ERP-style apps used in retail, hospitality, procurement and industry.' },
     { title: 'Production reliability', desc: 'Apps relied on daily by businesses across Croatia and Slovenia.' },
-    { title: 'Teaching & mentoring', desc: 'Five years lecturing Android development at Algebra — structured and generous with knowledge.' },
+    { title: 'Teaching & mentoring', desc: 'Five years lecturing Android development — structured and generous with knowledge.' },
   ],
 
   experience: [

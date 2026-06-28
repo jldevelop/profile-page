@@ -45,7 +45,7 @@ const showFloat = '/images/catalog/e04-luxury-fashion-house-full.webp'
   <!-- Clients / built-for strip -->
   <section class="clients">
     <div class="container">
-      <p class="clients-lead">Products and brands we’ve helped build</p>
+      <p class="clients-lead">Brands we’ve worked with</p>
       <ul class="client-row" v-reveal>
         <li v-for="c in clients" :key="c.name">
           <img :src="c.logo" :alt="c.name" loading="lazy" decoding="async" />
