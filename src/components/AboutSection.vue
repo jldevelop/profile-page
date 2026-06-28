@@ -1,5 +1,8 @@
 <script setup>
-import { about, strengths } from '@/content.js'
+defineProps({
+  about: { type: Object, required: true },
+  strengths: { type: Array, default: () => [] },
+})
 </script>
 
 <template>
@@ -14,11 +17,11 @@ import { about, strengths } from '@/content.js'
         <p v-for="(paragraph, i) in about.paragraphs" :key="i">{{ paragraph }}</p>
       </div>
 
-      <aside class="looking-for" v-reveal>
-        <p>{{ about.lookingFor }}</p>
+      <aside v-if="about.callout" class="about-callout" v-reveal>
+        <p>{{ about.callout }}</p>
       </aside>
 
-      <ul class="strengths" v-reveal>
+      <ul v-if="strengths.length" class="strengths" v-reveal>
         <li v-for="item in strengths" :key="item.title" class="strength">
           <h3>{{ item.title }}</h3>
           <p>{{ item.desc }}</p>
@@ -37,7 +40,7 @@ import { about, strengths } from '@/content.js'
   font-size: 17px;
 }
 
-.looking-for {
+.about-callout {
   max-width: 760px;
   margin-top: 34px;
   padding: 22px 26px;

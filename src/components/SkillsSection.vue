@@ -1,8 +1,10 @@
 <script setup>
-import { skillGroups } from '@/content.js'
+import { computed } from 'vue'
 
-const featured = skillGroups.filter((group) => group.featured)
-const rest = skillGroups.filter((group) => !group.featured)
+const props = defineProps({ skillGroups: { type: Array, default: () => [] } })
+
+const featured = computed(() => props.skillGroups.filter((g) => g.featured))
+const rest = computed(() => props.skillGroups.filter((g) => !g.featured))
 </script>
 
 <template>
@@ -10,7 +12,7 @@ const rest = skillGroups.filter((group) => !group.featured)
     <div class="container">
       <div class="section-head" v-reveal>
         <p class="eyebrow">Skills</p>
-        <h2>Leadership first, hands-on always</h2>
+        <h2>Skills &amp; tools</h2>
       </div>
 
       <div v-for="group in featured" :key="group.label" class="group group-featured" v-reveal>

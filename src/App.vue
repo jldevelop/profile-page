@@ -1,27 +1,19 @@
 <script setup>
 import SiteNav from './components/SiteNav.vue'
-import HeroSection from './components/HeroSection.vue'
-import AboutSection from './components/AboutSection.vue'
-import CaseStudies from './components/CaseStudies.vue'
-import PortfolioShowcase from './components/PortfolioShowcase.vue'
-import ExperienceTimeline from './components/ExperienceTimeline.vue'
-import SkillsSection from './components/SkillsSection.vue'
-import EducationSection from './components/EducationSection.vue'
-import ContactSection from './components/ContactSection.vue'
 import SiteFooter from './components/SiteFooter.vue'
 </script>
 
 <template>
+  <a class="skip-link" href="#main">Skip to content</a>
   <SiteNav />
-  <main>
-    <HeroSection />
-    <AboutSection />
-    <CaseStudies />
-    <PortfolioShowcase />
-    <ExperienceTimeline />
-    <SkillsSection />
-    <EducationSection />
-    <ContactSection />
+  <main id="main" class="app-main" tabindex="-1">
+    <router-view />
   </main>
   <SiteFooter />
 </template>
+
+<style scoped>
+.app-main {
+  min-height: calc(100vh - 64px);
+}
+</style>

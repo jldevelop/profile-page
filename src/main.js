@@ -2,9 +2,11 @@ import './assets/main.css'
 
 import { createApp } from 'vue'
 import App from './App.vue'
+import { router } from './router'
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
+// Single shared observer drives the v-reveal scroll-in animation across all pages.
 const observer = reduceMotion
   ? null
   : new IntersectionObserver(
@@ -25,8 +27,19 @@ app.directive('reveal', {
   mounted(el) {
     if (!observer) return
     el.classList.add('reveal')
+    // Elements already in view on mount (e.g. after a route change) reveal
+    // immediately — avoids a one-frame opacity:0 flash before the async observer fires.
+    const r = el.getBoundingClientRect()
+    if (r.top < window.innerHeight && r.bottom > 0) {
+      el.classList.add('is-visible')
+      return
+    }
     observer.observe(el)
+  },
+  unmounted(el) {
+    observer?.unobserve(el)
   },
 })
 
+app.use(router)
 app.mount('#app')
