@@ -125,6 +125,11 @@ const stores = [
   ['e03-streetwear', 'Streetwear Store', 'Streetwear', 'A bold, drop-driven store for a streetwear brand.'],
   ['e04-luxury-fashion-house', 'Luxury Fashion House', 'Luxury fashion', 'An editorial storefront for a luxury label.'],
   ['e05-sustainable-apparel', 'Sustainable Apparel', 'Sustainable fashion', 'Sell conscious clothing with a story-led shop.'],
+  ['e06-activewear-athleisure', 'Activewear & Athleisure', 'Activewear', 'Sell performance activewear with a high-energy store.'],
+  ['e07-lingerie-intimates', 'Lingerie & Intimates', 'Lingerie', 'An elegant, intimate storefront for a lingerie label.'],
+  ['e08-premium-denim', 'Premium Denim', 'Denim', 'Sell premium selvedge denim with a craft-led shop.'],
+  ['e09-vintage-thrift', 'Vintage & Thrift', 'Vintage', 'A characterful store for one-of-one vintage finds.'],
+  ['e10-kids-clothing', "Kids' Clothing", 'Kidswear', 'A playful, parent-friendly store for kids’ clothing.'],
 ]
 
 const toTemplate = (kind, group) => ([slug, title, industry, blurb]) => ({

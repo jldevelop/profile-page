@@ -1,10 +1,14 @@
 <script setup>
+import { computed } from 'vue'
 import { company, services, companyStats, companyProcess, techStack, clients, team } from '@/content.js'
 import { featuredTemplates } from '@/catalog.js'
 
 // Template screenshots for the layered hero showcase.
 const showMain = '/images/catalog/30-saas-product-full.webp'
 const showFloat = '/images/catalog/e04-luxury-fashion-house-full.webp'
+
+// Only real members on the teaser — placeholder seats are hidden until filled.
+const teamMembers = computed(() => team.filter((m) => !m.placeholder))
 </script>
 
 <template>
@@ -111,12 +115,14 @@ const showFloat = '/images/catalog/e04-luxury-fashion-house-full.webp'
         <p class="eyebrow">Technologies</p>
         <h2>The stack we build on</h2>
       </div>
-      <div class="stack-grid">
-        <div v-for="grp in techStack" :key="grp.group" class="stack-group" v-reveal>
+      <div class="stack-rows">
+        <div v-for="grp in techStack" :key="grp.group" class="stack-row" v-reveal>
           <h3>{{ grp.group }}</h3>
-          <div class="pills">
-            <span v-for="t in grp.items" :key="t" class="pill">{{ t }}</span>
-          </div>
+          <ul class="logos">
+            <li v-for="t in grp.items" :key="t.name">
+              <img :src="t.icon" :alt="t.name" :title="t.name" loading="lazy" decoding="async" />
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -150,7 +156,7 @@ const showFloat = '/images/catalog/e04-luxury-fashion-house-full.webp'
         <router-link class="link-arrow" to="/team">Meet everyone →</router-link>
       </div>
       <div class="faces" v-reveal>
-        <router-link v-for="m in team" :key="m.slug" :to="`/team/${m.slug}`" class="face">
+        <router-link v-for="m in teamMembers" :key="m.slug" :to="`/team/${m.slug}`" class="face">
           <div class="avatar" :class="{ mono: !m.photo }">
             <img v-if="m.photo" :src="m.photo" alt="" loading="lazy" decoding="async" />
             <span v-else aria-hidden="true">{{ m.monogram }}</span>
@@ -472,34 +478,62 @@ const showFloat = '/images/catalog/e04-luxury-fashion-house-full.webp'
   color: var(--muted);
 }
 
-/* ---- tech stack ---- */
-.stack-grid {
+/* ---- tech stack (logos) ---- */
+.stack-rows {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 18px;
+  gap: 22px;
 }
 
-.stack-group {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 22px 24px;
+.stack-row {
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  gap: 24px;
+  align-items: center;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--line);
 }
 
-.stack-group:first-child {
-  grid-column: 1 / -1;
-  border-top: 4px solid var(--accent);
+.stack-row:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
 }
 
-.stack-group h3 {
+.stack-row h3 {
   font-size: 15px;
-  margin-bottom: 13px;
+  color: var(--ink);
 }
 
-.pills {
+.logos {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.logos img {
+  width: 54px;
+  height: 54px;
+  padding: 11px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  object-fit: contain;
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.logos li:hover img {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-card);
+}
+
+@media (max-width: 680px) {
+  .stack-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
 }
 
 /* ---- process ---- */
@@ -657,8 +691,7 @@ const showFloat = '/images/catalog/e04-luxury-fashion-house-full.webp'
   }
 
   .svc-grid,
-  .work-grid,
-  .stack-grid {
+  .work-grid {
     grid-template-columns: 1fr;
   }
 

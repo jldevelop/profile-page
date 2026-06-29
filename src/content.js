@@ -64,13 +64,39 @@ export const companyStats = [
   { value: 'Full-stack', label: 'web, mobile & e-commerce' },
 ]
 
-// Technologies the team actually works with (drives the homepage stack section).
+// Technologies the team works with — shown as logos on the homepage. Logos live
+// in /images/tech (real brand SVGs). Legacy/dated tech is kept but placed last.
+const TI = '/images/tech'
+const tech = (name, file) => ({ name, icon: `${TI}/${file}.svg` })
 export const techStack = [
-  { group: 'Frontend', items: ['Vue.js', 'TypeScript', 'JavaScript', 'Nuxt', 'Tailwind CSS', 'Three.js / WebGL'] },
-  { group: 'Backend', items: ['Node.js', 'NestJS', 'Laravel / PHP', 'REST & GraphQL APIs'] },
-  { group: 'Mobile', items: ['Kotlin', 'Swift', 'Native iOS & Android', 'Electron'] },
-  { group: 'Cloud & DevOps', items: ['AWS', 'GCP', 'Docker', 'Kubernetes', 'Cloudflare', 'CI/CD'] },
-  { group: 'Data & AI', items: ['PostgreSQL', 'MongoDB', 'Redis', 'WebSockets', 'AI model integration'] },
+  {
+    group: 'Frontend',
+    items: [tech('Vue.js', 'vuejs'), tech('TypeScript', 'typescript'), tech('JavaScript', 'javascript'), tech('Nuxt', 'nuxt'), tech('Tailwind CSS', 'tailwindcss'), tech('Three.js', 'threejs')],
+  },
+  {
+    group: 'Backend',
+    items: [tech('Node.js', 'nodejs'), tech('NestJS', 'nestjs'), tech('Laravel', 'laravel'), tech('PHP', 'php'), tech('GraphQL', 'graphql')],
+  },
+  {
+    group: 'Mobile',
+    items: [tech('Kotlin', 'kotlin'), tech('Swift', 'swift'), tech('Java', 'java'), tech('Android', 'android'), tech('iOS', 'apple'), tech('Electron', 'electron')],
+  },
+  {
+    group: 'Cloud & DevOps',
+    items: [tech('AWS', 'aws'), tech('Google Cloud', 'googlecloud'), tech('Docker', 'docker'), tech('Kubernetes', 'kubernetes'), tech('Cloudflare', 'cloudflare')],
+  },
+  {
+    group: 'Data',
+    items: [tech('PostgreSQL', 'postgresql'), tech('MySQL', 'mysql'), tech('MongoDB', 'mongodb'), tech('Redis', 'redis'), tech('Firebase', 'firebase')],
+  },
+  {
+    group: 'Commerce & CMS',
+    items: [tech('Shopify', 'shopify'), tech('WordPress', 'wordpress')],
+  },
+  {
+    group: 'Also in our toolkit',
+    items: [tech('jQuery', 'jquery'), tech('Bootstrap', 'bootstrap'), tech('AngularJS', 'angularjs')],
+  },
 ]
 
 // Brands & products the team has built / shipped (logo strip — all real).
@@ -83,6 +109,7 @@ export const clients = [
   { name: 'AWW', logo: `${CL}/aww.png` },
   { name: 'Guidekick', logo: `${CL}/guidekick.png` },
   { name: "less'n'more", logo: `${CL}/lessnmore.png` },
+  { name: 'Toilet Board Coalition', logo: `${CL}/toilet-board.png` },
 ]
 
 export const companyProcess = [
@@ -111,15 +138,20 @@ const josip = {
   slug: 'josip-lukacevic',
   name: 'Josip Lukačević',
   monogram: 'JL',
-  role: 'Founder & Engineering Lead',
+  // Listing title (homepage teaser + team page). The founder title intentionally
+  // lives only on his profile page, which renders `eyebrow` below.
+  role: 'Senior Software Developer',
   eyebrow: 'Founder & Engineering Lead · Full-Stack · Barcelona',
   tagline: 'My job is making teams ship.',
   intro:
     `${YEARS.josip}+ years in web engineering — first as a developer, then as an engineering manager leading a web team, most recently as co-founder & CTO of a startup. Through jCode I take on websites, web apps and mobile apps end-to-end.`,
-  photo: '/images/profile_photo_color2.webp',
+  photo: '/images/josip-lukacevic.webp',
   email: 'info@jcode.hr',
   linkedin: 'https://www.linkedin.com/in/jlukacevic/',
   github: 'https://github.com/jldevelop',
+  years: `${YEARS.josip}+`,
+  bio: 'jCode’s founder. Josip has run web engineering at scale — leading the team behind a global esports brand’s platform and merch store, then co-founding an AI SaaS as its CTO. He stays hands-on across the whole stack and owns delivery end to end.',
+  stack: [tech('Vue.js', 'vuejs'), tech('Node.js', 'nodejs'), tech('Laravel', 'laravel'), tech('JavaScript', 'javascript'), tech('AWS', 'aws'), tech('Shopify', 'shopify'), tech('MongoDB', 'mongodb')],
 
   stats: [
     { value: `${YEARS.josip}+`, label: 'years in web engineering' },
@@ -130,12 +162,11 @@ const josip = {
   about: {
     title: 'An engineering manager who never stopped being an engineer',
     paragraphs: [
-      'I’ve shipped production code in JavaScript/Vue, Node.js, PHP/Laravel and on AWS for over a decade — so I can review a PR, unblock a developer, challenge an estimate, and talk credibly to both the CEO and the junior dev. I manage by understanding the work, not by managing the ticket board.',
-      'I joined one company as a developer and within two years was running its dev and QA teams — hiring, planning, code reviews and delivery for web properties serving a fanbase of millions. Since then I’ve been on the founder side as a co-founder & CTO, where I learned what shipping looks like when there’s no one above you to escalate to.',
-      'One thing I care about: arguments, not egos. I don’t need to be right — I need the best-supported idea to win. I’ll defend a decision with data and reasoning, and change my mind just as quickly when someone brings better ones.',
+      'Josip is a hands-on engineering leader with more than a decade across the full web stack. He has built his career on staying close to the work — architecture, code reviews, the hard estimates — while owning the bigger picture of roadmap, delivery and the people doing the building. It’s a rare combination that lets him lead a team without losing the engineer’s instinct for how software actually ships.',
+      'He has grown from developer to engineering manager to co-founder and CTO, a path that built both a founder’s sense of ownership and a pragmatic, delivery-first way of working. He communicates as easily with executives as with junior developers, backs decisions with evidence rather than ego, and is quick to change his mind the moment someone brings a better idea.',
     ],
     callout:
-      `My focus is engineering leadership and shipping — turning a brief into a product that actually works, then keeping it fast and reliable. Across ${YEARS.josip}+ years I’ve done it as a developer, an engineering manager, and a founder.`,
+      `His focus is engineering leadership and shipping — turning a brief into a product that actually works, then keeping it fast and reliable. Across ${YEARS.josip}+ years he’s done it as a developer, an engineering manager, and a founder.`,
   },
 
   strengths: [
@@ -233,6 +264,9 @@ const oleg = {
     `${YEARS.oleg}+ years building scalable web platforms, desktop applications and real-time systems — across security & identity, SaaS, marketplaces and real-time communication. Strong in JavaScript/TypeScript, Vue.js and Node.js.`,
   photo: '/images/oleg-kalysh.webp',
   github: 'https://github.com/Miami3',
+  years: `${YEARS.oleg}+`,
+  bio: 'Oleg takes on the hard parts — real-time systems, cross-platform desktop apps and high-load back-ends. He’s shipped biometric security on deployed hardware and WebSocket-heavy interfaces, and he sweats performance and reliability under load.',
+  stack: [tech('Vue.js', 'vuejs'), tech('TypeScript', 'typescript'), tech('Node.js', 'nodejs'), tech('NestJS', 'nestjs'), tech('Electron', 'electron'), tech('PostgreSQL', 'postgresql'), tech('AWS', 'aws')],
 
   stats: [
     { value: `${YEARS.oleg}+`, label: 'years of commercial experience' },
@@ -244,8 +278,8 @@ const oleg = {
   about: {
     title: 'A full-stack engineer for real-time and high-load systems',
     paragraphs: [
-      `I work full-cycle — architecture, frontend and backend, performance and cloud deployment. Over ${YEARS.oleg}+ years I’ve built scalable web platforms, cross-platform desktop clients, biometric and security systems, and high-load backend services, in both product companies and freelance teams.`,
-      'I designed a cross-platform Electron desktop client driving palm-scanning hardware on 50+ deployed devices, and built a NestJS user-management service handling 10,000+ requests a day. Earlier I built real-time chat interfaces and high-frequency messaging UIs over WebSockets.',
+      'Oleg is a full-cycle engineer drawn to the harder parts of software — real-time systems, cross-platform desktop applications and back-ends that have to stay fast and reliable under heavy load. He moves comfortably across the whole stack, from architecture and interface through to APIs, performance tuning and cloud infrastructure.',
+      `Across ${YEARS.oleg}+ years in both product companies and engineering teams, he has delivered everything from scalable web platforms to security and biometric systems. He is methodical and outcome-driven, with a habit of measuring his work — and a genuine focus on reliability, speed and the experience of the people who depend on it every day.`,
     ],
     callout:
       'Deep experience in real-time communication (WebSockets), Electron desktop apps, cloud infrastructure and UI performance optimization — delivering measurable gains in reliability, speed and user experience.',
@@ -323,6 +357,9 @@ const danijel = {
     `${YEARS.danijel}+ years building Android and iOS applications — retail point-of-sale systems, a taxi-services platform and business apps — with team-lead, Node.js back-end and AWS DevOps experience.`,
   photo: '/images/danijel-popic.webp',
   linkedin: 'https://www.linkedin.com/in/dpopic',
+  years: `${YEARS.danijel}+`,
+  bio: 'Danijel builds native mobile that businesses rely on daily — point-of-sale systems running across Croatia and Slovenia and a complex taxi platform. He’s led Android teams, owned back-end work at a global brand, and taught the craft for five years.',
+  stack: [tech('Kotlin', 'kotlin'), tech('Swift', 'swift'), tech('Java', 'java'), tech('Android', 'android'), tech('iOS', 'apple'), tech('Node.js', 'nodejs'), tech('AWS', 'aws')],
 
   stats: [
     { value: `${YEARS.danijel}+`, label: 'years in mobile development' },
@@ -334,8 +371,8 @@ const danijel = {
   about: {
     title: 'A mobile engineer who builds and leads',
     paragraphs: [
-      `I’ve spent ${YEARS.danijel}+ years building Android and iOS applications — retail point-of-sale systems used across Croatia and Slovenia, a complex taxi-services platform, and business apps for management, procurement, hospitality and industry. I work from architecture through to the store, in Kotlin, Java and Swift.`,
-      'I’ve led Android teams and projects at several companies, and I work well beyond the app — most recently as a Node.js back-end developer and AWS DevOps engineer, where I also took on team management. For five years I taught Android development as a lecturer.',
+      `Danijel is a mobile engineer and team lead who builds the software businesses run on every day. Across ${YEARS.danijel}+ years he has shipped native Android and iOS apps from architecture all the way to the store — point-of-sale and business systems used across retail, hospitality and industry, and a complex taxi-services platform.`,
+      'His range extends well beyond the app itself, with hands-on experience in Node.js back-ends and AWS infrastructure, and he has led engineering teams and projects at several companies. Five years lecturing Android development shaped how he works — structured, dependable and generous with knowledge — and it shows in both the code he ships and the teams he runs.',
     ],
     callout:
       'Strong across native mobile (Android & iOS), Node.js back-ends and AWS infrastructure — and experienced leading teams and shipping production apps that businesses depend on daily.',

@@ -1,12 +1,11 @@
 <script setup>
-import { onUnmounted, ref, watch } from 'vue'
+import { onMounted, onUnmounted, ref, watch } from 'vue'
 
 const props = defineProps({ member: { type: Object, required: true } })
 
-// Touch devices have no hover: colorize the portrait while it is FULLY in the
-// viewport instead, and desaturate again as soon as any edge starts leaving.
-// vue-router reuses this instance across /team/:slug changes, so (re)build the
-// observer whenever the member changes — not just once on mount.
+// Drive the portrait's colour + tilt from its viewport position on every device:
+// full colour and straightened while it is FULLY in view, desaturated and tilted
+// again as soon as any edge starts leaving.
 const portraitEl = ref(null)
 let portraitObserver = null
 
@@ -15,22 +14,24 @@ function teardown() {
   portraitObserver = null
 }
 
-watch(
-  () => props.member.slug,
-  () => {
-    teardown()
-    portraitEl.value?.classList.remove('in-view')
-    if (!props.member.photo || !window.matchMedia('(hover: none)').matches) return
-    portraitObserver = new IntersectionObserver(
-      ([entry]) => {
-        portraitEl.value?.classList.toggle('in-view', entry.intersectionRatio >= 0.98)
-      },
-      { threshold: [0.98] },
-    )
-    if (portraitEl.value) portraitObserver.observe(portraitEl.value)
-  },
-  { immediate: true, flush: 'post' },
-)
+function buildObserver() {
+  teardown()
+  portraitEl.value?.classList.remove('in-view')
+  if (!props.member.photo || !portraitEl.value) return
+  portraitObserver = new IntersectionObserver(
+    ([entry]) => {
+      portraitEl.value?.classList.toggle('in-view', entry.intersectionRatio >= 0.98)
+    },
+    { threshold: [0.98] },
+  )
+  portraitObserver.observe(portraitEl.value)
+}
+
+// Attach once the element exists, then rebuild on member change — vue-router reuses
+// this instance across /team/:slug, and flush:'post' guarantees the new portrait is
+// in the DOM before we re-observe.
+onMounted(buildObserver)
+watch(() => props.member.slug, buildObserver, { flush: 'post' })
 
 onUnmounted(teardown)
 </script>
@@ -134,6 +135,7 @@ h1 {
   position: relative;
   width: min(100%, 340px);
   aspect-ratio: 4 / 5;
+  border: 1px solid #0f1a38;
   border-radius: 22px;
   margin-inline: auto;
   display: grid;
@@ -151,30 +153,20 @@ h1 {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* shown desaturated by default; gains color on hover in step with the straightening */
+  /* desaturated + tilted by default; gains colour and straightens while fully in view */
   filter: grayscale(1);
   transition: filter 0.35s ease;
 }
 
-@media (hover: hover) {
-  .portrait:hover {
-    transform: rotate(0deg);
-  }
-
-  .portrait:hover img {
-    filter: grayscale(0);
-  }
+/* All devices: straighten + colorize while the portrait is fully in view, and
+   desaturate + tilt again as soon as it starts leaving (class toggled by the
+   IntersectionObserver above). */
+.portrait.in-view {
+  transform: rotate(0deg);
 }
 
-/* touch devices: straighten + colorize while fully in view (class managed by IntersectionObserver) */
-@media (hover: none) {
-  .portrait.in-view {
-    transform: rotate(0deg);
-  }
-
-  .portrait.in-view img {
-    filter: grayscale(0);
-  }
+.portrait.in-view img {
+  filter: grayscale(0);
 }
 
 .portrait-mark {
