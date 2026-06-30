@@ -79,8 +79,17 @@ onUnmounted(() => {
               <p class="cat">{{ item.category }}</p>
             </div>
             <div class="actions">
-              <router-link
+              <a
+                v-if="item.live"
                 class="btn btn-primary btn-small"
+                :href="item.live"
+                target="_blank"
+                rel="noopener"
+              >
+                Open live site ↗
+              </a>
+              <router-link
+                class="btn btn-ghost btn-small"
                 :to="{ path: '/contact', query: { type: item.kind === 'ecommerce' ? 'ecommerce' : 'website', ref: item.id } }"
                 @click="emit('close')"
               >
@@ -197,6 +206,22 @@ onUnmounted(() => {
   padding: 60px 20px;
   text-align: center;
   color: var(--muted);
+}
+
+@media (max-width: 560px) {
+  .panel-head {
+    flex-wrap: wrap;
+  }
+
+  .actions {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .actions .btn {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
 }
 
 .fade-enter-active,

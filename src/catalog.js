@@ -7,6 +7,12 @@
 
 const CAT = '/images/catalog'
 
+// Live demo sites — deployed to Cloudflare Pages from ../websites-portfolio/templates-wrapper.
+// Folder names match each template's slug; simple sites and storefronts live under
+// separate top-level folders. See websites-portfolio/wrangler.toml + `npm run deploy:templates`.
+const DEMO_BASE = 'https://jcode-templates.pages.dev'
+const DEMO_DIR = { simple: 'templates', ecommerce: 'templates-ecommerce' }
+
 // Two top-level sections, keyed to each template's `kind`.
 export const sections = [
   { key: 'simple', label: 'Simple Landing Pages' },
@@ -146,6 +152,7 @@ const toTemplate = (kind, group) => ([slug, title, industry, blurb]) => ({
   blurb,
   card: `${CAT}/${slug}-card.webp`,
   full: `${CAT}/${slug}-full.webp`,
+  live: `${DEMO_BASE}/${DEMO_DIR[kind]}/${slug}/`,
 })
 
 export const templates = [

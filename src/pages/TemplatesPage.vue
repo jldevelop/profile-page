@@ -72,24 +72,30 @@ const countLabel = computed(() => {
       </div>
 
       <div class="grid">
-        <button
-          v-for="item in items"
-          :key="item.id"
-          type="button"
-          class="card"
-          @click="selected = item"
-        >
-          <div class="thumb">
-            <img :src="item.card" alt="" loading="lazy" decoding="async" />
-            <span class="kind">{{ item.kind === 'ecommerce' ? 'Online store' : 'Landing page' }}</span>
-          </div>
-          <div class="meta">
-            <h3>{{ item.title }}</h3>
-            <p class="cat">{{ item.category }}</p>
-            <p class="blurb">{{ item.blurb }}</p>
-            <span class="action">Preview →</span>
-          </div>
-        </button>
+        <article v-for="item in items" :key="item.id" class="card">
+          <button type="button" class="card-main" @click="selected = item">
+            <div class="thumb">
+              <img :src="item.card" alt="" loading="lazy" decoding="async" />
+              <span class="kind">{{ item.kind === 'ecommerce' ? 'Online store' : 'Landing page' }}</span>
+            </div>
+            <div class="meta">
+              <h3>{{ item.title }}</h3>
+              <p class="cat">{{ item.category }}</p>
+              <p class="blurb">{{ item.blurb }}</p>
+              <span class="action">Preview screenshot →</span>
+            </div>
+          </button>
+          <a
+            v-if="item.live"
+            class="live-badge"
+            :href="item.live"
+            target="_blank"
+            rel="noopener"
+            :aria-label="`Open the live ${item.title} site in a new tab`"
+          >
+            Live ↗
+          </a>
+        </article>
       </div>
 
       <div class="tpl-cta" v-reveal>
@@ -194,24 +200,61 @@ const countLabel = computed(() => {
 }
 
 .card {
+  position: relative;
   display: flex;
-  flex-direction: column;
-  text-align: left;
-  padding: 0;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   overflow: hidden;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+/* The whole card (minus the Live badge) opens the screenshot preview. */
+.card-main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  text-align: left;
+  padding: 0;
+  background: transparent;
+  border: none;
   cursor: pointer;
   font: inherit;
   color: inherit;
-  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
 }
 
 .card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-card);
   border-color: var(--accent);
+}
+
+/* Opens the actual deployed template in a new tab — sibling of the preview
+   button (not nested) so the markup stays valid and both stay focusable. */
+.live-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #fff;
+  background: var(--accent);
+  padding: 4px 10px;
+  border-radius: 999px;
+  text-decoration: none;
+  box-shadow: 0 4px 12px -4px rgba(30, 70, 196, 0.75);
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.live-badge:hover {
+  background: var(--accent-deep);
+  transform: translateY(-1px);
 }
 
 .thumb {
