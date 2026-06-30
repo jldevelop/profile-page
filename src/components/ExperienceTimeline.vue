@@ -1,5 +1,8 @@
 <script setup>
-import { experience, earlierRoles } from '@/content.js'
+defineProps({
+  experience: { type: Array, default: () => [] },
+  earlierRoles: { type: String, default: '' },
+})
 </script>
 
 <template>
@@ -25,7 +28,7 @@ import { experience, earlierRoles } from '@/content.js'
         </li>
       </ol>
 
-      <details class="earlier" v-reveal>
+      <details v-if="earlierRoles" class="earlier" v-reveal>
         <summary>Earlier roles (2012 – 2015)</summary>
         <p>{{ earlierRoles }}</p>
       </details>
@@ -87,6 +90,7 @@ import { experience, earlierRoles } from '@/content.js'
 }
 
 .entry-org {
+  display: inline-block;
   color: var(--accent);
 }
 

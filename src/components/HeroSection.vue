@@ -1,15 +1,23 @@
 <script setup>
-import { onMounted, onUnmounted, ref } from 'vue'
-import { profile, stats } from '@/content.js'
+import { onMounted, onUnmounted, ref, watch } from 'vue'
 
-// Touch devices have no hover: colorize the portrait while it is FULLY in the
-// viewport instead, and desaturate again as soon as any edge starts leaving.
+const props = defineProps({ member: { type: Object, required: true } })
+
+// Drive the portrait's colour + tilt from its viewport position on every device:
+// full colour and straightened while it is FULLY in view, desaturated and tilted
+// again as soon as any edge starts leaving.
 const portraitEl = ref(null)
 let portraitObserver = null
 
-onMounted(() => {
-  console.log('mounted!')
-  if (!profile.photo || !window.matchMedia('(hover: none)').matches) return
+function teardown() {
+  portraitObserver?.disconnect()
+  portraitObserver = null
+}
+
+function buildObserver() {
+  teardown()
+  portraitEl.value?.classList.remove('in-view')
+  if (!props.member.photo || !portraitEl.value) return
   portraitObserver = new IntersectionObserver(
     ([entry]) => {
       portraitEl.value?.classList.toggle('in-view', entry.intersectionRatio >= 0.98)
@@ -17,51 +25,53 @@ onMounted(() => {
     { threshold: [0.98] },
   )
   portraitObserver.observe(portraitEl.value)
-})
+}
 
-onUnmounted(() => portraitObserver?.disconnect())
+// Attach once the element exists, then rebuild on member change — vue-router reuses
+// this instance across /team/:slug, and flush:'post' guarantees the new portrait is
+// in the DOM before we re-observe.
+onMounted(buildObserver)
+watch(() => props.member.slug, buildObserver, { flush: 'post' })
+
+onUnmounted(teardown)
 </script>
 
 <template>
   <section id="top" class="hero">
     <div class="container hero-grid">
       <div class="hero-text" v-reveal>
-        <p class="eyebrow">{{ profile.eyebrow }}</p>
-        <h1>{{ profile.name }}</h1>
-        <p class="tagline">“{{ profile.tagline }}”</p>
-        <p class="intro">{{ profile.intro }}</p>
+        <p class="eyebrow">{{ member.eyebrow }}</p>
+        <h1>{{ member.name }}</h1>
+        <p class="tagline">“{{ member.tagline }}”</p>
+        <p class="intro">{{ member.intro }}</p>
         <div class="cta-row">
-          <a class="btn btn-primary" :href="profile.cvPath" :download="profile.cvFileName">
-            Download CV
-          </a>
-          <a class="btn btn-ghost" href="#contact">Get in touch</a>
+          <router-link class="btn btn-primary" to="/contact">Get in touch</router-link>
         </div>
-        <div class="quick-links">
-          <a class="link-arrow" :href="profile.linkedin" target="_blank" rel="noopener">LinkedIn ↗</a>
-          <a class="link-arrow" :href="profile.upwork" target="_blank" rel="noopener">Upwork ↗</a>
-          <a class="link-arrow" :href="profile.github" target="_blank" rel="noopener">GitHub ↗</a>
-          <a class="link-arrow" :href="`mailto:${profile.email}`">{{ profile.email }}</a>
+        <div v-if="member.linkedin || member.github || member.email" class="quick-links">
+          <a v-if="member.linkedin" class="link-arrow" :href="member.linkedin" target="_blank" rel="noopener">LinkedIn ↗</a>
+          <a v-if="member.github" class="link-arrow" :href="member.github" target="_blank" rel="noopener">GitHub ↗</a>
+          <a v-if="member.email" class="link-arrow" :href="`mailto:${member.email}`">{{ member.email }}</a>
         </div>
       </div>
 
       <div class="hero-visual" v-reveal>
         <div class="portrait" ref="portraitEl">
           <img
-            v-if="profile.photo"
-            :src="profile.photo"
-            :alt="`Portrait of ${profile.name}`"
+            v-if="member.photo"
+            :src="member.photo"
+            :alt="`Portrait of ${member.name}`"
             fetchpriority="high"
             decoding="async"
           />
-          <span v-else class="portrait-mark" aria-hidden="true">{{ profile.monogram }}</span>
+          <span v-else class="portrait-mark" aria-hidden="true">{{ member.monogram }}</span>
           <span class="portrait-bar" aria-hidden="true"></span>
         </div>
       </div>
     </div>
 
-    <div class="container">
+    <div v-if="member.stats?.length" class="container">
       <dl class="stats" v-reveal>
-        <div v-for="stat in stats" :key="stat.label" class="stat">
+        <div v-for="stat in member.stats" :key="stat.label" class="stat">
           <dt>{{ stat.label }}</dt>
           <dd>{{ stat.value }}</dd>
         </div>
@@ -125,12 +135,13 @@ h1 {
   position: relative;
   width: min(100%, 340px);
   aspect-ratio: 4 / 5;
+  border: 1px solid #0f1a38;
   border-radius: 22px;
   margin-inline: auto;
   display: grid;
   place-items: center;
   overflow: hidden;
-  background: linear-gradient(160deg, #1d2127 0%, #14171b 100%);
+  background: linear-gradient(160deg, var(--dark-soft) 0%, var(--dark) 100%);
   box-shadow: var(--shadow-card);
   transform: rotate(-2deg);
   transition: transform 0.35s ease;
@@ -142,30 +153,20 @@ h1 {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* shown desaturated by default; gains color on hover in step with the straightening */
+  /* desaturated + tilted by default; gains colour and straightens while fully in view */
   filter: grayscale(1);
   transition: filter 0.35s ease;
 }
 
-@media (hover: hover) {
-  .portrait:hover {
-    transform: rotate(0deg);
-  }
-
-  .portrait:hover img {
-    filter: grayscale(0);
-  }
+/* All devices: straighten + colorize while the portrait is fully in view, and
+   desaturate + tilt again as soon as it starts leaving (class toggled by the
+   IntersectionObserver above). */
+.portrait.in-view {
+  transform: rotate(0deg);
 }
 
-/* touch devices: straighten + colorize while fully in view (class managed by IntersectionObserver) */
-@media (hover: none) {
-  .portrait.in-view {
-    transform: rotate(0deg);
-  }
-
-  .portrait.in-view img {
-    filter: grayscale(0);
-  }
+.portrait.in-view img {
+  filter: grayscale(0);
 }
 
 .portrait-mark {

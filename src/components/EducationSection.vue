@@ -1,5 +1,8 @@
 <script setup>
-import { education, languages } from '@/content.js'
+defineProps({
+  education: { type: Array, default: () => [] },
+  languages: { type: Array, default: () => [] },
+})
 </script>
 
 <template>
@@ -10,7 +13,7 @@ import { education, languages } from '@/content.js'
         <h2>Always still learning</h2>
       </div>
 
-      <ul class="edu-list" v-reveal>
+      <ul v-if="education.length" class="edu-list" v-reveal>
         <li v-for="item in education" :key="item.credential" class="edu-item">
           <div>
             <h3>{{ item.credential }}</h3>
@@ -20,7 +23,7 @@ import { education, languages } from '@/content.js'
         </li>
       </ul>
 
-      <p class="languages" v-reveal>
+      <p v-if="languages.length" class="languages" v-reveal>
         <span v-for="(lang, i) in languages" :key="lang.name">
           <strong>{{ lang.name }}</strong> — {{ lang.level
           }}<span v-if="i < languages.length - 1" class="dot"> · </span>
