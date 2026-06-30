@@ -6,6 +6,11 @@ import { ref } from 'vue'
 export const languages = [
   { code: 'en', label: 'English', short: 'EN' },
   { code: 'hr', label: 'Hrvatski', short: 'HR' },
+  { code: 'es', label: 'Español', short: 'ES' },
+  // Ukrainian: ISO 639-1 language code is `uk`; shown as UA to match the flag and
+  // avoid visual confusion with the UK (English) entry.
+  { code: 'uk', label: 'Українська', short: 'UA' },
+  { code: 'de', label: 'Deutsch', short: 'DE' },
 ]
 
 function initialLang() {

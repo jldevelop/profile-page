@@ -30,6 +30,25 @@ defineProps({ code: { type: String, required: true } })
         <rect x="33" y="18.5" width="3" height="3.5" />
       </g>
     </svg>
+
+    <!-- Spanish → red / yellow / red horizontal bands (1:2:1) -->
+    <svg v-else-if="code === 'es'" viewBox="0 0 60 30" preserveAspectRatio="xMidYMid slice">
+      <rect width="60" height="30" fill="#aa151b" />
+      <rect width="60" height="15" y="7.5" fill="#f1bf00" />
+    </svg>
+
+    <!-- Ukrainian → blue over yellow -->
+    <svg v-else-if="code === 'uk'" viewBox="0 0 60 30" preserveAspectRatio="xMidYMid slice">
+      <rect width="60" height="15" fill="#0057b7" />
+      <rect width="60" height="15" y="15" fill="#ffd700" />
+    </svg>
+
+    <!-- German → black / red / gold horizontal thirds -->
+    <svg v-else-if="code === 'de'" viewBox="0 0 60 30" preserveAspectRatio="xMidYMid slice">
+      <rect width="60" height="10" fill="#000000" />
+      <rect width="60" height="10" y="10" fill="#dd0000" />
+      <rect width="60" height="10" y="20" fill="#ffce00" />
+    </svg>
   </span>
 </template>
 
