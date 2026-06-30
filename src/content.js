@@ -14,8 +14,8 @@ export const company = {
   name: 'jCode',
   domain: 'jcode.hr',
   eyebrow: 'Software studio · Barcelona + EU remote',
-  tagline: 'Software engineering for websites, web apps & mobile apps.',
-  lede: 'A small, senior software studio. We design, engineer and ship websites, web apps and mobile apps — from first sketch to production — for clients ranging from startups to global brands.',
+  tagline: 'Websites, e-commerce, mobile apps & AI automation for growing businesses.',
+  lede: 'A senior software studio. We design and build websites, online stores, mobile apps and AI automations for small and medium businesses — from first sketch to launch.',
   // Contact. The form posts to a FormSubmit endpoint tied to this address.
   email: 'info@jcode.hr',
   // WhatsApp / phone are placeholders — drop in real values to light them up.
@@ -41,27 +41,33 @@ export const services = [
   {
     key: 'websites',
     title: 'Websites',
-    desc: 'Fast, accessible marketing sites and online stores — engineered for performance and built to convert. A fully bespoke build, or a quick start from one of our templates.',
-    points: ['Marketing & brand sites', 'E-commerce & online stores', 'Headless & CMS-driven'],
+    desc: 'Fast, modern marketing and business websites that look the part and turn visitors into customers — engineered for performance and built to convert.',
+    points: ['Marketing & brand sites', 'Landing pages', 'Performance & SEO foundations'],
   },
   {
-    key: 'webapps',
-    title: 'Web apps',
-    desc: 'Complex, interactive products — dashboards, SaaS, real-time collaboration, browser-based tools. The hard engineering, architected and shipped.',
-    points: ['SaaS & dashboards', 'Real-time & collaborative apps', 'GPU / browser-based tooling'],
+    key: 'ecommerce',
+    title: 'E-commerce',
+    desc: 'Online stores that are easy to run and easy to buy from — product pages, cart and checkout set up to sell, on Shopify or a custom build.',
+    points: ['Shopify & custom stores', 'Product & checkout flows', 'Payments & integrations'],
   },
   {
     key: 'mobile',
     title: 'Mobile apps',
-    desc: 'Native iOS and Android apps that businesses run on — point-of-sale, operations and customer-facing products, built to stay reliable day in, day out.',
+    desc: 'Native iOS and Android apps your business and customers can rely on — point-of-sale, operations and customer-facing products, built to stay reliable day in, day out.',
     points: ['Native iOS & Android', 'API & backend integration', 'App Store & Play Store delivery'],
+  },
+  {
+    key: 'ai-automation',
+    title: 'AI automation',
+    desc: 'Put AI to work on the busywork — connect your tools and automate repetitive operations and workflows, so your team can focus on the work that matters.',
+    points: ['Workflow & process automation', 'AI assistants & integrations', 'Custom internal tools'],
   },
 ]
 
 export const companyStats = [
   { value: `${YEARS.josip}+`, label: 'years shipping software' },
-  { value: '75+', label: 'website templates to start from' },
-  { value: 'Full-stack', label: 'web, mobile & e-commerce' },
+  { value: '80+', label: 'site designs in our showcase' },
+  { value: 'End-to-end', label: 'web, e-commerce, mobile & AI' },
 ]
 
 // Technologies the team works with — shown as logos on the homepage. Logos live
@@ -122,12 +128,12 @@ export const companyProcess = [
 export const contact = {
   title: 'Let’s build something.',
   pitch:
-    'Tell us about your project — a new website, a web app, a mobile app, or just an idea you want to pressure-test. We read every message and reply within a day.',
+    'Tell us about your project — a website, an online store, a mobile app, an AI automation, or just an idea you want to pressure-test. We read every message and reply within a day.',
 }
 
 // Top navigation (the logo links home).
 export const siteNav = [
-  { label: 'Templates', to: '/templates' },
+  { label: 'Work', to: '/work' },
   { label: 'Team', to: '/team' },
   { label: 'Contact', to: '/contact' },
 ]

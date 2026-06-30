@@ -1,41 +1,74 @@
 <script setup>
 import { computed, ref } from 'vue'
-import { templates, templateGroups } from '@/catalog.js'
+import { templates, sections, simpleGroups } from '@/catalog.js'
 import CatalogDialog from '@/components/CatalogDialog.vue'
 
-const active = ref('all')
+const section = ref('simple') // 'simple' | 'ecommerce'
+const sub = ref('all') // industry sub-filter, only used within the simple section
 const selected = ref(null)
 
-const items = computed(() =>
-  active.value === 'all' ? templates : templates.filter((t) => t.group === active.value),
-)
+function selectSection(key) {
+  section.value = key
+  sub.value = 'all'
+}
+
+const items = computed(() => {
+  if (section.value === 'ecommerce') return templates.filter((t) => t.kind === 'ecommerce')
+  return templates.filter(
+    (t) => t.kind === 'simple' && (sub.value === 'all' || t.group === sub.value),
+  )
+})
+
+const countLabel = computed(() => {
+  const n = items.value.length
+  const noun = section.value === 'ecommerce' ? 'store' : 'template'
+  return `${n} ${noun}${n === 1 ? '' : 's'}`
+})
 </script>
 
 <template>
   <section class="section page-section">
     <div class="container">
       <header class="page-head" v-reveal>
-        <p class="eyebrow">Website templates</p>
-        <h1>Ready-to-adapt website designs</h1>
+        <p class="eyebrow">Our work</p>
+        <h1>Websites &amp; stores we’ve designed</h1>
         <p class="lede">
-          A library of {{ templates.length }} production-ready designs — single-page website
-          templates across every industry, plus full e-commerce storefronts — a fast, affordable
-          starting point that we customise, brand and ship for you. Click any one to preview it
-          full-page.
+          A look at the kind of sites and online stores we design and build — {{ templates.length }}
+          across every industry, from single-page websites to full e-commerce storefronts. See one
+          you like? We’ll build you one like it. Click any design to preview it full-page.
         </p>
       </header>
 
-      <div class="filters" v-reveal>
+      <div class="section-tabs" role="tablist" aria-label="Template sections" v-reveal>
         <button
-          v-for="g in templateGroups"
-          :key="g.key"
+          v-for="s in sections"
+          :key="s.key"
           type="button"
-          :class="{ active: active === g.key }"
-          @click="active = g.key"
+          role="tab"
+          :aria-selected="section === s.key"
+          :class="{ active: section === s.key }"
+          @click="selectSection(s.key)"
         >
-          {{ g.label }}
+          {{ s.label }}
         </button>
-        <span class="count">{{ items.length }} {{ items.length === 1 ? 'template' : 'templates' }}</span>
+      </div>
+
+      <div class="toolbar" v-reveal>
+        <div v-if="section === 'simple'" class="filters">
+          <button
+            v-for="g in simpleGroups"
+            :key="g.key"
+            type="button"
+            :class="{ active: sub === g.key }"
+            @click="sub = g.key"
+          >
+            {{ g.label }}
+          </button>
+        </div>
+        <p v-else class="section-note">
+          Full multi-page storefronts — home, collection, product &amp; cart.
+        </p>
+        <span class="count">{{ countLabel }}</span>
       </div>
 
       <div class="grid">
@@ -48,7 +81,7 @@ const items = computed(() =>
         >
           <div class="thumb">
             <img :src="item.card" alt="" loading="lazy" decoding="async" />
-            <span class="kind">Template</span>
+            <span class="kind">{{ item.kind === 'ecommerce' ? 'Online store' : 'Landing page' }}</span>
           </div>
           <div class="meta">
             <h3>{{ item.title }}</h3>
@@ -60,7 +93,7 @@ const items = computed(() =>
       </div>
 
       <div class="tpl-cta" v-reveal>
-        <p>Found a starting point — or want something fully bespoke?</p>
+        <p>See something you like — or want something fully bespoke?</p>
         <router-link class="btn btn-primary" to="/contact">Start a project</router-link>
       </div>
     </div>
@@ -70,12 +103,59 @@ const items = computed(() =>
 </template>
 
 <style scoped>
-.filters {
+/* primary section toggle */
+.section-tabs {
+  display: inline-flex;
+  gap: 4px;
+  padding: 5px;
+  margin-bottom: 22px;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+
+.section-tabs button {
+  padding: 10px 22px;
+  border: none;
+  background: transparent;
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14.5px;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.section-tabs button:hover {
+  color: var(--ink);
+}
+
+.section-tabs button.active {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 6px 16px -8px rgba(30, 70, 196, 0.7);
+}
+
+.toolbar {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 10px;
   margin-bottom: 28px;
+}
+
+.section-note {
+  font-size: 14px;
+  color: var(--muted);
+  max-width: 56ch;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
 }
 
 .filters button {
@@ -228,6 +308,17 @@ const items = computed(() =>
   .count {
     flex-basis: 100%;
     margin-left: 0;
+  }
+
+  .section-tabs {
+    display: flex;
+    width: 100%;
+  }
+
+  .section-tabs button {
+    flex: 1;
+    padding: 10px 8px;
+    font-size: 13px;
   }
 }
 </style>

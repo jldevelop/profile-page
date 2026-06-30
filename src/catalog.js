@@ -1,17 +1,22 @@
-// Website templates — the studio's productized offering. Two kinds:
-//  • simple    — single-page website templates across every industry
-//  • ecommerce — full multi-page online storefronts (the e01–e05 set)
-// These are ready-to-adapt starting points generated in-house, not client work.
-// Thumbnails live in /images/catalog/ (<slug>-card.webp grid, <slug>-full.webp preview).
+// Website showcase — designs the studio has built, shown as proof of capability
+// (not for sale). Two kinds:
+//  • simple    — single-page website designs across every industry
+//  • ecommerce — full multi-page online storefronts
+// Made in-house, not client work. Thumbnails live in /images/catalog/
+// (<slug>-card.webp grid, <slug>-full.webp preview).
 
 const CAT = '/images/catalog'
 
-// Broad filter buckets so the full library stays browsable. "Online stores" is
-// the e-commerce bucket (full multi-page storefronts); the rest are single-page
-// "simple" website templates grouped by industry.
-export const templateGroups = [
-  { key: 'all', label: 'All templates' },
-  { key: 'ecommerce', label: 'Online stores' },
+// Two top-level sections, keyed to each template's `kind`.
+export const sections = [
+  { key: 'simple', label: 'Simple Landing Pages' },
+  { key: 'ecommerce', label: 'Ecommerce Websites' },
+]
+
+// Industry sub-filters shown within the "Simple Landing Pages" section. Ecommerce
+// is a small set, shown without sub-filters.
+export const simpleGroups = [
+  { key: 'all', label: 'All' },
   { key: 'food-hospitality', label: 'Food & hospitality' },
   { key: 'health-beauty', label: 'Health, beauty & fitness' },
   { key: 'home-pro', label: 'Home, trades & professional' },

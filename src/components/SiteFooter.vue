@@ -10,7 +10,7 @@ const socials = Object.entries({
 
 const pages = [
   { to: '/', label: 'Home' },
-  { to: '/templates', label: 'Templates' },
+  { to: '/work', label: 'Work' },
   { to: '/team', label: 'Team' },
   { to: '/contact', label: 'Contact' },
 ]

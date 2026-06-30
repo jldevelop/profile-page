@@ -1,6 +1,20 @@
 <script setup>
 import { ref } from 'vue'
+import { useRoute } from 'vue-router'
 import { company, contact } from '@/content.js'
+
+// Service the enquiry is about. Mirrors the four pillars; the showcase modal and
+// service cards can pre-select one via a ?type= query param.
+const PROJECT_TYPES = [
+  { value: 'website', label: 'Website' },
+  { value: 'ecommerce', label: 'Online store' },
+  { value: 'mobile', label: 'Mobile app' },
+  { value: 'ai', label: 'AI automation' },
+  { value: 'other', label: 'Something else' },
+]
+
+const route = useRoute()
+const projectType = ref(PROJECT_TYPES.some((t) => t.value === route.query.type) ? route.query.type : '')
 
 const state = ref('idle') // idle | sending | sent | error
 
@@ -8,6 +22,7 @@ async function submit(event) {
   const data = Object.fromEntries(new FormData(event.target))
   if (data._honey) return // spam bot filled the honeypot
   state.value = 'sending'
+  const typeLabel = PROJECT_TYPES.find((t) => t.value === projectType.value)?.label || ''
   try {
     const res = await fetch(company.formEndpoint, {
       method: 'POST',
@@ -15,8 +30,9 @@ async function submit(event) {
       body: JSON.stringify({
         name: data.name,
         email: data.email,
+        projectType: typeLabel,
         message: data.message,
-        _subject: `jCode — new enquiry from ${data.name}`,
+        _subject: `jCode — new ${typeLabel || 'project'} enquiry from ${data.name}`,
       }),
     })
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
@@ -75,6 +91,22 @@ const socials = Object.entries({
 
         <div class="form-card" v-reveal>
           <form v-if="state !== 'sent'" @submit.prevent="submit">
+            <div class="field">
+              <span class="field-label">What can we help with?</span>
+              <div class="type-options" role="group" aria-label="Project type">
+                <button
+                  v-for="t in PROJECT_TYPES"
+                  :key="t.value"
+                  type="button"
+                  class="type-btn"
+                  :class="{ active: projectType === t.value }"
+                  :aria-pressed="projectType === t.value"
+                  @click="projectType = t.value"
+                >
+                  {{ t.label }}
+                </button>
+              </div>
+            </div>
             <label>
               <span>Name</span>
               <input name="name" type="text" required autocomplete="name" />
@@ -84,7 +116,7 @@ const socials = Object.entries({
               <input name="email" type="email" required autocomplete="email" />
             </label>
             <label>
-              <span>What can we build for you?</span>
+              <span>Tell us about your project</span>
               <textarea name="message" rows="5" required></textarea>
             </label>
             <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" class="honey" />
@@ -190,6 +222,46 @@ a.method:hover {
 form {
   display: grid;
   gap: 16px;
+}
+
+.field {
+  display: grid;
+  gap: 9px;
+}
+
+.field-label {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.type-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.type-btn {
+  padding: 8px 14px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.type-btn:hover {
+  border-color: var(--ink);
+}
+
+.type-btn.active {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
 }
 
 label {

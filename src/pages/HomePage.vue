@@ -17,14 +17,15 @@ const teamMembers = computed(() => team.filter((m) => !m.placeholder))
     <div class="container hero-grid">
       <div class="hero-text" v-reveal>
         <p class="eyebrow">{{ company.eyebrow }}</p>
-        <h1>We build digital products that perform.</h1>
+        <h1>Websites, apps &amp; automation for growing businesses.</h1>
         <p class="lede">
-          A senior software studio designing and engineering websites, web apps and mobile
-          apps — from first sketch to production.
+          jCode is a senior software studio. We design and build websites, online stores,
+          mobile apps and AI automations for small and medium businesses — from first
+          sketch to launch.
         </p>
         <div class="cta-row">
-          <router-link class="btn btn-primary" to="/templates">Browse templates</router-link>
-          <router-link class="btn btn-ghost" to="/contact">Start a project</router-link>
+          <router-link class="btn btn-primary" to="/contact">Start a project</router-link>
+          <router-link class="btn btn-ghost" to="/work">See our work</router-link>
         </div>
         <ul class="hero-stats">
           <li v-for="stat in companyStats" :key="stat.label">
@@ -62,8 +63,8 @@ const teamMembers = computed(() => team.filter((m) => !m.placeholder))
   <section class="section services">
     <div class="container">
       <div class="section-head" v-reveal>
-        <p class="eyebrow">What we do</p>
-        <h2>Three things, done properly</h2>
+        <p class="eyebrow">Services</p>
+        <h2>What we build</h2>
       </div>
       <div class="svc-grid">
         <article v-for="svc in services" :key="svc.key" class="svc" v-reveal>
@@ -82,16 +83,16 @@ const teamMembers = computed(() => team.filter((m) => !m.placeholder))
     <div class="container">
       <div class="section-head with-link" v-reveal>
         <div>
-          <p class="eyebrow">Website templates</p>
-          <h2>Launch faster with a ready-made design</h2>
+          <p class="eyebrow">Our work</p>
+          <h2>A look at what we build</h2>
         </div>
-        <router-link class="link-arrow" to="/templates">All templates →</router-link>
+        <router-link class="link-arrow" to="/work">See all our work →</router-link>
       </div>
       <div class="work-grid">
         <router-link
           v-for="t in featuredTemplates"
           :key="t.id"
-          to="/templates"
+          to="/work"
           class="work-card"
           v-reveal
         >
@@ -346,7 +347,7 @@ const teamMembers = computed(() => team.filter((m) => !m.placeholder))
 /* ---- services ---- */
 .svc-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
 }
 

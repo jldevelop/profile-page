@@ -1,17 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from '@/pages/HomePage.vue'
 
-const BASE_TITLE = 'jCode — Software studio for websites, web & mobile apps'
+const BASE_TITLE = 'jCode — Software studio for websites, apps & AI automation'
 const BASE_DESC =
-  'jCode is a small, senior software studio. We design, engineer and ship websites, web apps and mobile apps — plus a library of ready-to-adapt website templates and online stores.'
+  'jCode is a senior software studio building websites, online stores, mobile apps and AI automations for small and medium businesses — from first sketch to launch.'
 
 const routes = [
   { path: '/', name: 'home', component: HomePage, meta: { title: BASE_TITLE, desc: BASE_DESC } },
   {
-    path: '/templates',
-    name: 'templates',
+    path: '/work',
+    name: 'work',
     component: () => import('@/pages/TemplatesPage.vue'),
-    meta: { title: 'Website templates — jCode', desc: '75+ ready-to-adapt website templates and online-store designs across every industry — a fast, affordable starting point for your site, customised and shipped by jCode.' },
+    meta: { title: 'Our work — jCode', desc: 'A showcase of websites and online stores designed and built by jCode — the kind of sites and apps we make for small and medium businesses.' },
   },
   {
     path: '/team',
@@ -27,10 +27,10 @@ const routes = [
     component: () => import('@/pages/ContactPage.vue'),
     meta: { title: 'Contact — jCode', desc: 'Tell us about your project — a website, a web app, a mobile app, or an idea you want to pressure-test. We reply within a day.' },
   },
-  // Old catalog/work URLs → templates (kept for any existing links).
-  { path: '/catalog', redirect: '/templates' },
-  { path: '/work', redirect: '/templates' },
-  { path: '/work/:slug', redirect: '/templates' },
+  // Old template/catalog URLs → the work showcase (kept for any existing links).
+  { path: '/templates', redirect: '/work' },
+  { path: '/catalog', redirect: '/work' },
+  { path: '/work/:slug', redirect: '/work' },
   { path: '/:pathMatch(.*)*', redirect: '/' },
 ]
 

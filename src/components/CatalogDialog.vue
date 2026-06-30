@@ -79,15 +79,13 @@ onUnmounted(() => {
               <p class="cat">{{ item.category }}</p>
             </div>
             <div class="actions">
-              <a
-                v-if="item.live"
+              <router-link
                 class="btn btn-primary btn-small"
-                :href="item.live"
-                target="_blank"
-                rel="noopener"
+                :to="{ path: '/contact', query: { type: item.kind === 'ecommerce' ? 'ecommerce' : 'website', ref: item.id } }"
+                @click="emit('close')"
               >
-                Visit live site ↗
-              </a>
+                Build me one like this →
+              </router-link>
               <button class="close" type="button" aria-label="Close preview" @click="emit('close')">✕</button>
             </div>
           </header>
