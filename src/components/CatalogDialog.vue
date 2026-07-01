@@ -1,5 +1,6 @@
 <script setup>
 import { nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
+import { t } from '@/i18n.js'
 
 const props = defineProps({ item: { type: Object, default: null } })
 const emit = defineEmits(['close'])
@@ -70,7 +71,7 @@ onUnmounted(() => {
           class="panel"
           role="dialog"
           aria-modal="true"
-          :aria-label="`${item.title} preview`"
+          :aria-label="t('dialog.previewAria')(item.title)"
           tabindex="-1"
         >
           <header class="panel-head">
@@ -86,16 +87,16 @@ onUnmounted(() => {
                 target="_blank"
                 rel="noopener"
               >
-                Open live site ↗
+                {{ t('dialog.openLive') }}
               </a>
               <router-link
                 class="btn btn-ghost btn-small"
                 :to="{ path: '/contact', query: { type: item.kind === 'ecommerce' ? 'ecommerce' : 'website', ref: item.id } }"
                 @click="emit('close')"
               >
-                Build me one like this →
+                {{ t('dialog.buildLike') }}
               </router-link>
-              <button class="close" type="button" aria-label="Close preview" @click="emit('close')">✕</button>
+              <button class="close" type="button" :aria-label="t('dialog.closePreviewAria')" @click="emit('close')">✕</button>
             </div>
           </header>
 
@@ -103,10 +104,10 @@ onUnmounted(() => {
             <img
               v-if="item.full"
               :src="item.full"
-              :alt="`${item.title} — full page preview`"
+              :alt="t('dialog.fullPreviewAlt')(item.title)"
               decoding="async"
             />
-            <p v-else class="noimg">Preview coming soon.</p>
+            <p v-else class="noimg">{{ t('dialog.noImg') }}</p>
           </div>
         </div>
       </div>

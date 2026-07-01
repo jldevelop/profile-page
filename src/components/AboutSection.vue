@@ -1,4 +1,6 @@
 <script setup>
+import { t } from '@/i18n.js'
+
 defineProps({
   about: { type: Object, required: true },
   strengths: { type: Array, default: () => [] },
@@ -9,7 +11,7 @@ defineProps({
   <section id="about" class="section">
     <div class="container">
       <div class="section-head" v-reveal>
-        <p class="eyebrow">About</p>
+        <p class="eyebrow">{{ t('about.eyebrow') }}</p>
         <h2>{{ about.title }}</h2>
       </div>
 
@@ -22,7 +24,7 @@ defineProps({
       </aside>
 
       <ul v-if="strengths.length" class="strengths" v-reveal>
-        <li v-for="item in strengths" :key="item.title" class="strength">
+        <li v-for="(item, i) in strengths" :key="i" class="strength">
           <h3>{{ item.title }}</h3>
           <p>{{ item.desc }}</p>
         </li>

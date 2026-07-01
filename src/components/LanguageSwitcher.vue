@@ -1,6 +1,7 @@
 <script setup>
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { languages, lang, setLang } from '@/lang.js'
+import { t } from '@/i18n.js'
 import FlagIcon from './FlagIcon.vue'
 
 const open = ref(false)
@@ -36,7 +37,7 @@ onUnmounted(() => {
       type="button"
       :aria-expanded="open"
       aria-haspopup="listbox"
-      :aria-label="`Language: ${current.label}`"
+      :aria-label="`${t('langSwitcher.ariaPrefix')} ${current.label}`"
       @click="open = !open"
     >
       <FlagIcon :code="current.code" />
@@ -47,7 +48,7 @@ onUnmounted(() => {
     </button>
 
     <Transition name="lang-pop">
-      <ul v-if="open" class="lang-menu" role="listbox" aria-label="Select language">
+      <ul v-if="open" class="lang-menu" role="listbox" :aria-label="t('langSwitcher.selectLanguage')">
         <li v-for="l in languages" :key="l.code">
           <button
             type="button"

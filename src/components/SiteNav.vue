@@ -1,11 +1,16 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import { siteNav } from '@/content.js'
+import { t } from '@/i18n.js'
 import LanguageSwitcher from './LanguageSwitcher.vue'
 
 const open = ref(false)
 const route = useRoute()
+const navLinks = computed(() => [
+  { to: '/work', label: t('nav.work') },
+  { to: '/team', label: t('nav.team') },
+  { to: '/contact', label: t('nav.contact') },
+])
 // Close the drawer on navigation; lock body scroll while it's open.
 watch(() => route.fullPath, () => (open.value = false))
 watch(open, (v) => {
@@ -16,17 +21,17 @@ watch(open, (v) => {
 <template>
   <header class="nav">
     <div class="container nav-row">
-      <router-link to="/" class="brand" aria-label="jCode — home">
+      <router-link to="/" class="brand" :aria-label="t('nav.brandLabel')">
         <img class="brand-logo" src="/images/logo/jcode-logo-light-new.png" alt="jCode" />
       </router-link>
 
       <nav class="links" aria-label="Main">
-        <router-link v-for="link in siteNav" :key="link.to" :to="link.to">{{ link.label }}</router-link>
+        <router-link v-for="link in navLinks" :key="link.to" :to="link.to">{{ link.label }}</router-link>
       </nav>
 
       <LanguageSwitcher class="nav-lang" />
 
-      <router-link class="btn btn-primary btn-small cta" to="/contact">Start a project</router-link>
+      <router-link class="btn btn-primary btn-small cta" to="/contact">{{ t('nav.cta') }}</router-link>
 
       <button
         class="burger"
@@ -34,7 +39,7 @@ watch(open, (v) => {
         :class="{ open }"
         :aria-expanded="open"
         aria-controls="mobile-drawer"
-        :aria-label="open ? 'Close menu' : 'Open menu'"
+        :aria-label="open ? t('nav.closeMenu') : t('nav.openMenu')"
         @click="open = !open"
       >
         <span></span><span></span><span></span>
@@ -43,8 +48,8 @@ watch(open, (v) => {
 
     <Transition name="drawer">
       <nav v-if="open" id="mobile-drawer" class="drawer" aria-label="Mobile">
-        <router-link v-for="link in siteNav" :key="link.to" :to="link.to">{{ link.label }}</router-link>
-        <router-link class="btn btn-primary" to="/contact">Start a project</router-link>
+        <router-link v-for="link in navLinks" :key="link.to" :to="link.to">{{ link.label }}</router-link>
+        <router-link class="btn btn-primary" to="/contact">{{ t('nav.cta') }}</router-link>
       </nav>
     </Transition>
   </header>

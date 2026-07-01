@@ -1,23 +1,24 @@
+import { watch } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from '@/pages/HomePage.vue'
+import { lang } from '@/lang.js'
+import { t } from '@/i18n.js'
 
-const BASE_TITLE = 'jCode — Software studio for websites, apps & AI automation'
-const BASE_DESC =
-  'jCode is a senior software studio building websites, online stores, mobile apps and AI automations for small and medium businesses — from first sketch to launch.'
-
+// Routes store a meta *key* (into locales/{en,hr}.js meta.<key>), not the literal
+// title/desc, so afterEach + the lang watcher below can resolve it per locale.
 const routes = [
-  { path: '/', name: 'home', component: HomePage, meta: { title: BASE_TITLE, desc: BASE_DESC } },
+  { path: '/', name: 'home', component: HomePage, meta: { metaKey: 'base' } },
   {
     path: '/work',
     name: 'work',
     component: () => import('@/pages/TemplatesPage.vue'),
-    meta: { title: 'Our work — jCode', desc: 'A showcase of websites and online stores designed and built by jCode — the kind of sites and apps we make for small and medium businesses.' },
+    meta: { metaKey: 'work' },
   },
   {
     path: '/team',
     name: 'team',
     component: () => import('@/pages/TeamPage.vue'),
-    meta: { title: 'The team — jCode', desc: 'Meet the senior engineers behind jCode — full-stack, real-time and native mobile specialists.' },
+    meta: { metaKey: 'team' },
   },
   // Profile route sets its own title inside the page component.
   { path: '/team/:slug', name: 'profile', component: () => import('@/pages/ProfilePage.vue'), props: true },
@@ -25,7 +26,7 @@ const routes = [
     path: '/contact',
     name: 'contact',
     component: () => import('@/pages/ContactPage.vue'),
-    meta: { title: 'Contact — jCode', desc: 'Tell us about your project — a website, a web app, a mobile app, or an idea you want to pressure-test. We reply within a day.' },
+    meta: { metaKey: 'contact' },
   },
   // Old template/catalog URLs → the work showcase (kept for any existing links).
   { path: '/templates', redirect: '/work' },
@@ -56,7 +57,14 @@ function setMeta(name, content) {
 }
 
 // Per-route document title + description (profile/case-study routes set their own).
-router.afterEach((to) => {
-  if (to.meta.title !== undefined) document.title = to.meta.title
-  if (to.meta.desc !== undefined) setMeta('description', to.meta.desc)
-})
+function applyMeta(route) {
+  const key = route.meta.metaKey
+  if (!key) return
+  document.title = t(`meta.${key}.title`)
+  setMeta('description', t(`meta.${key}.desc`))
+}
+
+router.afterEach(applyMeta)
+// Switching language without navigating (e.g. sitting on / and flipping EN→HR)
+// doesn't fire afterEach, so re-apply the current route's meta on locale change too.
+watch(lang, () => applyMeta(router.currentRoute.value))

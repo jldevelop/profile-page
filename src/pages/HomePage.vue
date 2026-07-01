@@ -2,13 +2,14 @@
 import { computed } from 'vue'
 import { company, services, companyStats, companyProcess, techStack, clients, team } from '@/content.js'
 import { featuredTemplates } from '@/catalog.js'
+import { t } from '@/i18n.js'
 
 // Template screenshots for the layered hero showcase.
 const showMain = '/images/catalog/30-saas-product-full.webp'
 const showFloat = '/images/catalog/e04-luxury-fashion-house-full.webp'
 
 // Only real members on the teaser — placeholder seats are hidden until filled.
-const teamMembers = computed(() => team.filter((m) => !m.placeholder))
+const teamMembers = computed(() => team.value.filter((m) => !m.placeholder))
 </script>
 
 <template>
@@ -17,18 +18,14 @@ const teamMembers = computed(() => team.filter((m) => !m.placeholder))
     <div class="container hero-grid">
       <div class="hero-text" v-reveal>
         <p class="eyebrow">{{ company.eyebrow }}</p>
-        <h1>Websites, apps &amp; automation for growing businesses.</h1>
-        <p class="lede">
-          jCode is a senior software studio. We design and build websites, online stores,
-          mobile apps and AI automations for small and medium businesses — from first
-          sketch to launch.
-        </p>
+        <h1>{{ t('home.hero.h1') }}</h1>
+        <p class="lede">{{ t('home.hero.lede') }}</p>
         <div class="cta-row">
-          <router-link class="btn btn-primary" to="/contact">Start a project</router-link>
-          <router-link class="btn btn-ghost" to="/work">See our work</router-link>
+          <router-link class="btn btn-primary" to="/contact">{{ t('home.hero.ctaStart') }}</router-link>
+          <router-link class="btn btn-ghost" to="/work">{{ t('home.hero.ctaWork') }}</router-link>
         </div>
         <ul class="hero-stats">
-          <li v-for="stat in companyStats" :key="stat.label">
+          <li v-for="(stat, i) in companyStats" :key="i">
             <strong>{{ stat.value }}</strong> {{ stat.label }}
           </li>
         </ul>
@@ -50,7 +47,7 @@ const teamMembers = computed(() => team.filter((m) => !m.placeholder))
   <!-- Clients / built-for strip -->
   <section class="clients">
     <div class="container">
-      <p class="clients-lead">Brands we’ve worked with</p>
+      <p class="clients-lead">{{ t('home.clients.lead') }}</p>
       <ul class="client-row" v-reveal>
         <li v-for="c in clients" :key="c.name">
           <img :src="c.logo" :alt="c.name" loading="lazy" decoding="async" />
@@ -63,8 +60,8 @@ const teamMembers = computed(() => team.filter((m) => !m.placeholder))
   <section class="section services">
     <div class="container">
       <div class="section-head" v-reveal>
-        <p class="eyebrow">Services</p>
-        <h2>What we build</h2>
+        <p class="eyebrow">{{ t('home.services.eyebrow') }}</p>
+        <h2>{{ t('home.services.h2') }}</h2>
       </div>
       <div class="svc-grid">
         <article v-for="svc in services" :key="svc.key" class="svc" v-reveal>
@@ -83,26 +80,26 @@ const teamMembers = computed(() => team.filter((m) => !m.placeholder))
     <div class="container">
       <div class="section-head with-link" v-reveal>
         <div>
-          <p class="eyebrow">Our work</p>
-          <h2>A look at what we build</h2>
+          <p class="eyebrow">{{ t('home.work.eyebrow') }}</p>
+          <h2>{{ t('home.work.h2') }}</h2>
         </div>
-        <router-link class="link-arrow" to="/work">See all our work →</router-link>
+        <router-link class="link-arrow" to="/work">{{ t('home.work.seeAll') }}</router-link>
       </div>
       <div class="work-grid">
         <router-link
-          v-for="t in featuredTemplates"
-          :key="t.id"
+          v-for="tpl in featuredTemplates"
+          :key="tpl.id"
           to="/work"
           class="work-card"
           v-reveal
         >
           <div class="thumb">
-            <img :src="t.card" alt="" loading="lazy" decoding="async" />
-            <span class="kind">{{ t.category }}</span>
+            <img :src="tpl.card" alt="" loading="lazy" decoding="async" />
+            <span class="kind">{{ tpl.category }}</span>
           </div>
           <div class="work-meta">
-            <h3>{{ t.title }}</h3>
-            <p>{{ t.blurb }}</p>
+            <h3>{{ tpl.title }}</h3>
+            <p>{{ tpl.blurb }}</p>
           </div>
         </router-link>
       </div>
@@ -113,15 +110,15 @@ const teamMembers = computed(() => team.filter((m) => !m.placeholder))
   <section class="section stack">
     <div class="container">
       <div class="section-head" v-reveal>
-        <p class="eyebrow">Technologies</p>
-        <h2>The stack we build on</h2>
+        <p class="eyebrow">{{ t('home.stack.eyebrow') }}</p>
+        <h2>{{ t('home.stack.h2') }}</h2>
       </div>
       <div class="stack-rows">
-        <div v-for="grp in techStack" :key="grp.group" class="stack-row" v-reveal>
+        <div v-for="grp in techStack" :key="grp.key" class="stack-row" v-reveal>
           <h3>{{ grp.group }}</h3>
           <ul class="logos">
-            <li v-for="t in grp.items" :key="t.name">
-              <img :src="t.icon" :alt="t.name" :title="t.name" loading="lazy" decoding="async" />
+            <li v-for="tool in grp.items" :key="tool.name">
+              <img :src="tool.icon" :alt="tool.name" :title="tool.name" loading="lazy" decoding="async" />
             </li>
           </ul>
         </div>
@@ -133,8 +130,8 @@ const teamMembers = computed(() => team.filter((m) => !m.placeholder))
   <section class="section process">
     <div class="container">
       <div class="section-head" v-reveal>
-        <p class="eyebrow">How we work</p>
-        <h2>From first sketch to shipped</h2>
+        <p class="eyebrow">{{ t('home.process.eyebrow') }}</p>
+        <h2>{{ t('home.process.h2') }}</h2>
       </div>
       <ol class="proc-grid">
         <li v-for="step in companyProcess" :key="step.num" class="proc" v-reveal>
@@ -151,10 +148,10 @@ const teamMembers = computed(() => team.filter((m) => !m.placeholder))
     <div class="container">
       <div class="section-head with-link" v-reveal>
         <div>
-          <p class="eyebrow">The team</p>
-          <h2>A small <em class="text-accent">team</em> - big <em class="text-accent">experience</em></h2>
+          <p class="eyebrow">{{ t('home.team.eyebrow') }}</p>
+          <h2 v-html="t('home.team.headingHtml')"></h2>
         </div>
-        <router-link class="link-arrow" to="/team">Meet everyone →</router-link>
+        <router-link class="link-arrow" to="/team">{{ t('home.team.meetAll') }}</router-link>
       </div>
       <div class="faces" v-reveal>
         <router-link v-for="m in teamMembers" :key="m.slug" :to="`/team/${m.slug}`" class="face">
@@ -172,9 +169,9 @@ const teamMembers = computed(() => team.filter((m) => !m.placeholder))
   <!-- CTA -->
   <section class="cta-band">
     <div class="container cta-inner" v-reveal>
-      <h2>Have a project in mind?</h2>
-      <p>Tell us what you’re building. We’ll tell you how we’d ship it.</p>
-      <router-link class="btn btn-primary" to="/contact">Start a project</router-link>
+      <h2>{{ t('home.cta.h2') }}</h2>
+      <p>{{ t('home.cta.p') }}</p>
+      <router-link class="btn btn-primary" to="/contact">{{ t('home.hero.ctaStart') }}</router-link>
     </div>
   </section>
 </template>

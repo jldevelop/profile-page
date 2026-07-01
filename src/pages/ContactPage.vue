@@ -1,20 +1,18 @@
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { company, contact } from '@/content.js'
+import { t } from '@/i18n.js'
 
 // Service the enquiry is about. Mirrors the four pillars; the showcase modal and
 // service cards can pre-select one via a ?type= query param.
-const PROJECT_TYPES = [
-  { value: 'website', label: 'Website' },
-  { value: 'ecommerce', label: 'Online store' },
-  { value: 'mobile', label: 'Mobile app' },
-  { value: 'ai', label: 'AI automation' },
-  { value: 'other', label: 'Something else' },
-]
+const PROJECT_TYPE_VALUES = ['website', 'ecommerce', 'mobile', 'ai', 'other']
+const PROJECT_TYPES = computed(() =>
+  PROJECT_TYPE_VALUES.map((value) => ({ value, label: t(`contact.projectTypes.${value}`) })),
+)
 
 const route = useRoute()
-const projectType = ref(PROJECT_TYPES.some((t) => t.value === route.query.type) ? route.query.type : '')
+const projectType = ref(PROJECT_TYPES.value.some((pt) => pt.value === route.query.type) ? route.query.type : '')
 
 const state = ref('idle') // idle | sending | sent | error
 
@@ -22,9 +20,9 @@ async function submit(event) {
   const data = Object.fromEntries(new FormData(event.target))
   if (data._honey) return // spam bot filled the honeypot
   state.value = 'sending'
-  const typeLabel = PROJECT_TYPES.find((t) => t.value === projectType.value)?.label || ''
+  const typeLabel = PROJECT_TYPES.value.find((pt) => pt.value === projectType.value)?.label || ''
   try {
-    const res = await fetch(company.formEndpoint, {
+    const res = await fetch(company.value.formEndpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
       body: JSON.stringify({
@@ -32,7 +30,7 @@ async function submit(event) {
         email: data.email,
         projectType: typeLabel,
         message: data.message,
-        _subject: `jCode — new ${typeLabel || 'project'} enquiry from ${data.name}`,
+        _subject: t('contact.buildSubject')(typeLabel || t('contact.subjectFallback'), data.name),
       }),
     })
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
@@ -42,12 +40,12 @@ async function submit(event) {
   }
 }
 
-const whatsappHref = company.whatsapp ? `https://wa.me/${company.whatsapp}` : null
-const phoneHref = company.phone ? `tel:${company.phone}` : null
+const whatsappHref = company.value.whatsapp ? `https://wa.me/${company.value.whatsapp}` : null
+const phoneHref = company.value.phone ? `tel:${company.value.phone}` : null
 const socials = Object.entries({
-  LinkedIn: company.socials.linkedin,
-  GitHub: company.socials.github,
-  Instagram: company.socials.instagram,
+  LinkedIn: company.value.socials.linkedin,
+  GitHub: company.value.socials.github,
+  Instagram: company.value.socials.instagram,
 }).filter(([, url]) => url)
 </script>
 
@@ -55,7 +53,7 @@ const socials = Object.entries({
   <section class="section page-section contact">
     <div class="container">
       <header class="page-head" v-reveal>
-        <p class="eyebrow">Contact</p>
+        <p class="eyebrow">{{ t('nav.contact') }}</p>
         <h1>{{ contact.title }}</h1>
         <p class="lede">{{ contact.pitch }}</p>
       </header>
@@ -63,22 +61,22 @@ const socials = Object.entries({
       <div class="contact-grid">
         <div class="methods" v-reveal>
           <a class="method" :href="`mailto:${company.email}`">
-            <span class="m-label">Email</span>
+            <span class="m-label">{{ t('contact.methods.email') }}</span>
             <span class="m-value">{{ company.email }}</span>
           </a>
 
           <a v-if="whatsappHref" class="method" :href="whatsappHref" target="_blank" rel="noopener">
-            <span class="m-label">WhatsApp</span>
-            <span class="m-value">Message us ↗</span>
+            <span class="m-label">{{ t('contact.methods.whatsapp') }}</span>
+            <span class="m-value">{{ t('contact.methods.whatsappCta') }}</span>
           </a>
 
           <a v-if="phoneHref" class="method" :href="phoneHref">
-            <span class="m-label">Phone</span>
+            <span class="m-label">{{ t('contact.methods.phone') }}</span>
             <span class="m-value">{{ company.phone }}</span>
           </a>
 
           <div class="method static">
-            <span class="m-label">Based in</span>
+            <span class="m-label">{{ t('contact.methods.basedIn') }}</span>
             <span class="m-value">{{ company.location }}</span>
           </div>
 
@@ -92,45 +90,45 @@ const socials = Object.entries({
         <div class="form-card" v-reveal>
           <form v-if="state !== 'sent'" @submit.prevent="submit">
             <div class="field">
-              <span class="field-label">What can we help with?</span>
-              <div class="type-options" role="group" aria-label="Project type">
+              <span class="field-label">{{ t('contact.helpLabel') }}</span>
+              <div class="type-options" role="group" :aria-label="t('contact.helpLabel')">
                 <button
-                  v-for="t in PROJECT_TYPES"
-                  :key="t.value"
+                  v-for="pt in PROJECT_TYPES"
+                  :key="pt.value"
                   type="button"
                   class="type-btn"
-                  :class="{ active: projectType === t.value }"
-                  :aria-pressed="projectType === t.value"
-                  @click="projectType = t.value"
+                  :class="{ active: projectType === pt.value }"
+                  :aria-pressed="projectType === pt.value"
+                  @click="projectType = pt.value"
                 >
-                  {{ t.label }}
+                  {{ pt.label }}
                 </button>
               </div>
             </div>
             <label>
-              <span>Name</span>
+              <span>{{ t('contact.nameLabel') }}</span>
               <input name="name" type="text" required autocomplete="name" />
             </label>
             <label>
-              <span>Email</span>
+              <span>{{ t('contact.emailLabel') }}</span>
               <input name="email" type="email" required autocomplete="email" />
             </label>
             <label>
-              <span>Tell us about your project</span>
+              <span>{{ t('contact.messageLabel') }}</span>
               <textarea name="message" rows="5" required></textarea>
             </label>
             <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" class="honey" />
             <button class="btn btn-primary" type="submit" :disabled="state === 'sending'">
-              {{ state === 'sending' ? 'Sending…' : 'Send message' }}
+              {{ state === 'sending' ? t('contact.sending') : t('contact.send') }}
             </button>
             <p v-if="state === 'error'" class="form-error">
-              Something went wrong — please email us directly at
+              {{ t('contact.errorPrefix') }}
               <a :href="`mailto:${company.email}`">{{ company.email }}</a>.
             </p>
           </form>
           <div v-else class="form-sent">
-            <h3>Thanks — message sent.</h3>
-            <p>We’ll get back to you within a day.</p>
+            <h3>{{ t('contact.sentTitle') }}</h3>
+            <p>{{ t('contact.sentBody') }}</p>
           </div>
         </div>
       </div>

@@ -3,6 +3,17 @@
 // `team` drives /team and the per-member /team/:slug profile pages. Josip's
 // member object is fully populated (his profile == the original homepage);
 // the other four are placeholders to fill in with real people later.
+//
+// i18n: translatable copy is pulled from src/locales/{en,hr}.js via t() —
+// English lives there directly; Croatian team-member copy is a separate
+// slug-keyed overlay (content.hr.js) merged in below, so structural/asset
+// fields (photo, stack icons, years, email/social links) stay single-copy
+// instead of being duplicated across locales. See catalog.js for the same
+// pattern applied to the (much larger) template showcase.
+import { computed } from 'vue'
+import { lang } from '@/lang.js'
+import { t } from '@/i18n.js'
+import teamHr from '@/content.hr.js'
 
 // Years of experience that tick up automatically each year — pass the career
 // start year and it renders the current count (e.g. 2014 → "12" in 2026).
@@ -10,18 +21,14 @@ const yearsSince = (startYear) => new Date().getFullYear() - startYear
 const YEARS = { josip: yearsSince(2014), oleg: yearsSince(2016), danijel: yearsSince(2013) }
 
 /* ------------------------------------------------------------------ company */
-export const company = {
+// Facts (not copy) — identical regardless of locale.
+const companyFacts = {
   name: 'jCode',
   domain: 'jcode.hr',
-  eyebrow: 'Software studio · Barcelona + EU remote',
-  tagline: 'Websites, e-commerce, mobile apps & AI automation for growing businesses.',
-  lede: 'A senior software studio. We design and build websites, online stores, mobile apps and AI automations for small and medium businesses — from first sketch to launch.',
-  // Contact. The form posts to a FormSubmit endpoint tied to this address.
-  email: 'info@jcode.hr',
   // WhatsApp / phone are placeholders — drop in real values to light them up.
   whatsapp: '', // digits only, incl. country code, e.g. '34600000000'
   phone: '',
-  location: 'Barcelona · EU remote',
+  email: 'info@jcode.hr',
   socials: {
     linkedin: 'https://www.linkedin.com/in/jlukacevic/',
     github: 'https://github.com/jldevelop',
@@ -37,73 +44,77 @@ export const company = {
   formEndpoint: 'https://formsubmit.co/ajax/info@jcode.hr',
 }
 
-export const services = [
-  {
-    key: 'websites',
-    title: 'Websites',
-    desc: 'Fast, modern marketing and business websites that look the part and turn visitors into customers — engineered for performance and built to convert.',
-    points: ['Marketing & brand sites', 'Landing pages', 'Performance & SEO foundations'],
-  },
-  {
-    key: 'ecommerce',
-    title: 'E-commerce',
-    desc: 'Online stores that are easy to run and easy to buy from — product pages, cart and checkout set up to sell, on Shopify or a custom build.',
-    points: ['Shopify & custom stores', 'Product & checkout flows', 'Payments & integrations'],
-  },
-  {
-    key: 'mobile',
-    title: 'Mobile apps',
-    desc: 'Native iOS and Android apps your business and customers can rely on — point-of-sale, operations and customer-facing products, built to stay reliable day in, day out.',
-    points: ['Native iOS & Android', 'API & backend integration', 'App Store & Play Store delivery'],
-  },
-  {
-    key: 'ai-automation',
-    title: 'AI automation',
-    desc: 'Put AI to work on the busywork — connect your tools and automate repetitive operations and workflows, so your team can focus on the work that matters.',
-    points: ['Workflow & process automation', 'AI assistants & integrations', 'Custom internal tools'],
-  },
-]
+export const company = computed(() => ({
+  ...companyFacts,
+  eyebrow: t('company.eyebrow'),
+  tagline: t('company.tagline'),
+  lede: t('company.lede'),
+  location: t('company.location'),
+}))
 
-export const companyStats = [
-  { value: `${YEARS.josip}+`, label: 'years shipping software' },
-  { value: '80+', label: 'site designs in our showcase' },
-  { value: 'End-to-end', label: 'web, e-commerce, mobile & AI' },
-]
+const SERVICE_KEYS = ['websites', 'ecommerce', 'mobile', 'ai-automation']
+export const services = computed(() =>
+  SERVICE_KEYS.map((key) => ({
+    key,
+    title: t(`services.${key}.title`),
+    desc: t(`services.${key}.desc`),
+    points: t(`services.${key}.points`),
+  })),
+)
+
+// stats[0].value is the auto-incrementing year count — not part of the dictionary.
+export const companyStats = computed(() => {
+  const [first, ...rest] = t('companyStats')
+  return [{ value: `${YEARS.josip}+`, label: first.label }, ...rest]
+})
+
+const PROCESS_NUMS = ['01', '02', '03', '04']
+export const companyProcess = computed(() =>
+  t('companyProcess').map((step, i) => ({ num: PROCESS_NUMS[i], ...step })),
+)
+
+export const contact = computed(() => ({
+  title: t('contact.title'),
+  pitch: t('contact.pitch'),
+}))
 
 // Technologies the team works with — shown as logos on the homepage. Logos live
 // in /images/tech (real brand SVGs). Legacy/dated tech is kept but placed last.
+// Tech/brand names are proper nouns — same in every locale, no translation;
+// only the group label comes from t('techGroups.<key>').
 const TI = '/images/tech'
 const tech = (name, file) => ({ name, icon: `${TI}/${file}.svg` })
-export const techStack = [
+const techStackBase = [
   {
-    group: 'Frontend',
+    key: 'frontend',
     items: [tech('Vue.js', 'vuejs'), tech('TypeScript', 'typescript'), tech('JavaScript', 'javascript'), tech('Nuxt', 'nuxt'), tech('Tailwind CSS', 'tailwindcss'), tech('Three.js', 'threejs')],
   },
   {
-    group: 'Backend',
+    key: 'backend',
     items: [tech('Node.js', 'nodejs'), tech('NestJS', 'nestjs'), tech('Laravel', 'laravel'), tech('PHP', 'php'), tech('GraphQL', 'graphql')],
   },
   {
-    group: 'Mobile',
+    key: 'mobile',
     items: [tech('Kotlin', 'kotlin'), tech('Swift', 'swift'), tech('Java', 'java'), tech('Android', 'android'), tech('iOS', 'apple'), tech('Electron', 'electron')],
   },
   {
-    group: 'Cloud & DevOps',
+    key: 'cloud-devops',
     items: [tech('AWS', 'aws'), tech('Google Cloud', 'googlecloud'), tech('Docker', 'docker'), tech('Kubernetes', 'kubernetes'), tech('Cloudflare', 'cloudflare')],
   },
   {
-    group: 'Data',
+    key: 'data',
     items: [tech('PostgreSQL', 'postgresql'), tech('MySQL', 'mysql'), tech('MongoDB', 'mongodb'), tech('Redis', 'redis'), tech('Firebase', 'firebase')],
   },
   {
-    group: 'Commerce & CMS',
+    key: 'commerce-cms',
     items: [tech('Shopify', 'shopify'), tech('WordPress', 'wordpress')],
   },
   {
-    group: 'Also in our toolkit',
+    key: 'also',
     items: [tech('jQuery', 'jquery'), tech('Bootstrap', 'bootstrap'), tech('AngularJS', 'angularjs')],
   },
 ]
+export const techStack = computed(() => techStackBase.map((g) => ({ ...g, group: t(`techGroups.${g.key}`) })))
 
 // Brands & products the team has built / shipped (logo strip — all real).
 // Logos are normalized to uniform monochrome silhouettes in /images/clients.
@@ -118,28 +129,12 @@ export const clients = [
   { name: 'Toilet Board Coalition', logo: `${CL}/toilet-board.png` },
 ]
 
-export const companyProcess = [
-  { num: '01', title: 'Discover & architect', desc: 'We learn your business, users and constraints, then design the architecture and scope the work — so there are no surprises later.' },
-  { num: '02', title: 'Design', desc: 'Wireframes to polished, accessible UI. You see and shape the product before a line of production code is written.' },
-  { num: '03', title: 'Engineer', desc: 'Senior engineers ship in tight iterations — code review, automated tests and CI on every change. You always have something real to click.' },
-  { num: '04', title: 'Ship & support', desc: 'We deploy, monitor and harden for production — performance, security and reliability — and stick around after go-live.' },
-]
-
-export const contact = {
-  title: 'Let’s build something.',
-  pitch:
-    'Tell us about your project — a website, an online store, a mobile app, an AI automation, or just an idea you want to pressure-test. We read every message and reply within a day.',
-}
-
-// Top navigation (the logo links home).
-export const siteNav = [
-  { label: 'Work', to: '/work' },
-  { label: 'Team', to: '/team' },
-  { label: 'Contact', to: '/contact' },
-]
-
 /* --------------------------------------------------------- team: Josip (full) */
 // Josip's profile == the original homepage, reframed for the company context.
+// English copy stays here as the base; mergeMember() overlays Croatian from
+// content.hr.js when active. Fields never rendered anywhere (experience,
+// education, earlierRoles, languages — see ExperienceTimeline.vue /
+// EducationSection.vue, both currently unused) are single-copy, no overlay.
 const josip = {
   slug: 'josip-lukacevic',
   name: 'Josip Lukačević',
@@ -464,7 +459,7 @@ const danijel = {
   ],
 }
 
-export const team = [
+const teamBase = [
   josip,
   oleg,
   danijel,
@@ -472,4 +467,44 @@ export const team = [
   placeholderMember({ slug: 'product-designer', role: 'Product Designer', monogram: 'D', focus: 'UX & visual design' }),
 ]
 
-export const teamById = Object.fromEntries(team.map((m) => [m.slug, m]))
+const YEARS_BY_SLUG = { 'josip-lukacevic': YEARS.josip, 'oleg-kalysh': YEARS.oleg, 'danijel-popic': YEARS.danijel }
+
+// Overlays translated fields from content.hr.js onto a member's English base.
+// Only touches fields that are actually rendered (see file header); everything
+// else (photo, stack, experience, education...) passes through untouched.
+function mergeMember(base) {
+  const overlay = lang.value === 'hr' ? teamHr[base.slug] : null
+  if (!overlay) return base
+  const years = YEARS_BY_SLUG[base.slug]
+  return {
+    ...base,
+    role: overlay.role ?? base.role,
+    eyebrow: overlay.eyebrow ?? base.eyebrow,
+    tagline: overlay.tagline ?? base.tagline,
+    intro: overlay.intro ? overlay.intro(years) : base.intro,
+    bio: overlay.bio ?? base.bio,
+    stats: overlay.stats
+      ? overlay.stats.map((s, i) => ({ value: s.value ?? base.stats[i].value, label: s.label }))
+      : base.stats,
+    about: overlay.about
+      ? {
+          title: overlay.about.title ?? base.about.title,
+          paragraphs: overlay.about.paragraphs
+            ? overlay.about.paragraphs.map((p) => (typeof p === 'function' ? p(years) : p))
+            : base.about.paragraphs,
+          callout: overlay.about.callout
+            ? typeof overlay.about.callout === 'function'
+              ? overlay.about.callout(years)
+              : overlay.about.callout
+            : base.about.callout,
+        }
+      : base.about,
+    strengths: overlay.strengths ?? base.strengths,
+    skillGroups: overlay.skillGroups
+      ? base.skillGroups.map((g, i) => ({ ...g, label: overlay.skillGroups[i]?.label ?? g.label }))
+      : base.skillGroups,
+  }
+}
+
+export const team = computed(() => teamBase.map(mergeMember))
+export const teamById = computed(() => Object.fromEntries(team.value.map((m) => [m.slug, m])))

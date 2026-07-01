@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, onUnmounted, ref, watch } from 'vue'
+import { t } from '@/i18n.js'
 
 const props = defineProps({ member: { type: Object, required: true } })
 
@@ -45,7 +46,7 @@ onUnmounted(teardown)
         <p class="tagline">“{{ member.tagline }}”</p>
         <p class="intro">{{ member.intro }}</p>
         <div class="cta-row">
-          <router-link class="btn btn-primary" to="/contact">Get in touch</router-link>
+          <router-link class="btn btn-primary" to="/contact">{{ t('hero.getInTouch') }}</router-link>
         </div>
         <div v-if="member.linkedin || member.github || member.email" class="quick-links">
           <a v-if="member.linkedin" class="link-arrow" :href="member.linkedin" target="_blank" rel="noopener">LinkedIn ↗</a>
@@ -59,7 +60,7 @@ onUnmounted(teardown)
           <img
             v-if="member.photo"
             :src="member.photo"
-            :alt="`Portrait of ${member.name}`"
+            :alt="`${t('hero.portraitAlt')} ${member.name}`"
             fetchpriority="high"
             decoding="async"
           />
@@ -71,7 +72,7 @@ onUnmounted(teardown)
 
     <div v-if="member.stats?.length" class="container">
       <dl class="stats" v-reveal>
-        <div v-for="stat in member.stats" :key="stat.label" class="stat">
+        <div v-for="(stat, i) in member.stats" :key="i" class="stat">
           <dt>{{ stat.label }}</dt>
           <dd>{{ stat.value }}</dd>
         </div>

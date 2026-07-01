@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue'
+import { t } from '@/i18n.js'
 
 const props = defineProps({ skillGroups: { type: Array, default: () => [] } })
 
@@ -11,11 +12,11 @@ const rest = computed(() => props.skillGroups.filter((g) => !g.featured))
   <section id="skills" class="section skills">
     <div class="container">
       <div class="section-head" v-reveal>
-        <p class="eyebrow">Skills</p>
-        <h2>Skills &amp; tools</h2>
+        <p class="eyebrow">{{ t('skills.eyebrow') }}</p>
+        <h2>{{ t('skills.heading') }}</h2>
       </div>
 
-      <div v-for="group in featured" :key="group.label" class="group group-featured" v-reveal>
+      <div v-for="(group, i) in featured" :key="i" class="group group-featured" v-reveal>
         <h3>{{ group.label }}</h3>
         <div class="pills">
           <span v-for="item in group.items" :key="item" class="pill pill-accent">{{ item }}</span>
@@ -23,7 +24,7 @@ const rest = computed(() => props.skillGroups.filter((g) => !g.featured))
       </div>
 
       <div class="group-grid">
-        <div v-for="group in rest" :key="group.label" class="group" v-reveal>
+        <div v-for="(group, i) in rest" :key="i" class="group" v-reveal>
           <h3>{{ group.label }}</h3>
           <div class="pills">
             <span v-for="item in group.items" :key="item" class="pill">{{ item }}</span>

@@ -1,6 +1,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { templates, sections, simpleGroups } from '@/catalog.js'
+import { t, plural } from '@/i18n.js'
 import CatalogDialog from '@/components/CatalogDialog.vue'
 
 const section = ref('simple') // 'simple' | 'ecommerce'
@@ -13,16 +14,16 @@ function selectSection(key) {
 }
 
 const items = computed(() => {
-  if (section.value === 'ecommerce') return templates.filter((t) => t.kind === 'ecommerce')
-  return templates.filter(
-    (t) => t.kind === 'simple' && (sub.value === 'all' || t.group === sub.value),
+  if (section.value === 'ecommerce') return templates.value.filter((tpl) => tpl.kind === 'ecommerce')
+  return templates.value.filter(
+    (tpl) => tpl.kind === 'simple' && (sub.value === 'all' || tpl.group === sub.value),
   )
 })
 
 const countLabel = computed(() => {
   const n = items.value.length
-  const noun = section.value === 'ecommerce' ? 'store' : 'template'
-  return `${n} ${noun}${n === 1 ? '' : 's'}`
+  const forms = section.value === 'ecommerce' ? t('work.countStore') : t('work.countTemplate')
+  return `${n} ${plural(n, forms)}`
 })
 </script>
 
@@ -30,16 +31,15 @@ const countLabel = computed(() => {
   <section class="section page-section">
     <div class="container">
       <header class="page-head" v-reveal>
-        <p class="eyebrow">Our work</p>
-        <h1>Websites &amp; stores we’ve designed</h1>
+        <p class="eyebrow">{{ t('work.eyebrow') }}</p>
+        <h1>{{ t('work.h1') }}</h1>
         <p class="lede">
-          A look at the kind of sites and online stores we design and build — {{ templates.length }}
-          across every industry, from single-page websites to full e-commerce storefronts. See one
-          you like? We’ll build you one like it. Click any design to preview it full-page.
+          {{ t('work.lede').before }} {{ templates.length }}
+          {{ t('work.lede').after }}
         </p>
       </header>
 
-      <div class="section-tabs" role="tablist" aria-label="Template sections" v-reveal>
+      <div class="section-tabs" role="tablist" :aria-label="t('work.sectionsAria')" v-reveal>
         <button
           v-for="s in sections"
           :key="s.key"
@@ -66,7 +66,7 @@ const countLabel = computed(() => {
           </button>
         </div>
         <p v-else class="section-note">
-          Full multi-page storefronts — home, collection, product &amp; cart.
+          {{ t('work.sectionNote') }}
         </p>
         <span class="count">{{ countLabel }}</span>
       </div>
@@ -76,13 +76,13 @@ const countLabel = computed(() => {
           <button type="button" class="card-main" @click="selected = item">
             <div class="thumb">
               <img :src="item.card" alt="" loading="lazy" decoding="async" />
-              <span class="kind">{{ item.kind === 'ecommerce' ? 'Online store' : 'Landing page' }}</span>
+              <span class="kind">{{ item.kind === 'ecommerce' ? t('work.badge.ecommerce') : t('work.badge.landing') }}</span>
             </div>
             <div class="meta">
               <h3>{{ item.title }}</h3>
               <p class="cat">{{ item.category }}</p>
               <p class="blurb">{{ item.blurb }}</p>
-              <span class="action">Preview screenshot →</span>
+              <span class="action">{{ t('work.previewAction') }}</span>
             </div>
           </button>
           <a
@@ -91,16 +91,16 @@ const countLabel = computed(() => {
             :href="item.live"
             target="_blank"
             rel="noopener"
-            :aria-label="`Open the live ${item.title} site in a new tab`"
+            :aria-label="t('work.liveAria')(item.title)"
           >
-            Live ↗
+            {{ t('work.liveBadge') }}
           </a>
         </article>
       </div>
 
       <div class="tpl-cta" v-reveal>
-        <p>See something you like — or want something fully bespoke?</p>
-        <router-link class="btn btn-primary" to="/contact">Start a project</router-link>
+        <p>{{ t('work.ctaText') }}</p>
+        <router-link class="btn btn-primary" to="/contact">{{ t('nav.cta') }}</router-link>
       </div>
     </div>
 

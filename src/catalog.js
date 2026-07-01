@@ -4,6 +4,14 @@
 //  • ecommerce — full multi-page online storefronts
 // Made in-house, not client work. Thumbnails live in /images/catalog/
 // (<slug>-card.webp grid, <slug>-full.webp preview).
+//
+// i18n: title/category/blurb are overlaid from catalog.hr.js (keyed by slug /
+// industry) when the active locale is Croatian — see content.js for the same
+// approach applied to team bios. webp paths, live-demo URLs and the
+// industry→group mapping stay locale-independent.
+import { computed } from 'vue'
+import { lang } from '@/lang.js'
+import catalogHr from '@/catalog.hr.js'
 
 const CAT = '/images/catalog'
 
@@ -14,14 +22,14 @@ const DEMO_BASE = 'https://jcode-templates.pages.dev'
 const DEMO_DIR = { simple: 'templates', ecommerce: 'templates-ecommerce' }
 
 // Two top-level sections, keyed to each template's `kind`.
-export const sections = [
+const sectionsBase = [
   { key: 'simple', label: 'Simple Landing Pages' },
   { key: 'ecommerce', label: 'Ecommerce Websites' },
 ]
 
 // Industry sub-filters shown within the "Simple Landing Pages" section. Ecommerce
 // is a small set, shown without sub-filters.
-export const simpleGroups = [
+const simpleGroupsBase = [
   { key: 'all', label: 'All' },
   { key: 'food-hospitality', label: 'Food & hospitality' },
   { key: 'health-beauty', label: 'Health, beauty & fitness' },
@@ -31,6 +39,14 @@ export const simpleGroups = [
   { key: 'sports-gaming', label: 'Sports, gaming & esports' },
   { key: 'personal-community', label: 'Personal & community' },
 ]
+
+function localizeLabels(base, dict) {
+  if (lang.value !== 'hr') return base
+  return base.map((entry) => ({ ...entry, label: dict[entry.key] ?? entry.label }))
+}
+
+export const sections = computed(() => localizeLabels(sectionsBase, catalogHr.sections))
+export const simpleGroups = computed(() => localizeLabels(simpleGroupsBase, catalogHr.simpleGroups))
 
 const GROUP_OF = {
   'Food & Drink': 'food-hospitality',
@@ -155,13 +171,26 @@ const toTemplate = (kind, group) => ([slug, title, industry, blurb]) => ({
   live: `${DEMO_BASE}/${DEMO_DIR[kind]}/${slug}/`,
 })
 
-export const templates = [
+const templatesBase = [
   ...sites.map(toTemplate('simple')),
   ...stores.map(toTemplate('ecommerce', 'ecommerce')),
 ]
 
+export const templates = computed(() => {
+  if (lang.value !== 'hr') return templatesBase
+  return templatesBase.map((tpl) => {
+    const item = catalogHr.items[tpl.id]
+    return {
+      ...tpl,
+      title: item?.title ?? tpl.title,
+      category: catalogHr.categories[tpl.category] ?? tpl.category,
+      blurb: item?.blurb ?? tpl.blurb,
+    }
+  })
+})
+
 // A small, varied set shown on the homepage "templates" teaser.
-export const featuredTemplates = [
+const FEATURED_IDS = [
   '30-saas-product',
   '18-architecture-firm',
   'e01-womens-fashion-boutique',
@@ -169,5 +198,6 @@ export const featuredTemplates = [
   '53-ai-productivity-saas',
   '27-boutique-hotel',
 ]
-  .map((id) => templates.find((t) => t.id === id))
-  .filter(Boolean)
+export const featuredTemplates = computed(() =>
+  FEATURED_IDS.map((id) => templates.value.find((t) => t.id === id)).filter(Boolean),
+)

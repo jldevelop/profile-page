@@ -2,13 +2,14 @@
 import { computed, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
 import { teamById } from '@/content.js'
+import { t } from '@/i18n.js'
 import HeroSection from '@/components/HeroSection.vue'
 import AboutSection from '@/components/AboutSection.vue'
 import SkillsSection from '@/components/SkillsSection.vue'
 
 const props = defineProps({ slug: { type: String, required: true } })
 const router = useRouter()
-const member = computed(() => teamById[props.slug])
+const member = computed(() => teamById.value[props.slug])
 
 // Unknown slug → send back to the team page; otherwise set a per-member title.
 watchEffect(() => {
@@ -23,9 +24,9 @@ watchEffect(() => {
 <template>
   <div v-if="member" class="profile-page">
     <div class="container profile-top">
-      <router-link to="/team" class="back">← The team</router-link>
+      <router-link to="/team" class="back">{{ t('profile.back') }}</router-link>
       <p v-if="member.placeholder" class="placeholder-note">
-        Placeholder profile — replace with real content for this teammate.
+        {{ t('profile.placeholderNote') }}
       </p>
     </div>
 

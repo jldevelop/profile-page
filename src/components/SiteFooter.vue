@@ -1,28 +1,34 @@
 <script setup>
+import { computed } from 'vue'
 import { company } from '@/content.js'
+import { t } from '@/i18n.js'
 
 const year = new Date().getFullYear()
-const socials = Object.entries({
-  LinkedIn: company.socials.linkedin,
-  GitHub: company.socials.github,
-  Instagram: company.socials.instagram,
-}).filter(([, url]) => url)
+const socials = computed(() =>
+  Object.entries({
+    LinkedIn: company.value.socials.linkedin,
+    GitHub: company.value.socials.github,
+    Instagram: company.value.socials.instagram,
+  }).filter(([, url]) => url),
+)
 
-const pages = [
-  { to: '/', label: 'Home' },
-  { to: '/work', label: 'Work' },
-  { to: '/team', label: 'Team' },
-  { to: '/contact', label: 'Contact' },
-]
+const pages = computed(() => [
+  { to: '/', label: t('nav.home') },
+  { to: '/work', label: t('nav.work') },
+  { to: '/team', label: t('nav.team') },
+  { to: '/contact', label: t('nav.contact') },
+])
 
 // Shown only when filled (no fabricated legal info).
-const legalLine = [
-  company.legal.entity,
-  company.legal.oib && `OIB ${company.legal.oib}`,
-  company.legal.address,
-]
-  .filter(Boolean)
-  .join(' · ')
+const legalLine = computed(() =>
+  [
+    company.value.legal.entity,
+    company.value.legal.oib && `OIB ${company.value.legal.oib}`,
+    company.value.legal.address,
+  ]
+    .filter(Boolean)
+    .join(' · '),
+)
 </script>
 
 <template>
@@ -35,12 +41,12 @@ const legalLine = [
       </div>
 
       <nav class="foot-nav" aria-label="Footer">
-        <h4>Pages</h4>
+        <h4>{{ t('footer.pagesHeading') }}</h4>
         <router-link v-for="link in pages" :key="link.to" :to="link.to">{{ link.label }}</router-link>
       </nav>
 
       <div class="foot-nav">
-        <h4>Get in touch</h4>
+        <h4>{{ t('footer.contactHeading') }}</h4>
         <a :href="`mailto:${company.email}`">{{ company.email }}</a>
         <a v-for="[label, url] in socials" :key="label" :href="url" target="_blank" rel="noopener">{{ label }} ↗</a>
       </div>
@@ -48,7 +54,7 @@ const legalLine = [
 
     <div class="container footer-bottom">
       <p>© {{ year }} {{ company.name }} — {{ company.domain }}<span v-if="legalLine"> · {{ legalLine }}</span></p>
-      <router-link to="/contact">Start a project →</router-link>
+      <router-link to="/contact">{{ t('footer.ctaLink') }}</router-link>
     </div>
   </footer>
 </template>

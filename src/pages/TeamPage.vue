@@ -1,13 +1,14 @@
 <script setup>
 import { computed } from 'vue'
 import { team } from '@/content.js'
+import { t } from '@/i18n.js'
 
 // The bio bands are for the real, fully-populated members (skip placeholders).
 // Explicit display order for this page (Oleg first, Josip last) — independent of
 // the source `team` order used elsewhere (e.g. the homepage teaser).
 const order = ['oleg-kalysh', 'danijel-popic', 'josip-lukacevic']
 const members = computed(() => {
-  const real = team.filter((m) => !m.placeholder && m.photo)
+  const real = team.value.filter((m) => !m.placeholder && m.photo)
   const ordered = order.map((slug) => real.find((m) => m.slug === slug)).filter(Boolean)
   const rest = real.filter((m) => !order.includes(m.slug))
   return [...ordered, ...rest]
@@ -18,12 +19,9 @@ const members = computed(() => {
   <section class="section page-section">
     <div class="container">
       <header class="page-head" v-reveal>
-        <p class="eyebrow">The team</p>
-        <h1>A small <em class="text-accent">team</em> - big <em class="text-accent">experience</em></h1>
-        <p class="lede">
-          The people behind jCode — senior generalists who design, build and ship. Fewer
-          handoffs, more ownership.
-        </p>
+        <p class="eyebrow">{{ t('team.eyebrow') }}</p>
+        <h1 v-html="t('home.team.headingHtml')"></h1>
+        <p class="lede">{{ t('team.lede') }}</p>
       </header>
 
       <div class="members">
@@ -37,7 +35,7 @@ const members = computed(() => {
           <router-link
             :to="`/team/${m.slug}`"
             class="member-photo"
-            :aria-label="`${m.name} — view profile`"
+            :aria-label="`${m.name} — ${t('team.viewProfileAria')}`"
           >
             <img :src="m.photo" :alt="m.name" loading="lazy" decoding="async" />
           </router-link>
@@ -46,21 +44,21 @@ const members = computed(() => {
             <p class="role">{{ m.role }}</p>
             <h2>{{ m.name }}</h2>
             <p class="bio">{{ m.bio }}</p>
-            <p class="years"><strong>{{ m.years }}</strong> years of experience</p>
+            <p class="years"><strong>{{ m.years }}</strong> {{ t('team.yearsSuffix') }}</p>
 
-            <p class="stack-label">Main stack</p>
+            <p class="stack-label">{{ t('team.mainStack') }}</p>
             <ul class="stack">
-              <li v-for="t in m.stack" :key="t.name">
-                <img :src="t.icon" :alt="t.name" :title="t.name" loading="lazy" decoding="async" />
+              <li v-for="tool in m.stack" :key="tool.name">
+                <img :src="tool.icon" :alt="tool.name" :title="tool.name" loading="lazy" decoding="async" />
               </li>
             </ul>
 
             <router-link
               :to="`/team/${m.slug}`"
               class="link-arrow profile-link"
-              :aria-label="`View ${m.name}'s full profile`"
+              :aria-label="`${t('team.viewProfileAria2')} ${m.name}`"
             >
-              View full profile →
+              {{ t('team.viewProfileLink') }}
             </router-link>
           </div>
         </article>
