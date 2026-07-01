@@ -87,23 +87,32 @@ const tech = (name, file) => ({ name, icon: `${TI}/${file}.svg` })
 const techStackBase = [
   {
     key: 'frontend',
-    items: [tech('Vue.js', 'vuejs'), tech('TypeScript', 'typescript'), tech('JavaScript', 'javascript'), tech('Nuxt', 'nuxt'), tech('Tailwind CSS', 'tailwindcss'), tech('Three.js', 'threejs')],
+    items: [
+      tech('Vue.js', 'vuejs'), tech('React', 'react'), tech('TypeScript', 'typescript'), tech('JavaScript', 'javascript'), tech('Nuxt', 'nuxt'), tech('Tailwind CSS', 'tailwindcss'), tech('Three.js', 'threejs'),
+      tech('Vite', 'vite'), tech('Pinia', 'pinia'), tech('HTML5', 'html5'), tech('CSS3', 'css3'), tech('Sass', 'sass'),
+    ],
   },
   {
     key: 'backend',
-    items: [tech('Node.js', 'nodejs'), tech('NestJS', 'nestjs'), tech('Laravel', 'laravel'), tech('PHP', 'php'), tech('GraphQL', 'graphql')],
+    items: [
+      tech('Node.js', 'nodejs'), tech('NestJS', 'nestjs'), tech('Laravel', 'laravel'), tech('PHP', 'php'), tech('GraphQL', 'graphql'),
+      tech('CodeIgniter', 'codeigniter'), tech('Hasura', 'hasura'), tech('Swagger', 'swagger'),
+    ],
   },
   {
     key: 'mobile',
-    items: [tech('Kotlin', 'kotlin'), tech('Swift', 'swift'), tech('Java', 'java'), tech('Android', 'android'), tech('iOS', 'apple'), tech('Electron', 'electron')],
+    items: [tech('Kotlin', 'kotlin'), tech('Swift', 'swift'), tech('Java', 'java'), tech('Android', 'android'), tech('iOS', 'apple'), tech('Electron', 'electron'), tech('SQLite', 'sqlite')],
   },
   {
     key: 'cloud-devops',
-    items: [tech('AWS', 'aws'), tech('Google Cloud', 'googlecloud'), tech('Docker', 'docker'), tech('Kubernetes', 'kubernetes'), tech('Cloudflare', 'cloudflare')],
+    items: [
+      tech('AWS', 'aws'), tech('Google Cloud', 'googlecloud'), tech('Docker', 'docker'), tech('Kubernetes', 'kubernetes'), tech('Cloudflare', 'cloudflare'),
+      tech('Nginx', 'nginx'), tech('Vercel', 'vercel'), tech('Git', 'git'), tech('GitHub', 'github'), tech('GitLab', 'gitlab'),
+    ],
   },
   {
     key: 'data',
-    items: [tech('PostgreSQL', 'postgresql'), tech('MySQL', 'mysql'), tech('MongoDB', 'mongodb'), tech('Redis', 'redis'), tech('Firebase', 'firebase')],
+    items: [tech('PostgreSQL', 'postgresql'), tech('MySQL', 'mysql'), tech('MongoDB', 'mongodb'), tech('Redis', 'redis'), tech('Firebase', 'firebase'), tech('DynamoDB', 'dynamodb')],
   },
   {
     key: 'commerce-cms',
@@ -111,7 +120,10 @@ const techStackBase = [
   },
   {
     key: 'also',
-    items: [tech('jQuery', 'jquery'), tech('Bootstrap', 'bootstrap'), tech('AngularJS', 'angularjs')],
+    items: [
+      tech('jQuery', 'jquery'), tech('Bootstrap', 'bootstrap'), tech('AngularJS', 'angularjs'),
+      tech('Figma', 'figma'), tech('Stripe', 'stripe'), tech('Webpack', 'webpack'), tech('Babel', 'babel'), tech('ESLint', 'eslint'), tech('Prettier', 'prettier'), tech('Jira', 'jira'), tech('GSAP', 'gsap'), tech('Chart.js', 'chartjs'),
+    ],
   },
 ]
 export const techStack = computed(() => techStackBase.map((g) => ({ ...g, group: t(`techGroups.${g.key}`) })))
