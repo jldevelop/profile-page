@@ -1,0 +1,10 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [{ "source": "/((?!images/|.*\\.[a-zA-Z0-9]+$).*)", "destination": "/index.html" }],
+  "git": {
+    "deploymentEnabled": {
+      "new-structure": true,
+      "profile-page-only": true
+    }
+  }
+}
