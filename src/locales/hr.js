@@ -157,6 +157,7 @@ export default {
   work: {
     eyebrow: 'Naši radovi',
     sectionsAria: 'Odjeljci predložaka',
+    filterAria: 'Filtriraj po kategoriji',
     h1: 'Web stranice i trgovine koje smo dizajnirali',
     lede: {
       before: 'Pregled web stranica i online trgovina koje dizajniramo i izrađujemo —',

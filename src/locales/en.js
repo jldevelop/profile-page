@@ -162,6 +162,7 @@ export default {
   work: {
     eyebrow: 'Our work',
     sectionsAria: 'Template sections',
+    filterAria: 'Filter by category',
     h1: 'Websites & stores we’ve designed',
     lede: {
       before: 'A look at the kind of sites and online stores we design and build —',

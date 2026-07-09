@@ -27,18 +27,19 @@ const sectionsBase = [
   { key: 'ecommerce', label: 'Ecommerce Websites' },
 ]
 
-// Industry sub-filters shown within the "Simple Landing Pages" section. Ecommerce
-// is a small set, shown without sub-filters.
+// Category options in the filter dropdown of the "Simple Landing Pages" section
+// (ecommerce is a small set, shown without sub-filters). Labels stay brief —
+// they render in a compact dropdown menu.
 const simpleGroupsBase = [
   { key: 'all', label: 'All' },
-  { key: 'food-hospitality', label: 'Food & hospitality' },
-  { key: 'health-beauty', label: 'Health, beauty & fitness' },
-  { key: 'home-pro', label: 'Home, trades & professional' },
-  { key: 'creative-media', label: 'Creative, media & events' },
-  { key: 'tech-shop-edu', label: 'Tech, shops & education' },
-  { key: 'sports-gaming', label: 'Sports, gaming & esports' },
-  { key: 'nightlife', label: 'Nightlife & clubs' },
-  { key: 'personal-community', label: 'Personal & community' },
+  { key: 'food-hospitality', label: 'Food & travel' },
+  { key: 'health-beauty', label: 'Health & beauty' },
+  { key: 'home-pro', label: 'Home & services' },
+  { key: 'creative-media', label: 'Creative & events' },
+  { key: 'tech-shop-edu', label: 'Tech & shops' },
+  { key: 'sports-gaming', label: 'Sports & gaming' },
+  { key: 'nightlife', label: 'Nightlife' },
+  { key: 'personal-community', label: 'Personal' },
 ]
 
 function localizeLabels(base, dict) {

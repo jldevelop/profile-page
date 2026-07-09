@@ -12,14 +12,14 @@ export default {
 
   simpleGroups: {
     all: 'Sve',
-    'food-hospitality': 'Hrana i ugostiteljstvo',
-    'health-beauty': 'Zdravlje, ljepota i fitness',
-    'home-pro': 'Dom, obrti i profesionalne usluge',
-    'creative-media': 'Kreativa, mediji i događanja',
-    'tech-shop-edu': 'Tehnologija, trgovine i edukacija',
-    'sports-gaming': 'Sport, igre i esport',
-    nightlife: 'Noćni život i klubovi',
-    'personal-community': 'Osobno i zajednica',
+    'food-hospitality': 'Hrana i putovanja',
+    'health-beauty': 'Zdravlje i ljepota',
+    'home-pro': 'Dom i usluge',
+    'creative-media': 'Kreativa i događanja',
+    'tech-shop-edu': 'Tehnologija i trgovine',
+    'sports-gaming': 'Sport i gaming',
+    nightlife: 'Noćni život',
+    'personal-community': 'Osobno',
   },
 
   categories: {

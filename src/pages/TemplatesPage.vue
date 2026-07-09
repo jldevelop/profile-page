@@ -1,74 +1,119 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { templates, sections, simpleGroups } from '@/catalog.js'
-import { t, plural } from '@/i18n.js'
+import { t } from '@/i18n.js'
 import CatalogDialog from '@/components/CatalogDialog.vue'
 
 const section = ref('simple') // 'simple' | 'ecommerce'
-const sub = ref('all') // industry sub-filter, only used within the simple section
+const sub = ref('all') // category filter, only used within the simple section
 const selected = ref(null)
 
-function selectSection(key) {
-  section.value = key
-  sub.value = 'all'
+// Templates render in a fresh random order on every visit. Each id gets a
+// random weight per mount, so the order is stable while browsing (and across
+// EN/HR switches, since ids don't change) but reshuffles on the next load.
+const weights = new Map()
+const weightOf = (id) => {
+  if (!weights.has(id)) weights.set(id, Math.random())
+  return weights.get(id)
 }
+const shuffled = computed(() => [...templates.value].sort((a, b) => weightOf(a.id) - weightOf(b.id)))
 
 const items = computed(() => {
-  if (section.value === 'ecommerce') return templates.value.filter((tpl) => tpl.kind === 'ecommerce')
-  return templates.value.filter(
+  if (section.value === 'ecommerce') return shuffled.value.filter((tpl) => tpl.kind === 'ecommerce')
+  return shuffled.value.filter(
     (tpl) => tpl.kind === 'simple' && (sub.value === 'all' || tpl.group === sub.value),
   )
 })
 
-const countLabel = computed(() => {
-  const n = items.value.length
-  const forms = section.value === 'ecommerce' ? t('work.countStore') : t('work.countTemplate')
-  return `${n} ${plural(n, forms)}`
+function selectSection(key) {
+  section.value = key
+  sub.value = 'all'
+  filterOpen.value = false
+}
+
+// --- category filter dropdown ---
+const filterOpen = ref(false)
+const filterRoot = ref(null)
+const activeGroup = computed(() => simpleGroups.value.find((g) => g.key === sub.value))
+
+function chooseCategory(key) {
+  sub.value = key
+  filterOpen.value = false
+}
+
+function onDocClick(e) {
+  if (filterRoot.value && !filterRoot.value.contains(e.target)) filterOpen.value = false
+}
+function onKey(e) {
+  if (e.key === 'Escape') filterOpen.value = false
+}
+
+onMounted(() => {
+  document.addEventListener('click', onDocClick)
+  document.addEventListener('keydown', onKey)
+})
+onUnmounted(() => {
+  document.removeEventListener('click', onDocClick)
+  document.removeEventListener('keydown', onKey)
 })
 </script>
 
 <template>
-  <section class="section page-section">
+  <section class="section page-section work-page">
     <div class="container">
       <header class="page-head" v-reveal>
         <p class="eyebrow">{{ t('work.eyebrow') }}</p>
         <h1>{{ t('work.h1') }}</h1>
-        <p class="lede">
-          {{ t('work.lede').before }} {{ templates.length }}
-          {{ t('work.lede').after }}
-        </p>
       </header>
 
-      <div class="section-tabs" role="tablist" :aria-label="t('work.sectionsAria')" v-reveal>
-        <button
-          v-for="s in sections"
-          :key="s.key"
-          type="button"
-          role="tab"
-          :aria-selected="section === s.key"
-          :class="{ active: section === s.key }"
-          @click="selectSection(s.key)"
-        >
-          {{ s.label }}
-        </button>
-      </div>
-
       <div class="toolbar" v-reveal>
-        <div v-if="section === 'simple'" class="filters">
+        <div class="section-tabs" role="tablist" :aria-label="t('work.sectionsAria')">
           <button
-            v-for="g in simpleGroups"
-            :key="g.key"
+            v-for="s in sections"
+            :key="s.key"
             type="button"
-            :class="{ active: sub === g.key }"
-            @click="sub = g.key"
+            role="tab"
+            :aria-selected="section === s.key"
+            :class="{ active: section === s.key }"
+            @click="selectSection(s.key)"
           >
-            {{ g.label }}
+            {{ s.label }}
           </button>
         </div>
-        <p v-else class="section-note">
-          {{ t('work.sectionNote') }}
-        </p>
-        <span class="count">{{ countLabel }}</span>
+
+        <div v-if="section === 'simple'" class="filter" ref="filterRoot">
+          <button
+            class="filter-btn"
+            type="button"
+            :class="{ engaged: sub !== 'all' }"
+            :aria-expanded="filterOpen"
+            aria-haspopup="listbox"
+            :aria-label="t('work.filterAria')"
+            @click="filterOpen = !filterOpen"
+          >
+            <svg class="funnel" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 5h18l-7 8.5V19l-4 2v-7.5L3 5z" />
+            </svg>
+            <span v-if="sub !== 'all'" class="filter-label">{{ activeGroup?.label }}</span>
+          </button>
+
+          <Transition name="filter-pop">
+            <ul v-if="filterOpen" class="filter-menu" role="listbox" :aria-label="t('work.filterAria')">
+              <li v-for="g in simpleGroups" :key="g.key">
+                <button
+                  type="button"
+                  role="option"
+                  :aria-selected="sub === g.key"
+                  :class="{ active: sub === g.key }"
+                  @click="chooseCategory(g.key)"
+                >
+                  <span class="name">{{ g.label }}</span>
+                  <span v-if="sub === g.key" class="check" aria-hidden="true">✓</span>
+                </button>
+              </li>
+            </ul>
+          </Transition>
+        </div>
       </div>
 
       <div class="grid">
@@ -109,12 +154,35 @@ const countLabel = computed(() => {
 </template>
 
 <style scoped>
+/* Thumbnails are the hero of this page — clear the fixed nav, nothing more. */
+.work-page {
+  padding-top: clamp(84px, 10vh, 116px);
+}
+
+/* Heading stays compact — no lede paragraph, tighter gap so the grid follows fast. */
+.page-head {
+  margin-bottom: clamp(22px, 3vw, 30px);
+}
+
+/* toolbar: section tabs left, filter icon right */
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.filter {
+  position: relative;
+  margin-left: auto;
+}
+
 /* primary section toggle */
 .section-tabs {
   display: inline-flex;
   gap: 4px;
   padding: 5px;
-  margin-bottom: 22px;
   background: var(--bg-soft);
   border: 1px solid var(--line);
   border-radius: 999px;
@@ -143,54 +211,103 @@ const countLabel = computed(() => {
   box-shadow: 0 6px 16px -8px rgba(30, 70, 196, 0.7);
 }
 
-.toolbar {
-  display: flex;
-  flex-wrap: wrap;
+/* category filter icon + dropdown */
+.filter-btn {
+  display: inline-flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 28px;
-}
-
-.section-note {
-  font-size: 14px;
-  color: var(--muted);
-  max-width: 56ch;
-}
-
-.filters {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px;
-}
-
-.filters button {
-  padding: 9px 18px;
+  gap: 8px;
+  height: 44px;
+  padding: 0 13px;
   background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: 999px;
-  font-family: var(--font-display);
-  font-size: 14px;
-  font-weight: 600;
+  border-radius: 12px;
   color: var(--ink-soft);
   cursor: pointer;
   transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
 }
 
-.filters button:hover {
+.filter-btn:hover {
   border-color: var(--ink);
+  color: var(--ink);
 }
 
-.filters button.active {
+.filter-btn.engaged {
   border-color: var(--accent);
-  background: var(--accent);
-  color: #fff;
+  background: var(--accent-soft);
+  color: var(--accent-deep);
 }
 
-.count {
-  margin-left: auto;
+.funnel {
+  width: 19px;
+  height: 19px;
+  flex-shrink: 0;
+}
+
+.filter-label {
+  font-family: var(--font-display);
+  font-weight: 600;
   font-size: 13.5px;
-  color: var(--muted);
+  white-space: nowrap;
+}
+
+.filter-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 215px;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 18px 40px -16px rgba(15, 26, 56, 0.45);
+  z-index: 60;
+}
+
+.filter-menu button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 11px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+}
+
+.filter-menu button:hover {
+  background: var(--bg-soft);
+}
+
+.filter-menu button.active {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.filter-menu .name {
+  flex: 1;
+}
+
+.filter-menu .check {
+  color: var(--accent);
+  font-size: 13px;
+}
+
+.filter-pop-enter-active,
+.filter-pop-leave-active {
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.filter-pop-enter-from,
+.filter-pop-leave-to {
+  opacity: 0;
+  transform: translateY(-6px);
 }
 
 .grid {
@@ -348,11 +465,7 @@ const countLabel = computed(() => {
     grid-template-columns: 1fr;
   }
 
-  .count {
-    flex-basis: 100%;
-    margin-left: 0;
-  }
-
+  /* tabs take the full row; the filter drops to its own right-aligned row */
   .section-tabs {
     display: flex;
     width: 100%;
