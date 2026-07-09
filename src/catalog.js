@@ -37,6 +37,7 @@ const simpleGroupsBase = [
   { key: 'creative-media', label: 'Creative, media & events' },
   { key: 'tech-shop-edu', label: 'Tech, shops & education' },
   { key: 'sports-gaming', label: 'Sports, gaming & esports' },
+  { key: 'nightlife', label: 'Nightlife & clubs' },
   { key: 'personal-community', label: 'Personal & community' },
 ]
 
@@ -68,6 +69,7 @@ const GROUP_OF = {
   'Education & Coaching': 'tech-shop-edu',
   Sports: 'sports-gaming',
   'Games & Esports': 'sports-gaming',
+  Nightlife: 'nightlife',
   Personal: 'personal-community',
   'Community & Nonprofit': 'personal-community',
 }
@@ -157,7 +159,38 @@ const stores = [
   ['e08-premium-denim', 'Premium Denim', 'Denim', 'Sell premium selvedge denim with a craft-led shop.'],
   ['e09-vintage-thrift', 'Vintage & Thrift', 'Vintage', 'A characterful store for one-of-one vintage finds.'],
   ['e10-kids-clothing', "Kids' Clothing", 'Kidswear', 'A playful, parent-friendly store for kids’ clothing.'],
+  ['e11-sneakers-footwear', 'Sneakers & Footwear', 'Footwear', 'A high-energy store for a sneaker & footwear brand.'],
+  ['e12-eyewear-sunglasses', 'Eyewear & Sunglasses', 'Eyewear', 'Sell frames and shades with a sharp, visual store.'],
+  ['e13-handbags-leather-goods', 'Handbags & Leather Goods', 'Leather goods', 'A refined store for handbags and leather goods.'],
+  ['e14-swimwear', 'Swimwear', 'Swimwear', 'A sun-soaked store for a swimwear label.'],
+  ['e15-eco-sneakers', 'Eco Sneakers', 'Eco footwear', 'Sell sustainable sneakers with a story-led shop.'],
+  ['e16-accessories-scarves-hats', 'Accessories, Scarves & Hats', 'Accessories', 'A versatile store for fashion accessories.'],
+  ['e17-skincare', 'Skincare', 'Skincare', 'Sell clean skincare with a calm, clinical store.'],
+  ['e18-makeup', 'Makeup', 'Makeup', 'A vibrant store for a colour-cosmetics brand.'],
+  ['e19-natural-organic-beauty', 'Natural & Organic Beauty', 'Natural beauty', 'Sell natural beauty with a botanical, story-led shop.'],
+  ['e20-perfume-fragrance', 'Perfume & Fragrance', 'Fragrance', 'An evocative store for a perfume house.'],
 ]
+
+// Nightclub tier demos (premium single-page sales demos). Deployed under
+// /nightclub-demos/ on Cloudflare Pages (not the templates wrapper dirs), so
+// they carry an explicit `live` URL. Bilingual via their own localStorage toggle.
+const NC_BASE = `${DEMO_BASE}/nightclub-demos`
+const nightclubs = [
+  ['nc01-beton', 'Klub BETON', 'Nightlife', 'Underground techno club — a raw, brutalist identity built to get a club found on Google. (Tier 1)', 'demo-tier1-beton.html'],
+  ['nc02-volt', 'Klub VOLT', 'Nightlife', 'High-energy commercial club — table bookings, guestlist and ticketing that make the club money. (Tier 2)', 'demo-tier2-volt.html'],
+  ['nc03-aurora', 'AURORA Rooftop Club', 'Nightlife', 'Premium rooftop club — an interactive floor plan, membership and an owner’s analytics dashboard. (Tier 3)', 'demo-tier3-aurora.html'],
+]
+const toNightclub = ([slug, title, industry, blurb, file]) => ({
+  id: slug,
+  title,
+  category: industry,
+  group: 'nightlife',
+  kind: 'simple',
+  blurb,
+  card: `${CAT}/${slug}-card.webp`,
+  full: `${CAT}/${slug}-full.webp`,
+  live: `${NC_BASE}/${file}`,
+})
 
 const toTemplate = (kind, group) => ([slug, title, industry, blurb]) => ({
   id: slug,
@@ -173,6 +206,7 @@ const toTemplate = (kind, group) => ([slug, title, industry, blurb]) => ({
 
 const templatesBase = [
   ...sites.map(toTemplate('simple')),
+  ...nightclubs.map(toNightclub),
   ...stores.map(toTemplate('ecommerce', 'ecommerce')),
 ]
 
@@ -185,6 +219,10 @@ export const templates = computed(() => {
       title: item?.title ?? tpl.title,
       category: catalogHr.categories[tpl.category] ?? tpl.category,
       blurb: item?.blurb ?? tpl.blurb,
+      // Croatian screenshots (captured with the site in Croatian) sit next to the
+      // English ones as <slug>-card.hr.webp / <slug>-full.hr.webp.
+      card: `${CAT}/${tpl.id}-card.hr.webp`,
+      full: `${CAT}/${tpl.id}-full.hr.webp`,
     }
   })
 })
