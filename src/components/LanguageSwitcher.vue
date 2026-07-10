@@ -12,7 +12,7 @@ const router = useRouter()
 const current = computed(() => languages.find((l) => l.code === lang.value) || languages[0])
 
 // Each language lives at its own URL (Croatian at the root, English under
-// /en/…), so switching navigates to the same page in the other locale — the
+// /en/…), so switching navigates to the same page in the other locale - the
 // router's beforeEach updates `lang`.
 function choose(code) {
   open.value = false

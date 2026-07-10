@@ -19,7 +19,7 @@ defineProps({
           <div class="entry-body" :class="{ current: job.current }">
             <h3>
               {{ job.role }}
-              <span class="entry-org">— {{ job.org }}</span>
+              <span class="entry-org">- {{ job.org }}</span>
             </h3>
             <p class="entry-place">{{ job.place }}</p>
             <p class="entry-blurb">{{ job.blurb }}</p>

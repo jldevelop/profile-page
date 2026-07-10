@@ -1,6 +1,6 @@
 // Flat UI-copy dictionary lookup, driven by src/lang.js. Structured/data-shaped
 // copy (team bios, catalog blurbs) lives closer to its data in content.js /
-// content.hr.js / catalog.js / catalog.hr.js instead — this file is only for
+// content.hr.js / catalog.js / catalog.hr.js instead - this file is only for
 // the strings hardcoded in component templates (nav, buttons, headings, a11y).
 import { lang } from '@/lang.js'
 import en from '@/locales/en.js'
@@ -37,7 +37,7 @@ const PLURAL_RULES = {
 }
 
 // plural(n, {one, few, other}) -> the form matching n in the active locale.
-// `few` is optional (English callers can omit it — falls back to `other`).
+// `few` is optional (English callers can omit it - falls back to `other`).
 export function plural(n, forms) {
   const rule = PLURAL_RULES[lang.value] || PLURAL_RULES.en
   const category = rule(Math.abs(n))

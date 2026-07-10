@@ -117,7 +117,7 @@ watch(open, (v) => {
   flex-shrink: 0;
 }
 
-/* hamburger — hidden on desktop */
+/* hamburger - hidden on desktop */
 .burger {
   display: none;
   flex-direction: column;

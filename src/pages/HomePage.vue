@@ -9,7 +9,7 @@ import { localePath } from '@/lang.js'
 const showMain = '/images/catalog/30-saas-product-full.webp'
 const showFloat = '/images/catalog/e04-luxury-fashion-house-full.webp'
 
-// Only real members on the teaser — placeholder seats are hidden until filled.
+// Only real members on the teaser - placeholder seats are hidden until filled.
 const teamMembers = computed(() => team.value.filter((m) => !m.placeholder))
 </script>
 

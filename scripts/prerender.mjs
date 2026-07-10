@@ -1,15 +1,15 @@
 // Prerenders every route of the SPA into static HTML for SEO.
 //
-// Runs after `vite build` (see package.json "build"). For each URL — English at
-// the root and Croatian under /hr — it writes dist/<path>/index.html with:
+// Runs after `vite build` (see package.json "build"). For each URL - English at
+// the root and Croatian under /hr - it writes dist/<path>/index.html with:
 //   • a unique <title>, meta description, canonical and hreflang pair,
 //   • per-page Open Graph/Twitter tags (template pages use their screenshot),
 //   • real, crawlable body content + internal links inside <div id="app">
-//     (the Vue app replaces it on mount — crawlers and first paint get HTML).
+//     (the Vue app replaces it on mount - crawlers and first paint get HTML).
 // It also emits dist/sitemap.xml. robots.txt ships from public/.
 //
 // App modules are loaded through Vite's SSR module loader so the same data
-// (locales, catalog, team) drives both the app and the prerendered pages —
+// (locales, catalog, team) drives both the app and the prerendered pages -
 // no duplicated copy, no drift.
 import { createServer } from 'vite'
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
@@ -70,12 +70,12 @@ try {
           <h1>${esc(t('home.hero.h1'))}</h1>
           <p>${esc(t('home.hero.lede'))}</p>
           <h2>${esc(t('home.services.h2'))}</h2>
-          <ul>${content.services.value.map((s) => `<li><strong>${esc(s.title)}</strong> — ${esc(s.desc)}</li>`).join('')}</ul>
+          <ul>${content.services.value.map((s) => `<li><strong>${esc(s.title)}</strong> - ${esc(s.desc)}</li>`).join('')}</ul>
           <h2>${esc(t('home.work.h2'))}</h2>
-          <ul>${catalog.featuredTemplates.value.map((tpl) => `<li><a href="${p(`/work/${tpl.id}`)}">${esc(tpl.title)} — ${esc(tpl.category)}</a></li>`).join('')}</ul>
+          <ul>${catalog.featuredTemplates.value.map((tpl) => `<li><a href="${p(`/work/${tpl.id}`)}">${esc(tpl.title)} - ${esc(tpl.category)}</a></li>`).join('')}</ul>
           <p><a href="${p('/work')}">${esc(t('home.work.seeAll'))}</a></p>
           <h2>${esc(t('home.team.eyebrow'))}</h2>
-          <ul>${members.map((m) => `<li><a href="${p(`/team/${m.slug}`)}">${esc(m.name)} — ${esc(m.role)}</a></li>`).join('')}</ul>
+          <ul>${members.map((m) => `<li><a href="${p(`/team/${m.slug}`)}">${esc(m.name)} - ${esc(m.role)}</a></li>`).join('')}</ul>
           <p><a href="${p('/contact')}">${esc(contactCta)}</a></p>
         </div></section>`,
     })
@@ -84,7 +84,7 @@ try {
     const listFor = (kind) =>
       templates
         .filter((tpl) => tpl.kind === kind)
-        .map((tpl) => `<li><a href="${p(`/work/${tpl.id}`)}">${esc(tpl.title)} — ${esc(tpl.category)} (${tpl.code})</a></li>`)
+        .map((tpl) => `<li><a href="${p(`/work/${tpl.id}`)}">${esc(tpl.title)} - ${esc(tpl.category)} (${tpl.code})</a></li>`)
         .join('')
     pages.push({
       path: p('/work'),
@@ -106,8 +106,8 @@ try {
     for (const tpl of templates) {
       const isStore = tpl.kind === 'ecommerce'
       const title = hr
-        ? `${tpl.title} — ${isStore ? 'dizajn web shopa' : 'dizajn web stranice'} (${tpl.code}) | jCode`
-        : `${tpl.title} — ${isStore ? 'Online Store Design' : 'Website Design'} (${tpl.code}) | jCode`
+        ? `${tpl.title} - ${isStore ? 'dizajn web shopa' : 'dizajn web stranice'} (${tpl.code}) | jCode`
+        : `${tpl.title} - ${isStore ? 'Online Store Design' : 'Website Design'} (${tpl.code}) | jCode`
       const related = templates
         .filter((other) => other.group === tpl.group && other.id !== tpl.id)
         .slice(0, 3)
@@ -122,7 +122,7 @@ try {
             <p>${esc(tpl.category)} · ${esc(kindLabel(tpl))}</p>
             <p>${esc(tpl.blurb)}</p>
             <p>${esc(tpl.about)}</p>
-            <p><img src="${esc(tpl.card)}" alt="${esc(tpl.title)} — ${esc(kindLabel(tpl))}" width="800" height="600"></p>
+            <p><img src="${esc(tpl.card)}" alt="${esc(tpl.title)} - ${esc(kindLabel(tpl))}" width="800" height="600"></p>
             <ul>
               ${tpl.live ? `<li><a href="${esc(tpl.live)}" rel="noopener">${esc(liveLabel)}</a></li>` : ''}
               <li><a href="${p('/contact')}?type=${isStore ? 'ecommerce' : 'website'}&amp;ref=${tpl.code}">${esc(t('dialog.buildLike'))}</a></li>
@@ -142,19 +142,19 @@ try {
         <section class="section"><div class="container">
           <h1>${esc(t('team.eyebrow'))}</h1>
           <p>${esc(t('team.lede'))}</p>
-          <ul>${members.map((m) => `<li><a href="${p(`/team/${m.slug}`)}">${esc(m.name)}</a> — ${esc(m.role)}. ${esc(m.bio || m.intro || '')}</li>`).join('')}</ul>
+          <ul>${members.map((m) => `<li><a href="${p(`/team/${m.slug}`)}">${esc(m.name)}</a> - ${esc(m.role)}. ${esc(m.bio || m.intro || '')}</li>`).join('')}</ul>
         </div></section>`,
     })
 
     for (const m of members) {
       pages.push({
         path: p(`/team/${m.slug}`),
-        title: `${m.name} — ${m.role} | jCode`,
+        title: `${m.name} - ${m.role} | jCode`,
         desc: clip(m.bio || m.intro || ''),
         body: `
           <section class="section"><div class="container">
             <h1>${esc(m.name)}</h1>
-            <p>${esc(m.role)}${m.tagline ? ` — “${esc(m.tagline)}”` : ''}</p>
+            <p>${esc(m.role)}${m.tagline ? ` - “${esc(m.tagline)}”` : ''}</p>
             <p>${esc(m.intro || '')}</p>
             <p>${esc(m.bio || '')}</p>
             <p><a href="${p('/team')}">${esc(t('profile.back'))}</a></p>

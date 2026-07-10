@@ -1,5 +1,5 @@
-// Language selection state — drives src/i18n.js. Read `lang` to get the active
-// locale; call setLang() to change it. Only en/hr are translated for now — the
+// Language selection state - drives src/i18n.js. Read `lang` to get the active
+// locale; call setLang() to change it. Only en/hr are translated for now - the
 // other flags stay in FlagIcon.vue, ready to re-enable once translated.
 //
 // Resolution order: localStorage (once the visitor has picked a language) →

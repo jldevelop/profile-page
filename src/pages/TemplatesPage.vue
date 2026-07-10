@@ -6,7 +6,7 @@ import { t } from '@/i18n.js'
 import { localePath } from '@/lang.js'
 import CatalogDialog from '@/components/CatalogDialog.vue'
 
-// /work/:id — an open preview is part of the URL, so every template is shareable
+// /work/:id - an open preview is part of the URL, so every template is shareable
 // and loads with its dialog open when visited directly.
 const props = defineProps({ id: { type: String, default: '' } })
 const router = useRouter()
@@ -14,10 +14,10 @@ const router = useRouter()
 const section = ref('simple') // 'simple' | 'ecommerce'
 const sub = ref('all') // category filter, only used within the simple section
 
-// The dialog is driven by the route param — single source of truth.
+// The dialog is driven by the route param - single source of truth.
 const selected = computed(() => (props.id ? templates.value.find((tpl) => tpl.id === props.id) ?? null : null))
 
-// Whether the current preview was opened from the grid (push) — then closing
+// Whether the current preview was opened from the grid (push) - then closing
 // goes back(); a direct/shared visit instead replaces to /work.
 let openedFromGrid = false
 
@@ -44,7 +44,7 @@ watch(
     }
     const item = templates.value.find((tpl) => tpl.id === id)
     if (!item) {
-      router.replace(localePath('/work')) // unknown/expired id — just show the grid
+      router.replace(localePath('/work')) // unknown/expired id - just show the grid
       return
     }
     // make sure the right section is active behind the dialog
@@ -58,7 +58,7 @@ watch(
 watch(
   selected,
   (s) => {
-    document.title = s ? `${s.title} (${s.code}) — jCode` : t('meta.work.title')
+    document.title = s ? `${s.title} (${s.code}) - jCode` : t('meta.work.title')
   },
   { immediate: true, flush: 'post' },
 )
@@ -212,12 +212,12 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-/* Thumbnails are the hero of this page — clear the fixed nav, nothing more. */
+/* Thumbnails are the hero of this page - clear the fixed nav, nothing more. */
 .work-page {
   padding-top: clamp(84px, 10vh, 116px);
 }
 
-/* Heading stays compact — no lede paragraph, tighter gap so the grid follows fast. */
+/* Heading stays compact - no lede paragraph, tighter gap so the grid follows fast. */
 .page-head {
   margin-bottom: clamp(22px, 3vw, 30px);
 }
@@ -404,7 +404,7 @@ onUnmounted(() => {
   border-color: var(--accent);
 }
 
-/* Opens the actual deployed template in a new tab — sibling of the preview
+/* Opens the actual deployed template in a new tab - sibling of the preview
    button (not nested) so the markup stays valid and both stay focusable. */
 .live-badge {
   position: absolute;
@@ -508,7 +508,7 @@ onUnmounted(() => {
   color: var(--accent);
 }
 
-/* public reference code — bottom-right corner of the card */
+/* public reference code - bottom-right corner of the card */
 .meta .code {
   flex-shrink: 0;
   font-family: var(--font-display);

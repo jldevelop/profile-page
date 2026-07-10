@@ -28,7 +28,7 @@ app.directive('reveal', {
     if (!observer) return
     el.classList.add('reveal')
     // Elements already in view on mount (e.g. after a route change) reveal
-    // immediately — avoids a one-frame opacity:0 flash before the async observer fires.
+    // immediately - avoids a one-frame opacity:0 flash before the async observer fires.
     const r = el.getBoundingClientRect()
     if (r.top < window.innerHeight && r.bottom > 0) {
       el.classList.add('is-visible')
@@ -43,5 +43,5 @@ app.directive('reveal', {
 
 app.use(router)
 // Wait for the initial navigation so the URL-derived locale (/hr/...) is
-// resolved before first paint — avoids an English flash on Croatian URLs.
+// resolved before first paint - avoids an English flash on Croatian URLs.
 router.isReady().then(() => app.mount('#app'))

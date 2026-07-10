@@ -5,7 +5,7 @@ import { t } from '@/i18n.js'
 import { localePath } from '@/lang.js'
 
 // The bio bands are for the real, fully-populated members (skip placeholders).
-// Explicit display order for this page (Oleg first, Josip last) — independent of
+// Explicit display order for this page (Oleg first, Josip last) - independent of
 // the source `team` order used elsewhere (e.g. the homepage teaser).
 const order = ['oleg-kalysh', 'danijel-popic', 'josip-lukacevic']
 const members = computed(() => {
@@ -36,7 +36,7 @@ const members = computed(() => {
           <router-link
             :to="localePath(`/team/${m.slug}`)"
             class="member-photo"
-            :aria-label="`${m.name} — ${t('team.viewProfileAria')}`"
+            :aria-label="`${m.name} - ${t('team.viewProfileAria')}`"
           >
             <img :src="m.photo" :alt="m.name" loading="lazy" decoding="async" />
           </router-link>

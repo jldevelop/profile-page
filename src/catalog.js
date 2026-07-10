@@ -1,12 +1,12 @@
-// Website showcase — designs the studio has built, shown as proof of capability
+// Website showcase - designs the studio has built, shown as proof of capability
 // (not for sale). Two kinds:
-//  • simple    — single-page website designs across every industry
-//  • ecommerce — full multi-page online storefronts
+//  • simple    - single-page website designs across every industry
+//  • ecommerce - full multi-page online storefronts
 // Made in-house, not client work. Thumbnails live in /images/catalog/
 // (<slug>-card.webp grid, <slug>-full.webp preview).
 //
 // i18n: title/category/blurb are overlaid from catalog.hr.js (keyed by slug /
-// industry) when the active locale is Croatian — see content.js for the same
+// industry) when the active locale is Croatian - see content.js for the same
 // approach applied to team bios. webp paths, live-demo URLs and the
 // industry→group mapping stay locale-independent.
 import { computed } from 'vue'
@@ -15,7 +15,7 @@ import catalogHr from '@/catalog.hr.js'
 
 const CAT = '/images/catalog'
 
-// Live demo sites — deployed to Cloudflare Pages from ../websites-portfolio/templates-wrapper.
+// Live demo sites - deployed to Cloudflare Pages from ../websites-portfolio/templates-wrapper.
 // Folder names match each template's slug; simple sites and storefronts live under
 // separate top-level folders. See websites-portfolio/wrangler.toml + `npm run deploy:templates`.
 const DEMO_BASE = 'https://jcode-templates.pages.dev'
@@ -28,7 +28,7 @@ const sectionsBase = [
 ]
 
 // Category options in the filter dropdown of the "Simple Landing Pages" section
-// (ecommerce is a small set, shown without sub-filters). Labels stay brief —
+// (ecommerce is a small set, shown without sub-filters). Labels stay brief -
 // they render in a compact dropdown menu.
 const simpleGroupsBase = [
   { key: 'all', label: 'All' },
@@ -177,9 +177,9 @@ const stores = [
 // they carry an explicit `live` URL. Bilingual via their own localStorage toggle.
 const NC_BASE = `${DEMO_BASE}/nightclub-demos`
 const nightclubs = [
-  ['nc01-beton', 'Klub BETON', 'Nightlife', 'Underground techno club — a raw, brutalist identity built to get a club found on Google. (Tier 1)', 'demo-tier1-beton.html'],
-  ['nc02-volt', 'Klub VOLT', 'Nightlife', 'High-energy commercial club — table bookings, guestlist and ticketing that make the club money. (Tier 2)', 'demo-tier2-volt.html'],
-  ['nc03-aurora', 'AURORA Rooftop Club', 'Nightlife', 'Premium rooftop club — an interactive floor plan, membership and an owner’s analytics dashboard. (Tier 3)', 'demo-tier3-aurora.html'],
+  ['nc01-beton', 'Klub BETON', 'Nightlife', 'Underground techno club - a raw, brutalist identity built to get a club found on Google. (Tier 1)', 'demo-tier1-beton.html'],
+  ['nc02-volt', 'Klub VOLT', 'Nightlife', 'High-energy commercial club - table bookings, guestlist and ticketing that make the club money. (Tier 2)', 'demo-tier2-volt.html'],
+  ['nc03-aurora', 'AURORA Rooftop Club', 'Nightlife', 'Premium rooftop club - an interactive floor plan, membership and an owner’s analytics dashboard. (Tier 3)', 'demo-tier3-aurora.html'],
 ]
 const toNightclub = ([slug, title, industry, blurb, file]) => ({
   id: slug,
@@ -195,32 +195,32 @@ const toNightclub = ([slug, title, industry, blurb, file]) => ({
   live: `${NC_BASE}/${file}`,
 })
 
-// Short industry paragraph per filter group — shown in the preview dialog and
+// Short industry paragraph per filter group - shown in the preview dialog and
 // on the prerendered /work/:id landing pages (real crawlable copy per design).
 // Croatian versions live in catalog.hr.js → groupAbout.
 const GROUP_ABOUT = {
   'food-hospitality':
-    'A design built for restaurants, cafés, bars, hotels and travel businesses — menus and offers up front, mouth-watering imagery, opening hours, location and a prominent reservation action that turns visitors into guests.',
+    'A design built for restaurants, cafés, bars, hotels and travel businesses - menus and offers up front, mouth-watering imagery, opening hours, location and a prominent reservation action that turns visitors into guests.',
   'health-beauty':
-    'A design made for salons, clinics, spas, trainers and wellness studios — services and pricing presented clearly, trust-building team and review sections, and an always-visible booking action that turns visitors into appointments.',
+    'A design made for salons, clinics, spas, trainers and wellness studios - services and pricing presented clearly, trust-building team and review sections, and an always-visible booking action that turns visitors into appointments.',
   'home-pro':
-    'A design for trades, agencies and professional services — it leads with the problem you solve, shows proof through projects and reviews, and drives quote requests with clear calls to action and contact details.',
+    'A design for trades, agencies and professional services - it leads with the problem you solve, shows proof through projects and reviews, and drives quote requests with clear calls to action and contact details.',
   'creative-media':
-    'A design for creative studios, photographers, event professionals and media brands — the work takes centre stage in generous galleries and editorial layouts, backed by packages and a clear enquiry flow.',
+    'A design for creative studios, photographers, event professionals and media brands - the work takes centre stage in generous galleries and editorial layouts, backed by packages and a clear enquiry flow.',
   'tech-shop-edu':
-    'A design for digital products, shops and education businesses — it explains the offer fast, builds credibility with features, numbers and testimonials, and pushes one conversion goal: sign-up, order or enrolment.',
+    'A design for digital products, shops and education businesses - it explains the offer fast, builds credibility with features, numbers and testimonials, and pushes one conversion goal: sign-up, order or enrolment.',
   'sports-gaming':
-    'A design for clubs, academies, events and gaming brands — bold, high-energy layouts with schedules, rosters and news, plus prominent actions for tickets, sign-ups and memberships.',
+    'A design for clubs, academies, events and gaming brands - bold, high-energy layouts with schedules, rosters and news, plus prominent actions for tickets, sign-ups and memberships.',
   nightlife:
-    'A high-impact design for clubs and nightlife venues — event programme and lineups front and centre, table booking and guestlist actions, atmosphere-heavy galleries and Instagram baked in.',
+    'A high-impact design for clubs and nightlife venues - event programme and lineups front and centre, table booking and guestlist actions, atmosphere-heavy galleries and Instagram baked in.',
   'personal-community':
-    'A design for personal brands, nonprofits and communities — a strong introduction, story-driven sections that build trust, and clear actions for contacting, joining or donating.',
+    'A design for personal brands, nonprofits and communities - a strong introduction, story-driven sections that build trust, and clear actions for contacting, joining or donating.',
   ecommerce:
-    'A complete multi-page online store — home, collection, product and cart — with merchandising sections, product storytelling and a checkout-ready flow designed to sell.',
+    'A complete multi-page online store - home, collection, product and cart - with merchandising sections, product storytelling and a checkout-ready flow designed to sell.',
 }
 
 // Public reference code shown on cards / in the preview / forwarded to the
-// contact form — lets a visitor name the exact design (WEB-14, SHOP-03, CLUB-02).
+// contact form - lets a visitor name the exact design (WEB-14, SHOP-03, CLUB-02).
 // Derived from the slug, locale-independent.
 export const codeOf = (slug) => {
   const store = slug.match(/^e(\d+)-/)

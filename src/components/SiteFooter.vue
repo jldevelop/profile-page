@@ -54,7 +54,7 @@ const legalLine = computed(() =>
     </div>
 
     <div class="container footer-bottom">
-      <p>© {{ year }} {{ company.name }} — {{ company.domain }}<span v-if="legalLine"> · {{ legalLine }}</span></p>
+      <p>© {{ year }} {{ company.name }} - {{ company.domain }}<span v-if="legalLine"> · {{ legalLine }}</span></p>
       <router-link :to="localePath('/contact')">{{ t('footer.ctaLink') }}</router-link>
     </div>
   </footer>

@@ -29,7 +29,7 @@ function buildObserver() {
   portraitObserver.observe(portraitEl.value)
 }
 
-// Attach once the element exists, then rebuild on member change — vue-router reuses
+// Attach once the element exists, then rebuild on member change - vue-router reuses
 // this instance across /team/:slug, and flush:'post' guarantees the new portrait is
 // in the DOM before we re-observe.
 onMounted(buildObserver)
@@ -132,7 +132,7 @@ h1 {
   color: var(--muted);
 }
 
-/* Portrait card — shows the headshot, or the monogram tile as fallback */
+/* Portrait card - shows the headshot, or the monogram tile as fallback */
 .portrait {
   position: relative;
   width: min(100%, 340px);

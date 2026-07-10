@@ -36,13 +36,13 @@ async function copyUrl() {
 
 function shareTo(target) {
   const url = window.location.href
-  const text = `${props.item.title} (${props.item.code}) — ${url}`
+  const text = `${props.item.title} (${props.item.code}) - ${url}`
   if (target === 'whatsapp') {
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank', 'noopener')
   } else if (target === 'facebook') {
     window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank', 'noopener,width=640,height=560')
   } else if (target === 'instagram') {
-    copyUrl() // no web share-intent — copy the link, then open Instagram to paste
+    copyUrl() // no web share-intent - copy the link, then open Instagram to paste
     window.open('https://www.instagram.com/', '_blank', 'noopener')
   } else if (target === 'linkedin') {
     window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank', 'noopener,width=640,height=560')
@@ -291,7 +291,7 @@ onUnmounted(() => {
 
 .panel-head {
   display: flex;
-  /* four actions + title won't always fit on one line — wrap instead of
+  /* four actions + title won't always fit on one line - wrap instead of
      overflowing the panel (overflow:hidden was clipping the buttons) */
   flex-wrap: wrap;
   align-items: center;

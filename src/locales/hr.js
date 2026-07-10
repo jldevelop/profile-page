@@ -1,4 +1,4 @@
-// Croatian UI copy — same shape as en.js (the fallback locale). Any key missing
+// Croatian UI copy - same shape as en.js (the fallback locale). Any key missing
 // here falls back to English automatically (see i18n.js), so partial additions
 // are safe, but keep this in sync with en.js when adding new UI strings.
 export default {
@@ -12,7 +12,7 @@ export default {
     team: 'Tim',
     contact: 'Kontakt',
     cta: 'Pokrenimo projekt',
-    brandLabel: 'jCode — početna',
+    brandLabel: 'jCode - početna',
     openMenu: 'Otvori meni',
     closeMenu: 'Zatvori meni',
   },
@@ -30,30 +30,30 @@ export default {
 
   company: {
     eyebrow: 'Softverski studio · Barcelona + EU, na daljinu',
-    tagline: 'Web stranice, e-trgovina, mobilne aplikacije i AI automatizacija za tvrtke u rastu.',
-    lede: 'Iskusan softverski studio. Dizajniramo i izrađujemo web stranice, online trgovine, mobilne aplikacije i AI automatizacije za male i srednje tvrtke — od prve skice do lansiranja.',
+    tagline: 'Web stranice, e-trgovina, mobilne aplikacije i AI automatizacija za tvrtke u razvoju.',
+    lede: 'Iskusan softverski studio. Dizajniramo i izrađujemo web stranice, online trgovine, mobilne aplikacije i AI automatizacije za male i srednje tvrtke - od prve skice do lansiranja.',
     location: 'Barcelona · EU, na daljinu',
   },
 
   services: {
     websites: {
       title: 'Web stranice',
-      desc: 'Brze, moderne poslovne web stranice koje izgledaju profesionalno i pretvaraju posjetitelje u kupce — optimizirane za brzinu i izrađene da konvertiraju.',
+      desc: 'Brze, moderne poslovne web stranice koje izgledaju profesionalno i pretvaraju posjetitelje u kupce - optimizirane za brzinu i izrađene da konvertiraju.',
       points: ['Marketinške i brend stranice', 'Landing stranice', 'Temelji za performanse i SEO'],
     },
     ecommerce: {
       title: 'E-trgovina',
-      desc: 'Online trgovine koje je lako voditi i u kojima je lako kupovati — stranice proizvoda, košarica i naplata posloženi da prodaju, na Shopifyju ili prilagođenom rješenju.',
+      desc: 'Online trgovine koje je lako voditi i u kojima je lako kupovati - stranice proizvoda, košarica i naplata posloženi da prodaju, na Shopifyju ili prilagođenom rješenju.',
       points: ['Shopify i prilagođene trgovine', 'Proizvodi i tijek naplate', 'Plaćanja i integracije'],
     },
     mobile: {
       title: 'Mobilne aplikacije',
-      desc: 'Native iOS i Android aplikacije na koje se vaša tvrtka i klijenti mogu pouzdati — POS sustavi, interni alati i proizvodi za korisnike, izrađeni da rade pouzdano svaki dan.',
+      desc: 'Native iOS i Android aplikacije na koje se vaša tvrtka i klijenti mogu pouzdati - POS sustavi, interni alati i proizvodi za korisnike, izrađeni da rade pouzdano svaki dan.',
       points: ['Native iOS i Android', 'API i backend integracije', 'Objava na App Store i Play Store'],
     },
     'ai-automation': {
       title: 'AI automatizacija',
-      desc: 'Prepustite AI-u dosadne, repetitivne zadatke — povežite svoje alate i automatizirajte procese kako bi se vaš tim mogao usredotočiti na posao koji je stvarno važan.',
+      desc: 'Prepustite AI-u dosadne, repetitivne zadatke - povežite svoje alate i automatizirajte procese kako bi se vaš tim mogao usredotočiti na posao koji je stvarno važan.',
       points: ['Automatizacija procesa', 'AI asistenti i integracije', 'Prilagođeni interni alati'],
     },
   },
@@ -65,10 +65,10 @@ export default {
   ],
 
   companyProcess: [
-    { title: 'Analiza i arhitektura', desc: 'Upoznamo vaš posao, korisnike i ograničenja, zatim osmislimo arhitekturu i opseg posla — bez neugodnih iznenađenja kasnije.' },
+    { title: 'Analiza i arhitektura', desc: 'Upoznamo vaš posao, korisnike i ograničenja, zatim osmislimo arhitekturu i opseg posla - bez neugodnih iznenađenja kasnije.' },
     { title: 'Dizajn', desc: 'Od wireframea do uglađenog, pristupačnog sučelja. Vidite i oblikujete proizvod prije nego što je napisana i jedna linija produkcijskog koda.' },
-    { title: 'Razvoj', desc: 'Iskusni inženjeri isporučuju u kratkim iteracijama — code review, automatizirani testovi i CI na svaku promjenu. Uvijek imate nešto stvarno za isprobati.' },
-    { title: 'Lansiranje i podrška', desc: 'Postavljamo, nadziremo i optimiziramo za produkciju — performanse, sigurnost i pouzdanost — i ostajemo uz vas i nakon lansiranja.' },
+    { title: 'Razvoj', desc: 'Iskusni inženjeri isporučuju u kratkim iteracijama - code review, automatizirani testovi i CI na svaku promjenu. Uvijek imate nešto stvarno za isprobati.' },
+    { title: 'Lansiranje i podrška', desc: 'Postavljamo, nadziremo i optimiziramo za produkciju - performanse, sigurnost i pouzdanost - i ostajemo uz vas i nakon lansiranja.' },
   ],
 
   techGroups: {
@@ -83,8 +83,8 @@ export default {
 
   home: {
     hero: {
-      h1: 'Web stranice, aplikacije i automatizacija za tvrtke u rastu.',
-      lede: 'jCode je iskusan softverski studio. Dizajniramo i izrađujemo web stranice, online trgovine, mobilne aplikacije i AI automatizacije za male i srednje tvrtke — od prve skice do lansiranja.',
+      h1: 'Web stranice, aplikacije i automatizacija za tvrtke u razvoju.',
+      lede: 'jCode je softverski studio sa iskustvom. Dizajniramo i izrađujemo web stranice, online trgovine, mobilne aplikacije i AI automatizacije za male i srednje tvrtke - od prve skice do lansiranja.',
       ctaStart: 'Pokrenimo projekt',
       ctaWork: 'Pogledajte naše radove',
     },
@@ -103,7 +103,7 @@ export default {
 
   team: {
     eyebrow: 'Tim',
-    lede: 'Ljudi iza jCodea — iskusni generalisti koji dizajniraju, izrađuju i isporučuju. Manje prebacivanja posla iz ruke u ruku, više osobne odgovornosti.',
+    lede: 'Ljudi iza jCodea - iskusni generalisti koji dizajniraju, izrađuju i isporučuju. Manje prebacivanja posla iz ruke u ruku, više osobne odgovornosti.',
     mainStack: 'Glavni stack',
     yearsSuffix: 'godina iskustva',
     viewProfileLink: 'Pogledajte cijeli profil →',
@@ -113,7 +113,7 @@ export default {
 
   hero: {
     getInTouch: 'Javite nam se',
-    portraitAlt: 'Portret —',
+    portraitAlt: 'Portret -',
   },
 
   about: { eyebrow: 'Biografija' },
@@ -121,12 +121,12 @@ export default {
 
   profile: {
     back: '← Tim',
-    placeholderNote: 'Privremeni profil — zamijenit će se stvarnim sadržajem za ovog člana tima.',
+    placeholderNote: 'Privremeni profil - zamijenit će se stvarnim sadržajem za ovog člana tima.',
   },
 
   contact: {
     title: 'Izgradimo nešto zajedno.',
-    pitch: 'Ispričajte nam o svom projektu — web stranici, online trgovini, mobilnoj aplikaciji, AI automatizaciji, ili samo ideji koju želite provjeriti. Pročitamo svaku poruku i odgovaramo u roku od dana.',
+    pitch: 'Ispričajte nam o svom projektu - web stranici, online trgovini, mobilnoj aplikaciji, AI automatizaciji, ili samo ideji koju želite provjeriti. Pročitamo svaku poruku i odgovaramo u roku od dana.',
     projectTypes: {
       website: 'Web stranica',
       ecommerce: 'Online trgovina',
@@ -140,8 +140,8 @@ export default {
     messageLabel: 'Ispričajte nam o svom projektu',
     sending: 'Slanje…',
     send: 'Pošalji poruku',
-    errorPrefix: 'Nešto je pošlo po zlu — pišite nam izravno na',
-    sentTitle: 'Hvala — poruka je poslana.',
+    errorPrefix: 'Nešto je pošlo po zlu - pišite nam izravno na',
+    sentTitle: 'Hvala - poruka je poslana.',
     sentBody: 'Odgovorit ćemo vam u roku od dana.',
     methods: {
       email: 'Email',
@@ -151,7 +151,7 @@ export default {
       basedIn: 'Lokacija',
     },
     subjectFallback: 'projekt',
-    buildSubject: (type, name) => `jCode — novi upit (${type}) od ${name}`,
+    buildSubject: (type, name) => `jCode - novi upit (${type}) od ${name}`,
     refLabel: 'Odnosi se na dizajn:',
     refRemoveAria: 'Ukloni referencu na dizajn',
     refOpenAria: (title) => `Otvori pregled dizajna ${title}`,
@@ -163,15 +163,15 @@ export default {
     filterAria: 'Filtriraj po kategoriji',
     h1: 'Web stranice i trgovine koje smo dizajnirali',
     lede: {
-      before: 'Pregled web stranica i online trgovina koje dizajniramo i izrađujemo —',
+      before: 'Pregled web stranica i online trgovina koje dizajniramo i izrađujemo -',
       after: 'iz svih industrija, od jednostraničnih web stranica do potpunih e-trgovina. Sviđa vam se nešto? Izradit ćemo vam sličnu. Kliknite na bilo koji dizajn za prikaz cijele stranice.',
     },
-    sectionNote: 'Potpune višestranične trgovine — početna, kolekcija, proizvod i košarica.',
+    sectionNote: 'Potpune višestranične trgovine - početna, kolekcija, proizvod i košarica.',
     badge: { ecommerce: 'Online trgovina', landing: 'Landing stranica' },
     previewAction: 'Pregled snimke zaslona →',
     liveBadge: 'Uživo ↗',
     liveAria: (title) => `Otvori uživo stranicu ${title} u novoj kartici`,
-    ctaText: 'Sviđa vam se nešto — ili želite potpuno prilagođeno rješenje?',
+    ctaText: 'Sviđa vam se nešto - ili želite potpuno prilagođeno rješenje?',
     countTemplate: { one: 'predložak', few: 'predloška', other: 'predložaka' },
     countStore: { one: 'trgovina', few: 'trgovine', other: 'trgovina' },
   },
@@ -186,7 +186,7 @@ export default {
     buildLike: 'Izradite mi sličnu →',
     closePreviewAria: 'Zatvori pregled',
     previewAria: (title) => `Pregled: ${title}`,
-    fullPreviewAlt: (title) => `${title} — pregled cijele stranice`,
+    fullPreviewAlt: (title) => `${title} - pregled cijele stranice`,
     noImg: 'Pregled uskoro stiže.',
   },
 
@@ -196,15 +196,15 @@ export default {
       desc: 'Profesionalna izrada web stranica, online trgovina i mobilnih aplikacija za male i srednje tvrtke. 90+ gotovih dizajna kao polazište. Zatražite besplatnu ponudu.',
     },
     work: {
-      title: 'Primjeri web stranica — 90+ dizajna po industrijama | jCode',
-      desc: 'Pogledajte 90+ primjera web stranica i web shopova po industrijama — restorani, saloni, obrti, trgovine i više. Odaberite dizajn koji vam se sviđa i izradit ćemo vam sličan.',
+      title: 'Primjeri web stranica - 90+ dizajna po industrijama | jCode',
+      desc: 'Pogledajte 90+ primjera web stranica i web shopova po industrijama - restorani, saloni, obrti, trgovine i više. Odaberite dizajn koji vam se sviđa i izradit ćemo vam sličan.',
     },
     team: {
-      title: 'Naš tim — iskusni web i mobilni developeri | jCode',
-      desc: 'Upoznajte tim iza jCodea — iskusne full-stack i mobilne developere s više od desetljeća iskustva u izradi web stranica, web shopova i aplikacija.',
+      title: 'Naš tim - iskusni web i mobilni developeri | jCode',
+      desc: 'Upoznajte tim iza jCodea - iskusne full-stack i mobilne developere s više od desetljeća iskustva u izradi web stranica, web shopova i aplikacija.',
     },
     contact: {
-      title: 'Kontakt — zatražite ponudu za izradu web stranice | jCode',
+      title: 'Kontakt - zatražite ponudu za izradu web stranice | jCode',
       desc: 'Zatražite besplatnu ponudu za izradu web stranice, web shopa ili mobilne aplikacije. Odgovaramo u roku od jednog dana.',
     },
   },

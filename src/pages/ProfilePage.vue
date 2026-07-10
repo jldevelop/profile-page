@@ -18,7 +18,7 @@ watchEffect(() => {
     router.replace(localePath('/team'))
     return
   }
-  document.title = `${member.value.name} — jCode`
+  document.title = `${member.value.name} - jCode`
 })
 </script>
 

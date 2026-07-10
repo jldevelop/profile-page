@@ -25,7 +25,7 @@ defineProps({
 
       <p v-if="languages.length" class="languages" v-reveal>
         <span v-for="(lang, i) in languages" :key="lang.name">
-          <strong>{{ lang.name }}</strong> — {{ lang.level
+          <strong>{{ lang.name }}</strong> - {{ lang.level
           }}<span v-if="i < languages.length - 1" class="dot"> · </span>
         </span>
       </p>
