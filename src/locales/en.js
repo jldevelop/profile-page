@@ -184,6 +184,8 @@ export default {
   dialog: {
     share: 'Share',
     shareCopied: 'Link copied ✓',
+    shareCopy: 'Copy URL',
+    shareMenuAria: 'Share options',
     shareAria: 'Share a link to this design',
     openLive: 'Open live site ↗',
     buildLike: 'Build me one like this →',

@@ -179,6 +179,8 @@ export default {
   dialog: {
     share: 'Podijeli',
     shareCopied: 'Poveznica kopirana ✓',
+    shareCopy: 'Kopiraj poveznicu',
+    shareMenuAria: 'Opcije dijeljenja',
     shareAria: 'Podijeli poveznicu na ovaj dizajn',
     openLive: 'Otvori uživo stranicu ↗',
     buildLike: 'Izradite mi sličnu →',
