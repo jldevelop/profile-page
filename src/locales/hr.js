@@ -8,8 +8,8 @@ export default {
 
   nav: {
     home: 'Početna',
-    work: 'Radovi',
-    team: 'Tim',
+    work: 'Web stranice',
+    team: 'Ekipa',
     contact: 'Kontakt',
     cta: 'Pokrenimo projekt',
     brandLabel: 'jCode - početna',
@@ -86,11 +86,11 @@ export default {
       h1: 'Web stranice, aplikacije i automatizacija za tvrtke u razvoju.',
       lede: 'jCode je softverski studio sa iskustvom. Dizajniramo i izrađujemo web stranice, online trgovine, mobilne aplikacije i AI automatizacije za male i srednje tvrtke - od prve skice do lansiranja.',
       ctaStart: 'Pokrenimo projekt',
-      ctaWork: 'Pogledajte naše radove',
+      ctaWork: 'Pogledajte naše web stranice',
     },
     clients: { lead: 'Brendovi s kojima smo radili' },
     services: { eyebrow: 'Usluge', h2: 'Što izrađujemo' },
-    work: { eyebrow: 'Naši radovi', h2: 'Pogled na to što izrađujemo', seeAll: 'Pogledajte sve naše radove →' },
+    work: { eyebrow: 'Naši proizvodi', h2: 'Pogled na to što izrađujemo', seeAll: 'Pogledajte sve naše radove →' },
     stack: { eyebrow: 'Tehnologije', h2: 'Tehnologije na kojima gradimo' },
     process: { eyebrow: 'Kako radimo', h2: 'Od prve skice do lansiranja' },
     team: {
@@ -158,7 +158,7 @@ export default {
   },
 
   work: {
-    eyebrow: 'Naši radovi',
+    eyebrow: 'Naši proizvodi',
     sectionsAria: 'Odjeljci predložaka',
     filterAria: 'Filtriraj po kategoriji',
     h1: 'Web stranice i trgovine koje smo dizajnirali',
