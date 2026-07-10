@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { company, contact } from '@/content.js'
+import { templates } from '@/catalog.js'
 import { t } from '@/i18n.js'
 
 // Service the enquiry is about. Mirrors the four pillars; the showcase modal and
@@ -14,6 +15,18 @@ const PROJECT_TYPES = computed(() =>
 const route = useRoute()
 const projectType = ref(PROJECT_TYPES.value.some((pt) => pt.value === route.query.type) ? route.query.type : '')
 
+// Template reference forwarded from the showcase preview ("Build me one like
+// this" passes ?ref=WEB-14 / SHOP-03 / CLUB-02). Shown as a screenshot card
+// beside the form (chip fallback if the code doesn't resolve) and included in
+// the submitted enquiry.
+const templateRef = ref(
+  typeof route.query.ref === 'string' && /^[A-Z]{2,6}-\d{1,3}$/.test(route.query.ref) ? route.query.ref : '',
+)
+// Resolve the code to the (localized) template for the visual reference card.
+const refTemplate = computed(() =>
+  templateRef.value ? templates.value.find((tpl) => tpl.code === templateRef.value) ?? null : null,
+)
+
 const state = ref('idle') // idle | sending | sent | error
 
 async function submit(event) {
@@ -21,6 +34,8 @@ async function submit(event) {
   if (data._honey) return // spam bot filled the honeypot
   state.value = 'sending'
   const typeLabel = PROJECT_TYPES.value.find((pt) => pt.value === projectType.value)?.label || ''
+  let subject = t('contact.buildSubject')(typeLabel || t('contact.subjectFallback'), data.name)
+  if (templateRef.value) subject += ` · ${templateRef.value}`
   try {
     const res = await fetch(company.value.formEndpoint, {
       method: 'POST',
@@ -29,8 +44,9 @@ async function submit(event) {
         name: data.name,
         email: data.email,
         projectType: typeLabel,
+        ...(templateRef.value ? { template: templateRef.value } : {}),
         message: data.message,
-        _subject: t('contact.buildSubject')(typeLabel || t('contact.subjectFallback'), data.name),
+        _subject: subject,
       }),
     })
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
@@ -60,6 +76,33 @@ const socials = Object.entries({
 
       <div class="contact-grid">
         <div class="methods" v-reveal>
+          <!-- Screenshot of the design this enquiry refers to (?ref=WEB-14) -->
+          <aside v-if="refTemplate" class="ref-card">
+            <router-link
+              class="ref-link"
+              :to="`/work/${refTemplate.id}`"
+              :aria-label="t('contact.refOpenAria')(refTemplate.title)"
+            >
+              <span class="ref-thumb">
+                <img :src="refTemplate.card" alt="" decoding="async" />
+                <span class="ref-code">{{ refTemplate.code }}</span>
+              </span>
+              <span class="ref-meta">
+                <span class="ref-label">{{ t('contact.refLabel') }}</span>
+                <span class="ref-title">{{ refTemplate.title }}</span>
+                <span v-if="refTemplate.category !== refTemplate.title" class="ref-cat">{{ refTemplate.category }}</span>
+              </span>
+            </router-link>
+            <button
+              class="ref-remove"
+              type="button"
+              :aria-label="t('contact.refRemoveAria')"
+              @click="templateRef = ''"
+            >
+              ✕
+            </button>
+          </aside>
+
           <a class="method" :href="`mailto:${company.email}`">
             <span class="m-label">{{ t('contact.methods.email') }}</span>
             <span class="m-value">{{ company.email }}</span>
@@ -89,6 +132,11 @@ const socials = Object.entries({
 
         <div class="form-card" v-reveal>
           <form v-if="state !== 'sent'" @submit.prevent="submit">
+            <!-- text fallback, only when the code can't be resolved to a template -->
+            <div v-if="templateRef && !refTemplate" class="ref-chip">
+              <span>{{ t('contact.refLabel') }} <b>{{ templateRef }}</b></span>
+              <button type="button" :aria-label="t('contact.refRemoveAria')" @click="templateRef = ''">✕</button>
+            </div>
             <div class="field">
               <span class="field-label">{{ t('contact.helpLabel') }}</span>
               <div class="type-options" role="group" :aria-label="t('contact.helpLabel')">
@@ -147,6 +195,112 @@ const socials = Object.entries({
 .methods {
   display: grid;
   gap: 12px;
+}
+
+/* ---- referenced-design card (?ref=WEB-14) ---- */
+.ref-card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 12px 32px -18px rgba(30, 70, 196, 0.45);
+  margin-bottom: 6px;
+}
+
+.ref-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.ref-thumb {
+  display: block;
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--bg-soft);
+}
+
+.ref-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform 0.4s ease;
+}
+
+.ref-link:hover .ref-thumb img {
+  transform: scale(1.04);
+}
+
+.ref-code {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 11.5px;
+  letter-spacing: 0.05em;
+  color: #fff;
+  background: rgba(15, 26, 56, 0.78);
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-variant-numeric: tabular-nums;
+}
+
+.ref-meta {
+  display: grid;
+  gap: 2px;
+  padding: 13px 16px 15px;
+}
+
+.ref-label {
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-deep);
+}
+
+.ref-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16.5px;
+  margin-top: 2px;
+}
+
+.ref-link:hover .ref-title {
+  color: var(--accent);
+}
+
+.ref-cat {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.ref-remove {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ink);
+  font-size: 13px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(15, 26, 56, 0.25);
+  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.ref-remove:hover {
+  background: #fff;
+  color: var(--accent-deep);
+  transform: scale(1.06);
 }
 
 .method {
@@ -220,6 +374,40 @@ a.method:hover {
 form {
   display: grid;
   gap: 16px;
+}
+
+/* forwarded template reference (?ref=WEB-14) */
+.ref-chip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--accent-deep);
+}
+
+.ref-chip b {
+  font-family: var(--font-display);
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.ref-chip button {
+  border: none;
+  background: transparent;
+  color: var(--accent-deep);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 6px;
+}
+
+.ref-chip button:hover {
+  background: rgba(30, 70, 196, 0.12);
 }
 
 .field {

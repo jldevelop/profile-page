@@ -1,12 +1,66 @@
 <script setup>
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
 import { templates, sections, simpleGroups } from '@/catalog.js'
 import { t } from '@/i18n.js'
 import CatalogDialog from '@/components/CatalogDialog.vue'
 
+// /work/:id — an open preview is part of the URL, so every template is shareable
+// and loads with its dialog open when visited directly.
+const props = defineProps({ id: { type: String, default: '' } })
+const router = useRouter()
+
 const section = ref('simple') // 'simple' | 'ecommerce'
 const sub = ref('all') // category filter, only used within the simple section
-const selected = ref(null)
+
+// The dialog is driven by the route param — single source of truth.
+const selected = computed(() => (props.id ? templates.value.find((tpl) => tpl.id === props.id) ?? null : null))
+
+// Whether the current preview was opened from the grid (push) — then closing
+// goes back(); a direct/shared visit instead replaces to /work.
+let openedFromGrid = false
+
+function openPreview(item) {
+  openedFromGrid = true
+  router.push(`/work/${item.id}`)
+}
+
+function closePreview() {
+  if (openedFromGrid) {
+    openedFromGrid = false
+    router.back()
+  } else {
+    router.replace('/work')
+  }
+}
+
+watch(
+  () => props.id,
+  (id) => {
+    if (!id) {
+      openedFromGrid = false
+      return
+    }
+    const item = templates.value.find((tpl) => tpl.id === id)
+    if (!item) {
+      router.replace('/work') // unknown/expired id — just show the grid
+      return
+    }
+    // make sure the right section is active behind the dialog
+    section.value = item.kind === 'ecommerce' ? 'ecommerce' : 'simple'
+    if (item.kind !== 'ecommerce' && sub.value !== 'all' && item.group !== sub.value) sub.value = 'all'
+  },
+  { immediate: true },
+)
+
+// An open preview owns the tab title (nice for shared links); restore on close.
+watch(
+  selected,
+  (s) => {
+    document.title = s ? `${s.title} (${s.code}) — jCode` : t('meta.work.title')
+  },
+  { immediate: true, flush: 'post' },
+)
 
 // Templates render in a fresh random order on every visit. Each id gets a
 // random weight per mount, so the order is stable while browsing (and across
@@ -118,7 +172,7 @@ onUnmounted(() => {
 
       <div class="grid">
         <article v-for="item in items" :key="item.id" class="card">
-          <button type="button" class="card-main" @click="selected = item">
+          <button type="button" class="card-main" @click="openPreview(item)">
             <div class="thumb">
               <img :src="item.card" alt="" loading="lazy" decoding="async" />
               <span class="kind">{{ item.kind === 'ecommerce' ? t('work.badge.ecommerce') : t('work.badge.landing') }}</span>
@@ -127,7 +181,10 @@ onUnmounted(() => {
               <h3>{{ item.title }}</h3>
               <p class="cat">{{ item.category }}</p>
               <p class="blurb">{{ item.blurb }}</p>
-              <span class="action">{{ t('work.previewAction') }}</span>
+              <span class="meta-foot">
+                <span class="action">{{ t('work.previewAction') }}</span>
+                <span class="code">{{ item.code }}</span>
+              </span>
             </div>
           </button>
           <a
@@ -149,7 +206,7 @@ onUnmounted(() => {
       </div>
     </div>
 
-    <CatalogDialog :item="selected" @close="selected = null" />
+    <CatalogDialog :item="selected" @close="closePreview" />
   </section>
 </template>
 
@@ -431,8 +488,15 @@ onUnmounted(() => {
   flex: 1;
 }
 
-.meta .action {
+.meta-foot {
   margin-top: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.meta .action {
   font-family: var(--font-display);
   font-weight: 600;
   font-size: 13.5px;
@@ -441,6 +505,21 @@ onUnmounted(() => {
 
 .card:hover .action {
   color: var(--accent);
+}
+
+/* public reference code — bottom-right corner of the card */
+.meta .code {
+  flex-shrink: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 11.5px;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-variant-numeric: tabular-nums;
 }
 
 .tpl-cta {

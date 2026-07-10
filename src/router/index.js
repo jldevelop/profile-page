@@ -9,9 +9,12 @@ import { t } from '@/i18n.js'
 const routes = [
   { path: '/', name: 'home', component: HomePage, meta: { metaKey: 'base' } },
   {
-    path: '/work',
+    // Optional :id deep-links straight to a template's screenshot preview
+    // (e.g. /work/01-restaurant) — shareable URLs for every design.
+    path: '/work/:id?',
     name: 'work',
     component: () => import('@/pages/TemplatesPage.vue'),
+    props: true,
     meta: { metaKey: 'work' },
   },
   {
@@ -31,7 +34,6 @@ const routes = [
   // Old template/catalog URLs → the work showcase (kept for any existing links).
   { path: '/templates', redirect: '/work' },
   { path: '/catalog', redirect: '/work' },
-  { path: '/work/:slug', redirect: '/work' },
   { path: '/:pathMatch(.*)*', redirect: '/' },
 ]
 
@@ -39,6 +41,9 @@ export const router = createRouter({
   history: createWebHistory(),
   routes,
   scrollBehavior(to, from, savedPosition) {
+    // Opening/closing a template preview only changes /work's :id param —
+    // keep the grid where it is instead of jumping to the top.
+    if (to.name === 'work' && from.name === 'work') return false
     if (savedPosition) return savedPosition
     if (to.hash) return { el: to.hash, top: 80, behavior: 'smooth' }
     return { top: 0 }
@@ -56,10 +61,12 @@ function setMeta(name, content) {
   el.setAttribute('content', content)
 }
 
-// Per-route document title + description (profile/case-study routes set their own).
+// Per-route document title + description (profile routes set their own; an open
+// template preview on /work/:id also owns the title — see TemplatesPage).
 function applyMeta(route) {
   const key = route.meta.metaKey
   if (!key) return
+  if (route.name === 'work' && route.params.id) return
   document.title = t(`meta.${key}.title`)
   setMeta('description', t(`meta.${key}.desc`))
 }

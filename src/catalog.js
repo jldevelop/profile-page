@@ -183,6 +183,7 @@ const nightclubs = [
 ]
 const toNightclub = ([slug, title, industry, blurb, file]) => ({
   id: slug,
+  code: codeOf(slug),
   title,
   category: industry,
   group: 'nightlife',
@@ -193,8 +194,20 @@ const toNightclub = ([slug, title, industry, blurb, file]) => ({
   live: `${NC_BASE}/${file}`,
 })
 
+// Public reference code shown on cards / in the preview / forwarded to the
+// contact form — lets a visitor name the exact design (WEB-14, SHOP-03, CLUB-02).
+// Derived from the slug, locale-independent.
+export const codeOf = (slug) => {
+  const store = slug.match(/^e(\d+)-/)
+  if (store) return `SHOP-${store[1]}`
+  const club = slug.match(/^nc(\d+)-/)
+  if (club) return `CLUB-${club[1]}`
+  return `WEB-${slug.slice(0, 2)}`
+}
+
 const toTemplate = (kind, group) => ([slug, title, industry, blurb]) => ({
   id: slug,
+  code: codeOf(slug),
   title,
   category: industry,
   group: group || GROUP_OF[industry] || 'all',

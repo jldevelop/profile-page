@@ -8,6 +8,37 @@ const emit = defineEmits(['close'])
 const panelEl = ref(null)
 let trigger = null // element to restore focus to on close
 
+// Share the preview's deep link (/work/<id>): native share sheet where
+// available, otherwise copy to clipboard with a brief confirmation.
+const shared = ref(false)
+let sharedTimer = null
+
+async function share() {
+  const url = window.location.href
+  if (navigator.share) {
+    try {
+      await navigator.share({ title: document.title, url })
+      return
+    } catch (e) {
+      if (e?.name === 'AbortError') return // user closed the share sheet
+      // fall through to clipboard
+    }
+  }
+  try {
+    await navigator.clipboard.writeText(url)
+  } catch {
+    const ta = document.createElement('textarea')
+    ta.value = url
+    document.body.appendChild(ta)
+    ta.select()
+    document.execCommand('copy')
+    ta.remove()
+  }
+  shared.value = true
+  clearTimeout(sharedTimer)
+  sharedTimer = setTimeout(() => (shared.value = false), 2000)
+}
+
 function focusables() {
   if (!panelEl.value) return []
   return [
@@ -41,6 +72,7 @@ watch(
   () => props.item,
   (v, old) => {
     document.body.style.overflow = v ? 'hidden' : ''
+    shared.value = false
     if (v && !old) {
       trigger = document.activeElement
       nextTick(() => (focusables()[0] || panelEl.value)?.focus())
@@ -77,9 +109,25 @@ onUnmounted(() => {
           <header class="panel-head">
             <div class="titles">
               <h2>{{ item.title }}</h2>
-              <p class="cat">{{ item.category }}</p>
+              <p class="cat">
+                {{ item.category }}
+                <span v-if="item.code" class="code">{{ item.code }}</span>
+              </p>
             </div>
             <div class="actions">
+              <button
+                class="btn btn-ghost btn-small"
+                type="button"
+                :class="{ shared }"
+                :aria-label="t('dialog.shareAria')"
+                @click="share"
+              >
+                <svg v-if="!shared" class="share-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="6" cy="12" r="2.6" /><circle cx="17.5" cy="5.5" r="2.6" /><circle cx="17.5" cy="18.5" r="2.6" />
+                  <path d="M8.4 10.8 15 6.9M8.4 13.2l6.6 3.9" />
+                </svg>
+                {{ shared ? t('dialog.shareCopied') : t('dialog.share') }}
+              </button>
               <a
                 v-if="item.live"
                 class="btn btn-primary btn-small"
@@ -89,10 +137,12 @@ onUnmounted(() => {
               >
                 {{ t('dialog.openLive') }}
               </a>
+              <!-- No @click close here: closing now navigates (back/replace) and would
+                   race this link's own navigation. Leaving /work unmounts the dialog,
+                   and browser-Back returns to the open preview. -->
               <router-link
                 class="btn btn-ghost btn-small"
-                :to="{ path: '/contact', query: { type: item.kind === 'ecommerce' ? 'ecommerce' : 'website', ref: item.id } }"
-                @click="emit('close')"
+                :to="{ path: '/contact', query: { type: item.kind === 'ecommerce' ? 'ecommerce' : 'website', ref: item.code } }"
               >
                 {{ t('dialog.buildLike') }}
               </router-link>
@@ -146,13 +196,20 @@ onUnmounted(() => {
 
 .panel-head {
   display: flex;
+  /* four actions + title won't always fit on one line — wrap instead of
+     overflowing the panel (overflow:hidden was clipping the buttons) */
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  padding: 16px clamp(16px, 2.5vw, 24px);
+  gap: 10px 16px;
+  padding: 14px clamp(16px, 2.5vw, 24px);
   background: var(--surface);
   border-bottom: 1px solid var(--line);
   flex-shrink: 0;
+}
+
+.titles {
+  min-width: 0;
 }
 
 .titles h2 {
@@ -163,13 +220,45 @@ onUnmounted(() => {
   font-size: 13px;
   color: var(--muted);
   margin-top: 3px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.code {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 11.5px;
+  letter-spacing: 0.05em;
+  color: var(--accent-deep);
+  background: var(--accent-soft);
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+.share-ico {
+  width: 15px;
+  height: 15px;
+}
+
+.actions .btn.shared {
+  border-color: var(--accent);
+  color: var(--accent-deep);
 }
 
 .actions {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 12px;
-  flex-shrink: 0;
+  gap: 8px 10px;
+  min-width: 0;
+  margin-left: auto;
+}
+
+.actions .btn {
+  white-space: nowrap;
 }
 
 .close {

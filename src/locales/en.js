@@ -157,6 +157,9 @@ export default {
     },
     subjectFallback: 'project',
     buildSubject: (type, name) => `jCode — new ${type} enquiry from ${name}`,
+    refLabel: 'Referring to design:',
+    refRemoveAria: 'Remove the design reference',
+    refOpenAria: (title) => `Open the ${title} design preview`,
   },
 
   work: {
@@ -179,6 +182,9 @@ export default {
   },
 
   dialog: {
+    share: 'Share',
+    shareCopied: 'Link copied ✓',
+    shareAria: 'Share a link to this design',
     openLive: 'Open live site ↗',
     buildLike: 'Build me one like this →',
     closePreviewAria: 'Close preview',

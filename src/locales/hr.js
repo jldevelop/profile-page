@@ -152,6 +152,9 @@ export default {
     },
     subjectFallback: 'projekt',
     buildSubject: (type, name) => `jCode — novi upit (${type}) od ${name}`,
+    refLabel: 'Odnosi se na dizajn:',
+    refRemoveAria: 'Ukloni referencu na dizajn',
+    refOpenAria: (title) => `Otvori pregled dizajna ${title}`,
   },
 
   work: {
@@ -174,6 +177,9 @@ export default {
   },
 
   dialog: {
+    share: 'Podijeli',
+    shareCopied: 'Poveznica kopirana ✓',
+    shareAria: 'Podijeli poveznicu na ovaj dizajn',
     openLive: 'Otvori uživo stranicu ↗',
     buildLike: 'Izradite mi sličnu →',
     closePreviewAria: 'Zatvori pregled',
