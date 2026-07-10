@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router'
 import { company, contact } from '@/content.js'
 import { templates } from '@/catalog.js'
 import { t } from '@/i18n.js'
+import { localePath } from '@/lang.js'
 
 // Service the enquiry is about. Mirrors the four pillars; the showcase modal and
 // service cards can pre-select one via a ?type= query param.
@@ -80,7 +81,7 @@ const socials = Object.entries({
           <aside v-if="refTemplate" class="ref-card">
             <router-link
               class="ref-link"
-              :to="`/work/${refTemplate.id}`"
+              :to="localePath(`/work/${refTemplate.id}`)"
               :aria-label="t('contact.refOpenAria')(refTemplate.title)"
             >
               <span class="ref-thumb">

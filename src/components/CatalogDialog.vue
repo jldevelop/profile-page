@@ -1,6 +1,7 @@
 <script setup>
 import { nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { t } from '@/i18n.js'
+import { localePath } from '@/lang.js'
 
 const props = defineProps({ item: { type: Object, default: null } })
 const emit = defineEmits(['close'])
@@ -234,13 +235,15 @@ onUnmounted(() => {
                    and browser-Back returns to the open preview. -->
               <router-link
                 class="btn btn-ghost btn-small"
-                :to="{ path: '/contact', query: { type: item.kind === 'ecommerce' ? 'ecommerce' : 'website', ref: item.code } }"
+                :to="{ path: localePath('/contact'), query: { type: item.kind === 'ecommerce' ? 'ecommerce' : 'website', ref: item.code } }"
               >
                 {{ t('dialog.buildLike') }}
               </router-link>
               <button class="close" type="button" :aria-label="t('dialog.closePreviewAria')" @click="emit('close')">✕</button>
             </div>
           </header>
+
+          <p v-if="item.about" class="dlg-about">{{ item.about }}</p>
 
           <div class="scroll">
             <img
@@ -432,6 +435,17 @@ onUnmounted(() => {
 .close:hover {
   border-color: var(--accent);
   color: var(--accent);
+}
+
+/* short industry line for the design being previewed */
+.dlg-about {
+  flex-shrink: 0;
+  padding: 10px clamp(16px, 2.5vw, 24px);
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--muted);
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
 }
 
 /* flex:1 + min-height:0 lets this shrink to the panel height so the tall

@@ -197,20 +197,20 @@ export default {
 
   meta: {
     base: {
-      title: 'jCode — Software studio for websites, apps & AI automation',
-      desc: 'jCode is a senior software studio building websites, online stores, mobile apps and AI automations for small and medium businesses — from first sketch to launch.',
+      title: 'Website Development & Design for Small Business | jCode',
+      desc: 'jCode builds fast, modern websites, online stores and mobile apps for small and medium businesses — from first sketch to launch. 90+ ready designs to start from. Get a free quote.',
     },
     work: {
-      title: 'Our work — jCode',
-      desc: 'A showcase of websites and online stores designed and built by jCode — the kind of sites and apps we make for small and medium businesses.',
+      title: 'Website Design Examples — 90+ Designs by Industry | jCode',
+      desc: 'Browse 90+ website and online-store designs by industry — restaurants, salons, trades, shops and more. Pick a design you like and we’ll build yours like it.',
     },
     team: {
-      title: 'The team — jCode',
-      desc: 'Meet the senior engineers behind jCode — full-stack, real-time and native mobile specialists.',
+      title: 'Our Team — Senior Web & Mobile Developers | jCode',
+      desc: 'Meet the senior engineers behind jCode — full-stack, e-commerce and native mobile specialists with a decade-plus of shipping websites and apps.',
     },
     contact: {
-      title: 'Contact — jCode',
-      desc: 'Tell us about your project — a website, a web app, a mobile app, or an idea you want to pressure-test. We reply within a day.',
+      title: 'Contact — Get a Free Website Quote | jCode',
+      desc: 'Tell us about your project — a website, online store or mobile app — and get a free quote. We reply within one day.',
     },
   },
 }

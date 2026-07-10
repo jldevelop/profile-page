@@ -49,5 +49,14 @@ export function setLang(code) {
   if (typeof document !== 'undefined') document.documentElement.lang = code
 }
 
+// Locale-aware path for internal links: Croatian pages live under /hr/... so
+// each language has real, indexable URLs (SEO/hreflang). Reads `lang`, so
+// template bindings using it re-render on locale change.
+export function localePath(path) {
+  const p = path.startsWith('/') ? path : `/${path}`
+  if (lang.value !== 'hr') return p
+  return p === '/' ? '/hr' : `/hr${p}`
+}
+
 // keep <html lang> in sync from the start
 if (typeof document !== 'undefined') document.documentElement.lang = lang.value

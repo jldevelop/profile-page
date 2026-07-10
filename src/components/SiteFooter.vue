@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { company } from '@/content.js'
 import { t } from '@/i18n.js'
+import { localePath } from '@/lang.js'
 
 const year = new Date().getFullYear()
 const socials = computed(() =>
@@ -13,10 +14,10 @@ const socials = computed(() =>
 )
 
 const pages = computed(() => [
-  { to: '/', label: t('nav.home') },
-  { to: '/work', label: t('nav.work') },
-  { to: '/team', label: t('nav.team') },
-  { to: '/contact', label: t('nav.contact') },
+  { to: localePath('/'), label: t('nav.home') },
+  { to: localePath('/work'), label: t('nav.work') },
+  { to: localePath('/team'), label: t('nav.team') },
+  { to: localePath('/contact'), label: t('nav.contact') },
 ])
 
 // Shown only when filled (no fabricated legal info).
@@ -54,7 +55,7 @@ const legalLine = computed(() =>
 
     <div class="container footer-bottom">
       <p>© {{ year }} {{ company.name }} — {{ company.domain }}<span v-if="legalLine"> · {{ legalLine }}</span></p>
-      <router-link to="/contact">{{ t('footer.ctaLink') }}</router-link>
+      <router-link :to="localePath('/contact')">{{ t('footer.ctaLink') }}</router-link>
     </div>
   </footer>
 </template>

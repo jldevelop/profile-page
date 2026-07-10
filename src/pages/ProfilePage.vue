@@ -3,6 +3,7 @@ import { computed, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
 import { teamById } from '@/content.js'
 import { t } from '@/i18n.js'
+import { localePath } from '@/lang.js'
 import HeroSection from '@/components/HeroSection.vue'
 import AboutSection from '@/components/AboutSection.vue'
 import SkillsSection from '@/components/SkillsSection.vue'
@@ -14,7 +15,7 @@ const member = computed(() => teamById.value[props.slug])
 // Unknown slug → send back to the team page; otherwise set a per-member title.
 watchEffect(() => {
   if (!member.value) {
-    router.replace('/team')
+    router.replace(localePath('/team'))
     return
   }
   document.title = `${member.value.name} — jCode`
@@ -24,7 +25,7 @@ watchEffect(() => {
 <template>
   <div v-if="member" class="profile-page">
     <div class="container profile-top">
-      <router-link to="/team" class="back">{{ t('profile.back') }}</router-link>
+      <router-link :to="localePath('/team')" class="back">{{ t('profile.back') }}</router-link>
       <p v-if="member.placeholder" class="placeholder-note">
         {{ t('profile.placeholderNote') }}
       </p>

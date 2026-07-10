@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { team } from '@/content.js'
 import { t } from '@/i18n.js'
+import { localePath } from '@/lang.js'
 
 // The bio bands are for the real, fully-populated members (skip placeholders).
 // Explicit display order for this page (Oleg first, Josip last) — independent of
@@ -33,7 +34,7 @@ const members = computed(() => {
           v-reveal
         >
           <router-link
-            :to="`/team/${m.slug}`"
+            :to="localePath(`/team/${m.slug}`)"
             class="member-photo"
             :aria-label="`${m.name} — ${t('team.viewProfileAria')}`"
           >
@@ -54,7 +55,7 @@ const members = computed(() => {
             </ul>
 
             <router-link
-              :to="`/team/${m.slug}`"
+              :to="localePath(`/team/${m.slug}`)"
               class="link-arrow profile-link"
               :aria-label="`${t('team.viewProfileAria2')} ${m.name}`"
             >

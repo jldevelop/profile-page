@@ -1,36 +1,45 @@
 import { watch } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from '@/pages/HomePage.vue'
-import { lang } from '@/lang.js'
+import { lang, setLang } from '@/lang.js'
 import { t } from '@/i18n.js'
 
 // Routes store a meta *key* (into locales/{en,hr}.js meta.<key>), not the literal
 // title/desc, so afterEach + the lang watcher below can resolve it per locale.
-const routes = [
-  { path: '/', name: 'home', component: HomePage, meta: { metaKey: 'base' } },
+//
+// Every page exists in two URL variants: English at the root (/, /work, …) and
+// Croatian under /hr (/hr, /hr/work, …). The URL is the source of truth for the
+// locale (see beforeEach below) so each language is separately indexable, with
+// hreflang pairs emitted by the prerenderer (scripts/prerender.mjs).
+const pages = [
+  { path: '', name: 'home', component: HomePage, meta: { metaKey: 'base' } },
   {
     // Optional :id deep-links straight to a template's screenshot preview
     // (e.g. /work/01-restaurant) — shareable URLs for every design.
-    path: '/work/:id?',
+    path: 'work/:id?',
     name: 'work',
     component: () => import('@/pages/TemplatesPage.vue'),
     props: true,
     meta: { metaKey: 'work' },
   },
   {
-    path: '/team',
+    path: 'team',
     name: 'team',
     component: () => import('@/pages/TeamPage.vue'),
     meta: { metaKey: 'team' },
   },
   // Profile route sets its own title inside the page component.
-  { path: '/team/:slug', name: 'profile', component: () => import('@/pages/ProfilePage.vue'), props: true },
+  { path: 'team/:slug', name: 'profile', component: () => import('@/pages/ProfilePage.vue'), props: true },
   {
-    path: '/contact',
+    path: 'contact',
     name: 'contact',
     component: () => import('@/pages/ContactPage.vue'),
     meta: { metaKey: 'contact' },
   },
+]
+
+const routes = [
+  { path: '/:locale(hr)?', children: pages },
   // Old template/catalog URLs → the work showcase (kept for any existing links).
   { path: '/templates', redirect: '/work' },
   { path: '/catalog', redirect: '/work' },
@@ -48,6 +57,15 @@ export const router = createRouter({
     if (to.hash) return { el: to.hash, top: 80, behavior: 'smooth' }
     return { top: 0 }
   },
+})
+
+// The URL decides the locale: /hr/... is Croatian, everything else is English.
+// This runs before the routed component renders, so t()/computeds resolve in
+// the right language on first paint (localStorage keeps the choice only as a
+// preference record — it never overrides the URL).
+router.beforeEach((to) => {
+  const urlLang = to.params.locale === 'hr' ? 'hr' : 'en'
+  if (lang.value !== urlLang) setLang(urlLang)
 })
 
 function setMeta(name, content) {

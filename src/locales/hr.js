@@ -192,20 +192,20 @@ export default {
 
   meta: {
     base: {
-      title: 'jCode — Softverski studio za web stranice, aplikacije i AI automatizaciju',
-      desc: 'jCode je iskusan softverski studio koji izrađuje web stranice, online trgovine, mobilne aplikacije i AI automatizacije za male i srednje tvrtke — od prve skice do lansiranja.',
+      title: 'Izrada web stranica, web shopova i mobilnih aplikacija | jCode',
+      desc: 'Profesionalna izrada web stranica, online trgovina i mobilnih aplikacija za male i srednje tvrtke. 90+ gotovih dizajna kao polazište. Zatražite besplatnu ponudu.',
     },
     work: {
-      title: 'Naši radovi — jCode',
-      desc: 'Pregled web stranica i online trgovina koje je dizajnirao i izradio jCode — vrsta stranica i aplikacija koje izrađujemo za male i srednje tvrtke.',
+      title: 'Primjeri web stranica — 90+ dizajna po industrijama | jCode',
+      desc: 'Pogledajte 90+ primjera web stranica i web shopova po industrijama — restorani, saloni, obrti, trgovine i više. Odaberite dizajn koji vam se sviđa i izradit ćemo vam sličan.',
     },
     team: {
-      title: 'Tim — jCode',
-      desc: 'Upoznajte iskusne inženjere iza jCodea — specijaliste za full-stack, real-time i native mobilni razvoj.',
+      title: 'Naš tim — iskusni web i mobilni developeri | jCode',
+      desc: 'Upoznajte tim iza jCodea — iskusne full-stack i mobilne developere s više od desetljeća iskustva u izradi web stranica, web shopova i aplikacija.',
     },
     contact: {
-      title: 'Kontakt — jCode',
-      desc: 'Ispričajte nam o svom projektu — web stranici, web aplikaciji, mobilnoj aplikaciji, ili ideji koju želite provjeriti. Odgovaramo u roku od dana.',
+      title: 'Kontakt — zatražite ponudu za izradu web stranice | jCode',
+      desc: 'Zatražite besplatnu ponudu za izradu web stranice, web shopa ili mobilne aplikacije. Odgovaramo u roku od jednog dana.',
     },
   },
 }

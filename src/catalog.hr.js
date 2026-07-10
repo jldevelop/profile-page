@@ -10,6 +10,28 @@ export default {
     ecommerce: 'Web trgovine',
   },
 
+  // Industry paragraph per filter group (EN originals: GROUP_ABOUT in catalog.js).
+  groupAbout: {
+    'food-hospitality':
+      'Dizajn za restorane, kafiće, barove, hotele i turističke tvrtke — jelovnici i ponude na prvom mjestu, primamljive fotografije, radno vrijeme, lokacija i istaknuta akcija za rezervaciju koja posjetitelje pretvara u goste.',
+    'health-beauty':
+      'Dizajn za salone, ordinacije, spa centre, trenere i wellness studije — usluge i cjenik jasno prikazani, sekcije tima i recenzija koje grade povjerenje te stalno vidljiva akcija za rezervaciju termina.',
+    'home-pro':
+      'Dizajn za obrte, agencije i profesionalne usluge — vodi s problemom koji rješavate, dokazuje kvalitetu projektima i recenzijama te potiče upite za ponudu jasnim pozivima na akciju i kontakt podacima.',
+    'creative-media':
+      'Dizajn za kreativne studije, fotografe, organizatore događanja i medijske brendove — radovi su u prvom planu kroz velike galerije i editorijalne rasporede, uz pakete i jasan tijek upita.',
+    'tech-shop-edu':
+      'Dizajn za digitalne proizvode, trgovine i edukacijske programe — brzo objašnjava ponudu, gradi kredibilitet značajkama, brojkama i recenzijama te vodi prema jednom cilju: registraciji, narudžbi ili upisu.',
+    'sports-gaming':
+      'Dizajn za klubove, akademije, događanja i gaming brendove — hrabri, energični rasporedi s terminima, postavama i novostima, uz istaknute akcije za ulaznice, prijave i članstva.',
+    nightlife:
+      'Upečatljiv dizajn za klubove i noćni život — program i lineupi u prvom planu, rezervacije stolova i guestlista, galerije s atmosferom i ugrađen Instagram feed.',
+    'personal-community':
+      'Dizajn za osobne brendove, udruge i zajednice — snažno predstavljanje, sekcije koje pričom grade povjerenje i jasne akcije za kontakt, učlanjenje ili donaciju.',
+    ecommerce:
+      'Potpuna višestranična online trgovina — početna, kolekcija, proizvod i košarica — s prodajnim sekcijama, pričom o proizvodu i tijekom kupnje spremnim za naplatu.',
+  },
+
   simpleGroups: {
     all: 'Sve',
     'food-hospitality': 'Hrana i putovanja',

@@ -42,4 +42,6 @@ app.directive('reveal', {
 })
 
 app.use(router)
-app.mount('#app')
+// Wait for the initial navigation so the URL-derived locale (/hr/...) is
+// resolved before first paint — avoids an English flash on Croatian URLs.
+router.isReady().then(() => app.mount('#app'))

@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, onUnmounted, ref, watch } from 'vue'
 import { t } from '@/i18n.js'
+import { localePath } from '@/lang.js'
 
 const props = defineProps({ member: { type: Object, required: true } })
 
@@ -46,7 +47,7 @@ onUnmounted(teardown)
         <p class="tagline">“{{ member.tagline }}”</p>
         <p class="intro">{{ member.intro }}</p>
         <div class="cta-row">
-          <router-link class="btn btn-primary" to="/contact">{{ t('hero.getInTouch') }}</router-link>
+          <router-link class="btn btn-primary" :to="localePath('/contact')">{{ t('hero.getInTouch') }}</router-link>
         </div>
         <div v-if="member.linkedin || member.github || member.email" class="quick-links">
           <a v-if="member.linkedin" class="link-arrow" :href="member.linkedin" target="_blank" rel="noopener">LinkedIn ↗</a>

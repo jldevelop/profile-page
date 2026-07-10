@@ -185,6 +185,7 @@ const toNightclub = ([slug, title, industry, blurb, file]) => ({
   id: slug,
   code: codeOf(slug),
   title,
+  about: GROUP_ABOUT.nightlife,
   category: industry,
   group: 'nightlife',
   kind: 'simple',
@@ -193,6 +194,30 @@ const toNightclub = ([slug, title, industry, blurb, file]) => ({
   full: `${CAT}/${slug}-full.webp`,
   live: `${NC_BASE}/${file}`,
 })
+
+// Short industry paragraph per filter group — shown in the preview dialog and
+// on the prerendered /work/:id landing pages (real crawlable copy per design).
+// Croatian versions live in catalog.hr.js → groupAbout.
+const GROUP_ABOUT = {
+  'food-hospitality':
+    'A design built for restaurants, cafés, bars, hotels and travel businesses — menus and offers up front, mouth-watering imagery, opening hours, location and a prominent reservation action that turns visitors into guests.',
+  'health-beauty':
+    'A design made for salons, clinics, spas, trainers and wellness studios — services and pricing presented clearly, trust-building team and review sections, and an always-visible booking action that turns visitors into appointments.',
+  'home-pro':
+    'A design for trades, agencies and professional services — it leads with the problem you solve, shows proof through projects and reviews, and drives quote requests with clear calls to action and contact details.',
+  'creative-media':
+    'A design for creative studios, photographers, event professionals and media brands — the work takes centre stage in generous galleries and editorial layouts, backed by packages and a clear enquiry flow.',
+  'tech-shop-edu':
+    'A design for digital products, shops and education businesses — it explains the offer fast, builds credibility with features, numbers and testimonials, and pushes one conversion goal: sign-up, order or enrolment.',
+  'sports-gaming':
+    'A design for clubs, academies, events and gaming brands — bold, high-energy layouts with schedules, rosters and news, plus prominent actions for tickets, sign-ups and memberships.',
+  nightlife:
+    'A high-impact design for clubs and nightlife venues — event programme and lineups front and centre, table booking and guestlist actions, atmosphere-heavy galleries and Instagram baked in.',
+  'personal-community':
+    'A design for personal brands, nonprofits and communities — a strong introduction, story-driven sections that build trust, and clear actions for contacting, joining or donating.',
+  ecommerce:
+    'A complete multi-page online store — home, collection, product and cart — with merchandising sections, product storytelling and a checkout-ready flow designed to sell.',
+}
 
 // Public reference code shown on cards / in the preview / forwarded to the
 // contact form — lets a visitor name the exact design (WEB-14, SHOP-03, CLUB-02).
@@ -213,6 +238,7 @@ const toTemplate = (kind, group) => ([slug, title, industry, blurb]) => ({
   group: group || GROUP_OF[industry] || 'all',
   kind,
   blurb,
+  about: GROUP_ABOUT[group || GROUP_OF[industry]] ?? '',
   card: `${CAT}/${slug}-card.webp`,
   full: `${CAT}/${slug}-full.webp`,
   live: `${DEMO_BASE}/${DEMO_DIR[kind]}/${slug}/`,
@@ -233,6 +259,7 @@ export const templates = computed(() => {
       title: item?.title ?? tpl.title,
       category: catalogHr.categories[tpl.category] ?? tpl.category,
       blurb: item?.blurb ?? tpl.blurb,
+      about: catalogHr.groupAbout[tpl.group] ?? tpl.about,
       // Croatian screenshots (captured with the site in Croatian) sit next to the
       // English ones as <slug>-card.hr.webp / <slug>-full.hr.webp.
       card: `${CAT}/${tpl.id}-card.hr.webp`,

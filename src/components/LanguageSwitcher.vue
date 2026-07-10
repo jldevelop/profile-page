@@ -1,16 +1,23 @@
 <script setup>
 import { computed, onMounted, onUnmounted, ref } from 'vue'
-import { languages, lang, setLang } from '@/lang.js'
+import { useRoute, useRouter } from 'vue-router'
+import { languages, lang } from '@/lang.js'
 import { t } from '@/i18n.js'
 import FlagIcon from './FlagIcon.vue'
 
 const open = ref(false)
 const root = ref(null)
+const route = useRoute()
+const router = useRouter()
 const current = computed(() => languages.find((l) => l.code === lang.value) || languages[0])
 
+// Each language lives at its own URL (/… vs /hr/…), so switching navigates to
+// the same page in the other locale — the router's beforeEach updates `lang`.
 function choose(code) {
-  setLang(code)
   open.value = false
+  if (code === lang.value) return
+  const bare = route.fullPath.replace(/^\/hr(?=\/|\?|#|$)/, '') || '/'
+  router.push(code === 'hr' ? (bare === '/' ? '/hr' : `/hr${bare}`) : bare)
 }
 
 function onDocPointer(e) {

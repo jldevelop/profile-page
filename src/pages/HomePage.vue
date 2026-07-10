@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { company, services, companyStats, companyProcess, techStack, clients, team } from '@/content.js'
 import { featuredTemplates } from '@/catalog.js'
 import { t } from '@/i18n.js'
+import { localePath } from '@/lang.js'
 
 // Template screenshots for the layered hero showcase.
 const showMain = '/images/catalog/30-saas-product-full.webp'
@@ -21,8 +22,8 @@ const teamMembers = computed(() => team.value.filter((m) => !m.placeholder))
         <h1>{{ t('home.hero.h1') }}</h1>
         <p class="lede">{{ t('home.hero.lede') }}</p>
         <div class="cta-row">
-          <router-link class="btn btn-primary" to="/contact">{{ t('home.hero.ctaStart') }}</router-link>
-          <router-link class="btn btn-ghost" to="/work">{{ t('home.hero.ctaWork') }}</router-link>
+          <router-link class="btn btn-primary" :to="localePath('/contact')">{{ t('home.hero.ctaStart') }}</router-link>
+          <router-link class="btn btn-ghost" :to="localePath('/work')">{{ t('home.hero.ctaWork') }}</router-link>
         </div>
         <ul class="hero-stats">
           <li v-for="(stat, i) in companyStats" :key="i">
@@ -83,13 +84,13 @@ const teamMembers = computed(() => team.value.filter((m) => !m.placeholder))
           <p class="eyebrow">{{ t('home.work.eyebrow') }}</p>
           <h2>{{ t('home.work.h2') }}</h2>
         </div>
-        <router-link class="link-arrow" to="/work">{{ t('home.work.seeAll') }}</router-link>
+        <router-link class="link-arrow" :to="localePath('/work')">{{ t('home.work.seeAll') }}</router-link>
       </div>
       <div class="work-grid">
         <router-link
           v-for="tpl in featuredTemplates"
           :key="tpl.id"
-          to="/work"
+          :to="localePath('/work')"
           class="work-card"
           v-reveal
         >
@@ -151,10 +152,10 @@ const teamMembers = computed(() => team.value.filter((m) => !m.placeholder))
           <p class="eyebrow">{{ t('home.team.eyebrow') }}</p>
           <h2 v-html="t('home.team.headingHtml')"></h2>
         </div>
-        <router-link class="link-arrow" to="/team">{{ t('home.team.meetAll') }}</router-link>
+        <router-link class="link-arrow" :to="localePath('/team')">{{ t('home.team.meetAll') }}</router-link>
       </div>
       <div class="faces" v-reveal>
-        <router-link v-for="m in teamMembers" :key="m.slug" :to="`/team/${m.slug}`" class="face">
+        <router-link v-for="m in teamMembers" :key="m.slug" :to="localePath(`/team/${m.slug}`)" class="face">
           <div class="avatar" :class="{ mono: !m.photo }">
             <img v-if="m.photo" :src="m.photo" alt="" loading="lazy" decoding="async" />
             <span v-else aria-hidden="true">{{ m.monogram }}</span>
@@ -171,7 +172,7 @@ const teamMembers = computed(() => team.value.filter((m) => !m.placeholder))
     <div class="container cta-inner" v-reveal>
       <h2>{{ t('home.cta.h2') }}</h2>
       <p>{{ t('home.cta.p') }}</p>
-      <router-link class="btn btn-primary" to="/contact">{{ t('home.hero.ctaStart') }}</router-link>
+      <router-link class="btn btn-primary" :to="localePath('/contact')">{{ t('home.hero.ctaStart') }}</router-link>
     </div>
   </section>
 </template>

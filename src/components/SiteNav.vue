@@ -2,14 +2,15 @@
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { t } from '@/i18n.js'
+import { localePath } from '@/lang.js'
 import LanguageSwitcher from './LanguageSwitcher.vue'
 
 const open = ref(false)
 const route = useRoute()
 const navLinks = computed(() => [
-  { to: '/work', label: t('nav.work') },
-  { to: '/team', label: t('nav.team') },
-  { to: '/contact', label: t('nav.contact') },
+  { to: localePath('/work'), label: t('nav.work') },
+  { to: localePath('/team'), label: t('nav.team') },
+  { to: localePath('/contact'), label: t('nav.contact') },
 ])
 // Close the drawer on navigation; lock body scroll while it's open.
 watch(() => route.fullPath, () => (open.value = false))
@@ -21,7 +22,7 @@ watch(open, (v) => {
 <template>
   <header class="nav">
     <div class="container nav-row">
-      <router-link to="/" class="brand" :aria-label="t('nav.brandLabel')">
+      <router-link :to="localePath('/')" class="brand" :aria-label="t('nav.brandLabel')">
         <img class="brand-logo" src="/images/logo/jcode-logo-light-new.png" alt="jCode" />
       </router-link>
 
@@ -31,7 +32,7 @@ watch(open, (v) => {
 
       <LanguageSwitcher class="nav-lang" />
 
-      <router-link class="btn btn-primary btn-small cta" to="/contact">{{ t('nav.cta') }}</router-link>
+      <router-link class="btn btn-primary btn-small cta" :to="localePath('/contact')">{{ t('nav.cta') }}</router-link>
 
       <button
         class="burger"
@@ -49,7 +50,7 @@ watch(open, (v) => {
     <Transition name="drawer">
       <nav v-if="open" id="mobile-drawer" class="drawer" aria-label="Mobile">
         <router-link v-for="link in navLinks" :key="link.to" :to="link.to">{{ link.label }}</router-link>
-        <router-link class="btn btn-primary" to="/contact">{{ t('nav.cta') }}</router-link>
+        <router-link class="btn btn-primary" :to="localePath('/contact')">{{ t('nav.cta') }}</router-link>
       </nav>
     </Transition>
   </header>

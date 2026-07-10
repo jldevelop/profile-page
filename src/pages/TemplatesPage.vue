@@ -3,6 +3,7 @@ import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { templates, sections, simpleGroups } from '@/catalog.js'
 import { t } from '@/i18n.js'
+import { localePath } from '@/lang.js'
 import CatalogDialog from '@/components/CatalogDialog.vue'
 
 // /work/:id — an open preview is part of the URL, so every template is shareable
@@ -22,7 +23,7 @@ let openedFromGrid = false
 
 function openPreview(item) {
   openedFromGrid = true
-  router.push(`/work/${item.id}`)
+  router.push(localePath(`/work/${item.id}`))
 }
 
 function closePreview() {
@@ -30,7 +31,7 @@ function closePreview() {
     openedFromGrid = false
     router.back()
   } else {
-    router.replace('/work')
+    router.replace(localePath('/work'))
   }
 }
 
@@ -43,7 +44,7 @@ watch(
     }
     const item = templates.value.find((tpl) => tpl.id === id)
     if (!item) {
-      router.replace('/work') // unknown/expired id — just show the grid
+      router.replace(localePath('/work')) // unknown/expired id — just show the grid
       return
     }
     // make sure the right section is active behind the dialog
@@ -202,7 +203,7 @@ onUnmounted(() => {
 
       <div class="tpl-cta" v-reveal>
         <p>{{ t('work.ctaText') }}</p>
-        <router-link class="btn btn-primary" to="/contact">{{ t('nav.cta') }}</router-link>
+        <router-link class="btn btn-primary" :to="localePath('/contact')">{{ t('nav.cta') }}</router-link>
       </div>
     </div>
 
