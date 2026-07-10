@@ -187,6 +187,7 @@ export default {
     closePreviewAria: 'Zatvori pregled',
     previewAria: (title) => `Pregled: ${title}`,
     fullPreviewAlt: (title) => `${title} - pregled cijele stranice`,
+    loadingAria: 'Učitavanje pregleda',
     noImg: 'Pregled uskoro stiže.',
   },
 

@@ -192,6 +192,7 @@ export default {
     closePreviewAria: 'Close preview',
     previewAria: (title) => `${title} preview`,
     fullPreviewAlt: (title) => `${title} - full page preview`,
+    loadingAria: 'Loading preview',
     noImg: 'Preview coming soon.',
   },
 

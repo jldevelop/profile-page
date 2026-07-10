@@ -9,6 +9,18 @@ const emit = defineEmits(['close'])
 const panelEl = ref(null)
 let trigger = null // element to restore focus to on close
 
+// The full-page screenshot is tall and loads late; keep the panel at its full
+// height the whole time and show a centered spinner until the image is in.
+const imgLoaded = ref(false)
+const imgError = ref(false)
+watch(
+  () => props.item?.full,
+  () => {
+    imgLoaded.value = false
+    imgError.value = false
+  },
+)
+
 // Share the preview's deep link (/work/<id>) to a specific network via a small
 // dropdown: WhatsApp, Instagram, Facebook, Copy URL. Instagram has no web
 // share-intent, so that option copies the link and opens Instagram to paste it.
@@ -246,13 +258,24 @@ onUnmounted(() => {
           <p v-if="item.about" class="dlg-about">{{ item.about }}</p>
 
           <div class="scroll">
+            <div
+              v-if="item.full && !imgLoaded && !imgError"
+              class="loader"
+              role="status"
+              :aria-label="t('dialog.loadingAria')"
+            >
+              <span class="spinner" aria-hidden="true"></span>
+            </div>
             <img
-              v-if="item.full"
+              v-if="item.full && !imgError"
               :src="item.full"
               :alt="t('dialog.fullPreviewAlt')(item.title)"
               decoding="async"
+              :class="{ pending: !imgLoaded }"
+              @load="imgLoaded = true"
+              @error="imgError = true"
             />
-            <p v-else class="noimg">{{ t('dialog.noImg') }}</p>
+            <p v-if="!item.full || imgError" class="noimg">{{ t('dialog.noImg') }}</p>
           </div>
         </div>
       </div>
@@ -278,7 +301,9 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
   width: min(100%, 1040px);
-  max-height: 92vh;
+  /* fixed height (not max-height) so the dialog opens at full size instead of
+     collapsing to the header and jumping once the tall screenshot loads */
+  height: 92vh;
   background: var(--bg);
   border-radius: 16px;
   overflow: hidden;
@@ -451,6 +476,7 @@ onUnmounted(() => {
 /* flex:1 + min-height:0 lets this shrink to the panel height so the tall
    full-page screenshot scrolls inside instead of being clipped. */
 .scroll {
+  position: relative;
   flex: 1;
   min-height: 0;
   overflow-y: auto;
@@ -460,6 +486,39 @@ onUnmounted(() => {
 .scroll img {
   width: 100%;
   display: block;
+  transition: opacity 0.25s ease;
+}
+
+/* while loading, keep the image out of flow (it must not size the scroll area)
+   and invisible; it fades in once @load flips the class off */
+.scroll img.pending {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loader {
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 3px solid var(--line);
+  border-top-color: var(--accent);
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .noimg {
