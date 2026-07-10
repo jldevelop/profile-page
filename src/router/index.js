@@ -7,10 +7,11 @@ import { t } from '@/i18n.js'
 // Routes store a meta *key* (into locales/{en,hr}.js meta.<key>), not the literal
 // title/desc, so afterEach + the lang watcher below can resolve it per locale.
 //
-// Every page exists in two URL variants: English at the root (/, /work, …) and
-// Croatian under /hr (/hr, /hr/work, …). The URL is the source of truth for the
-// locale (see beforeEach below) so each language is separately indexable, with
-// hreflang pairs emitted by the prerenderer (scripts/prerender.mjs).
+// Every page exists in two URL variants: Croatian at the root (/, /work, …) —
+// the primary market on a .hr domain — and English under /en (/en, /en/work, …).
+// The URL is the source of truth for the locale (see beforeEach below) so each
+// language is separately indexable, with hreflang pairs emitted by the
+// prerenderer (scripts/prerender.mjs).
 const pages = [
   { path: '', name: 'home', component: HomePage, meta: { metaKey: 'base' } },
   {
@@ -39,7 +40,7 @@ const pages = [
 ]
 
 const routes = [
-  { path: '/:locale(hr)?', children: pages },
+  { path: '/:locale(en)?', children: pages },
   // Old template/catalog URLs → the work showcase (kept for any existing links).
   { path: '/templates', redirect: '/work' },
   { path: '/catalog', redirect: '/work' },
@@ -59,12 +60,12 @@ export const router = createRouter({
   },
 })
 
-// The URL decides the locale: /hr/... is Croatian, everything else is English.
+// The URL decides the locale: /en/... is English, everything else is Croatian.
 // This runs before the routed component renders, so t()/computeds resolve in
 // the right language on first paint (localStorage keeps the choice only as a
 // preference record — it never overrides the URL).
 router.beforeEach((to) => {
-  const urlLang = to.params.locale === 'hr' ? 'hr' : 'en'
+  const urlLang = to.params.locale === 'en' ? 'en' : 'hr'
   if (lang.value !== urlLang) setLang(urlLang)
 })
 

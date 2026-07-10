@@ -10,7 +10,7 @@ export const languages = [
   { code: 'en', label: 'English', short: 'EN' },
   { code: 'hr', label: 'Hrvatski', short: 'HR' },
 ]
-const DEFAULT_LANG = 'en'
+const DEFAULT_LANG = 'hr'
 const STORAGE_KEY = 'lang'
 
 function browserLang() {
@@ -49,13 +49,14 @@ export function setLang(code) {
   if (typeof document !== 'undefined') document.documentElement.lang = code
 }
 
-// Locale-aware path for internal links: Croatian pages live under /hr/... so
-// each language has real, indexable URLs (SEO/hreflang). Reads `lang`, so
-// template bindings using it re-render on locale change.
+// Locale-aware path for internal links: Croatian is the default language at
+// the root; English pages live under /en/... so each language has real,
+// indexable URLs (SEO/hreflang). Reads `lang`, so template bindings using it
+// re-render on locale change.
 export function localePath(path) {
   const p = path.startsWith('/') ? path : `/${path}`
-  if (lang.value !== 'hr') return p
-  return p === '/' ? '/hr' : `/hr${p}`
+  if (lang.value !== 'en') return p
+  return p === '/' ? '/en' : `/en${p}`
 }
 
 // keep <html lang> in sync from the start

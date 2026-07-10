@@ -47,7 +47,7 @@ try {
   const buildPages = (locale) => {
     lang.value = locale
     const hr = locale === 'hr'
-    const p = (path) => (hr ? (path === '/' ? '/hr' : `/hr${path}`) : path) // locale path
+    const p = (path) => (hr ? path : path === '/' ? '/en' : `/en${path}`) // locale path (HR = root)
     const templates = catalog.templates.value
     const sections = catalog.sections.value
     const members = content.team.value.filter((m) => !m.placeholder)
@@ -183,13 +183,13 @@ try {
   const all = [...pagesEn, ...pagesHr]
 
   // ---- write each page ----
-  const hrPathOf = (enPath) => (enPath === '/' ? '/hr' : `/hr${enPath}`)
-  const enPathOf = (hrPath) => hrPath.replace(/^\/hr(?=\/|$)/, '') || '/'
+  const enPathOf = (hrPath) => (hrPath === '/' ? '/en' : `/en${hrPath}`)
+  const hrPathOf = (enPath) => enPath.replace(/^\/en(?=\/|$)/, '') || '/'
 
   for (const page of all) {
-    const isHr = page.path === '/hr' || page.path.startsWith('/hr/')
-    const enUrl = `${ORIGIN}${isHr ? enPathOf(page.path) : page.path}`
-    const hrUrl = `${ORIGIN}${isHr ? page.path : hrPathOf(page.path)}`
+    const isEn = page.path === '/en' || page.path.startsWith('/en/')
+    const enUrl = `${ORIGIN}${isEn ? page.path : enPathOf(page.path)}`
+    const hrUrl = `${ORIGIN}${isEn ? hrPathOf(page.path) : page.path}`
     const canonical = `${ORIGIN}${page.path}`
     const ogImage = page.ogImage || `${ORIGIN}/og-image.jpg`
 
@@ -197,12 +197,12 @@ try {
     <title>${esc(page.title)}</title>
     <meta name="description" content="${esc(page.desc)}">
     <link rel="canonical" href="${canonical}">
-    <link rel="alternate" hreflang="en" href="${enUrl}">
     <link rel="alternate" hreflang="hr" href="${hrUrl}">
+    <link rel="alternate" hreflang="en" href="${enUrl}">
     <link rel="alternate" hreflang="x-default" href="${enUrl}">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="jCode">
-    <meta property="og:locale" content="${isHr ? 'hr_HR' : 'en_US'}">
+    <meta property="og:locale" content="${isEn ? 'en_US' : 'hr_HR'}">
     <meta property="og:title" content="${esc(page.title)}">
     <meta property="og:description" content="${esc(page.desc)}">
     <meta property="og:url" content="${canonical}">
@@ -211,10 +211,10 @@ try {
     <meta name="twitter:title" content="${esc(page.title)}">
     <meta name="twitter:description" content="${esc(page.desc)}">
     <meta name="twitter:image" content="${esc(ogImage)}">
-    ${page.path === '/' ? template.match(/<script type="application\/ld\+json">[\s\S]*?<\/script>/)?.[0] ?? '' : ''}`
+    ${page.path === '/' || page.path === '/en' ? template.match(/<script type="application\/ld\+json">[\s\S]*?<\/script>/)?.[0] ?? '' : ''}`
 
     let html = template.replace(/<!-- seo:start\b[^>]*-->[\s\S]*?<!-- seo:end -->/, `<!-- seo:start -->${head}\n    <!-- seo:end -->`)
-    html = html.replace('<html lang="en">', `<html lang="${isHr ? 'hr' : 'en'}">`)
+    html = html.replace(/<html lang="[a-z]{2}">/, `<html lang="${isEn ? 'en' : 'hr'}">`)
     html = html.replace('<div id="app"></div>', `<div id="app">${page.body}\n    </div>`)
 
     const outDir = page.path === '/' ? DIST : resolve(DIST, `.${page.path}`)
@@ -225,14 +225,14 @@ try {
   // ---- sitemap.xml with hreflang alternates ----
   const today = new Date().toISOString().slice(0, 10)
   const urlEntry = (page) => {
-    const isHr = page.path === '/hr' || page.path.startsWith('/hr/')
-    const enUrl = `${ORIGIN}${isHr ? enPathOf(page.path) : page.path}`
-    const hrUrl = `${ORIGIN}${isHr ? page.path : hrPathOf(page.path)}`
+    const isEn = page.path === '/en' || page.path.startsWith('/en/')
+    const enUrl = `${ORIGIN}${isEn ? page.path : enPathOf(page.path)}`
+    const hrUrl = `${ORIGIN}${isEn ? hrPathOf(page.path) : page.path}`
     return `  <url>
     <loc>${ORIGIN}${page.path}</loc>
     <lastmod>${today}</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="${enUrl}"/>
     <xhtml:link rel="alternate" hreflang="hr" href="${hrUrl}"/>
+    <xhtml:link rel="alternate" hreflang="en" href="${enUrl}"/>
   </url>`
   }
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
