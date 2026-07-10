@@ -15,6 +15,17 @@ import catalogHr from '@/catalog.hr.js'
 
 const CAT = '/images/catalog'
 
+// ---------------------------------------------------------------------------
+// HIDDEN TEMPLATES
+// Add the public code ('WEB-07', 'SHOP-12', 'CLUB-01') or the slug
+// ('07-beauty-spa-wellness') of any template you want to take off the site
+// for now. Hidden templates disappear from the /work grid, their /work/:id
+// deep link, the prerendered pages and the sitemap on the next build/deploy.
+// Remove the entry to bring the template back.
+// ---------------------------------------------------------------------------
+const HIDDEN_TEMPLATES = ['WEB-68', 'WEB-27', 'WEB-28', 'WEB-20', 'WEB-37', 'WEB-03', 'WEB-26', 'WEB-64', 'WEB-11', 'WEB-18', 'WEB-01', '\n' +
+'SHOP-05']
+
 // Live demo sites - deployed to Cloudflare Pages from ../websites-portfolio/templates-wrapper.
 // Folder names match each template's slug; simple sites and storefronts live under
 // separate top-level folders. See websites-portfolio/wrangler.toml + `npm run deploy:templates`.
@@ -244,11 +255,14 @@ const toTemplate = (kind, group) => ([slug, title, industry, blurb]) => ({
   live: `${DEMO_BASE}/${DEMO_DIR[kind]}/${slug}/`,
 })
 
+const hidden = new Set(HIDDEN_TEMPLATES.map((s) => s.trim().toUpperCase()))
+const isHidden = (tpl) => hidden.has(tpl.code) || hidden.has(tpl.id.toUpperCase())
+
 const templatesBase = [
   ...sites.map(toTemplate('simple')),
   ...nightclubs.map(toNightclub),
   ...stores.map(toTemplate('ecommerce', 'ecommerce')),
-]
+].filter((tpl) => !isHidden(tpl))
 
 export const templates = computed(() => {
   if (lang.value !== 'hr') return templatesBase
