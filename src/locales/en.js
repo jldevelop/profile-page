@@ -30,10 +30,10 @@ export default {
   },
 
   company: {
-    eyebrow: 'Software studio · Barcelona + EU remote',
+    eyebrow: 'Software studio · Zagreb · Barcelona + EU remote',
     tagline: 'Websites, e-commerce, mobile apps & AI automation for growing businesses.',
     lede: 'A senior software studio. We design and build websites, online stores, mobile apps and AI automations for small and medium businesses - from first sketch to launch.',
-    location: 'Barcelona · EU remote',
+    location: 'Zagreb · Barcelona · EU remote',
   },
 
   services: {

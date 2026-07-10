@@ -154,7 +154,7 @@ const josip = {
   // Listing title (homepage teaser + team page). The founder title intentionally
   // lives only on his profile page, which renders `eyebrow` below.
   role: 'Senior Software Developer',
-  eyebrow: 'Founder & Engineering Lead · Full-Stack · Barcelona',
+  eyebrow: 'Founder & Engineering Lead · Full-Stack · Zagreb · Barcelona',
   tagline: 'My job is making teams ship.',
   intro:
     `${YEARS.josip}+ years in web engineering - first as a developer, then as an engineering manager leading a web team, most recently as co-founder & CTO of a startup. Through jCode I take on websites, web apps and mobile apps end-to-end.`,

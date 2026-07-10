@@ -11,7 +11,7 @@
 export default {
   'josip-lukacevic': {
     role: 'Viši softverski inženjer',
-    eyebrow: 'Osnivač i vodeći inženjer · Full-Stack · Barcelona',
+    eyebrow: 'Osnivač i vodeći inženjer · Full-Stack · Zagreb · Barcelona',
     tagline: 'Moj posao je da timovi isporučuju.',
     intro: (years) =>
       `${years}+ godina u web inženjerstvu - najprije kao razvojni programer, zatim kao voditelj inženjerskog tima, a najnovije kao suosnivač i CTO startupa. Kroz jCode preuzimam izradu web stranica, web i mobilnih aplikacija od početka do kraja.`,

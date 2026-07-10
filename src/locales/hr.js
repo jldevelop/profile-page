@@ -29,10 +29,10 @@ export default {
   },
 
   company: {
-    eyebrow: 'Softverski studio · Barcelona + EU, na daljinu',
+    eyebrow: 'Softverski studio · Zagreb · Barcelona + EU, na daljinu',
     tagline: 'Web stranice, e-trgovina, mobilne aplikacije i AI automatizacija za tvrtke u razvoju.',
     lede: 'Iskusan softverski studio. Dizajniramo i izrađujemo web stranice, online trgovine, mobilne aplikacije i AI automatizacije za male i srednje tvrtke - od prve skice do lansiranja.',
-    location: 'Barcelona · EU, na daljinu',
+    location: 'Zagreb · Barcelona · EU, na daljinu',
   },
 
   services: {
@@ -126,7 +126,7 @@ export default {
 
   contact: {
     title: 'Izgradimo nešto zajedno.',
-    pitch: 'Ispričajte nam o svom projektu - web stranici, online trgovini, mobilnoj aplikaciji, AI automatizaciji, ili samo ideji koju želite provjeriti. Pročitamo svaku poruku i odgovaramo u roku od dana.',
+    pitch: 'Ispričajte nam o svom projektu - web stranici, online trgovini, mobilnoj aplikaciji, AI automatizaciji, ili samo ideji koju želite provjeriti. Pročitamo svaku poruku i odgovaramo isti dan.',
     projectTypes: {
       website: 'Web stranica',
       ecommerce: 'Online trgovina',
@@ -142,7 +142,7 @@ export default {
     send: 'Pošalji poruku',
     errorPrefix: 'Nešto je pošlo po zlu - pišite nam izravno na',
     sentTitle: 'Hvala - poruka je poslana.',
-    sentBody: 'Odgovorit ćemo vam u roku od dana.',
+    sentBody: 'Odgovorit ćemo vam isti dan.',
     methods: {
       email: 'Email',
       whatsapp: 'WhatsApp',
