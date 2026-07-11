@@ -36,7 +36,8 @@ const HIDDEN_TEMPLATES = [
   'WEB-64',
   'WEB-68',
   'SHOP-05',
-  'WEB-17'
+  'WEB-17',
+  'WEB-48'
 ]
 
 // Live demo sites - deployed to Cloudflare Pages from ../websites-portfolio/templates-wrapper.
@@ -272,26 +273,27 @@ const hidden = new Set(HIDDEN_TEMPLATES.map((s) => s.trim().toUpperCase()))
 const isHidden = (tpl) => hidden.has(tpl.code) || hidden.has(tpl.id.toUpperCase())
 
 // Fixed display order for the /work grid (hand-picked with the /sort-templates
-// tool, 2026-07-11). Templates missing from this list - e.g. ones unhidden
+// tool, updated 2026-07-11). Templates missing from this list - e.g. ones unhidden
 // later - simply follow at the end in catalog order.
 const DISPLAY_ORDER = [
-  '30-saas-product',
+  '56-cybersecurity-software',
   '21-personal-profile-portfolio',
-  '13-construction-company',
+  '30-saas-product',
+  '55-developer-tool-api-platform',
   '09-dental-clinic',
   '40-musician-band',
   '31-mobile-app',
   '36-online-course-e-learning',
   '23-personal-trainer',
   '22-freelancer-consultant',
-  '55-developer-tool-api-platform',
+  '13-construction-company',
   '10-medical-practice',
   '08-nail-salon',
   '38-podcast',
-  '56-cybersecurity-software',
   '33-digital-marketing-agency',
   '69-fashion-boutique',
   '05-hair-salon',
+  '57-video-game-game-studio',
   '59-sports-club-team',
   '52-project-management-saas',
   '14-home-services-plumbing-electric',
@@ -317,17 +319,14 @@ const DISPLAY_ORDER = [
   '53-ai-productivity-saas',
   '43-pet-grooming',
   '60-esports-team-org',
-  '17-interior-design-studio',
   '44-veterinary-clinic',
   '54-analytics-dashboard-saas',
   '58-desktop-creative-software',
   '46-car-dealership',
   '47-bakery',
-  '48-florist',
   '49-catering-service',
   '50-daycare-preschool',
   '51-crm-saas',
-  '57-video-game-game-studio',
   '61-sports-academy-coaching',
   'e03-streetwear',
   '62-marathon-sporting-event',
