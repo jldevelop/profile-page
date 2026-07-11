@@ -63,19 +63,11 @@ watch(
   { immediate: true, flush: 'post' },
 )
 
-// Templates render in a fresh random order on every visit. Each id gets a
-// random weight per mount, so the order is stable while browsing (and across
-// EN/HR switches, since ids don't change) but reshuffles on the next load.
-const weights = new Map()
-const weightOf = (id) => {
-  if (!weights.has(id)) weights.set(id, Math.random())
-  return weights.get(id)
-}
-const shuffled = computed(() => [...templates.value].sort((a, b) => weightOf(a.id) - weightOf(b.id)))
-
+// Templates render in the fixed, hand-picked order from catalog.js
+// (DISPLAY_ORDER) - the same on every visit.
 const items = computed(() => {
-  if (section.value === 'ecommerce') return shuffled.value.filter((tpl) => tpl.kind === 'ecommerce')
-  return shuffled.value.filter(
+  if (section.value === 'ecommerce') return templates.value.filter((tpl) => tpl.kind === 'ecommerce')
+  return templates.value.filter(
     (tpl) => tpl.kind === 'simple' && (sub.value === 'all' || tpl.group === sub.value),
   )
 })

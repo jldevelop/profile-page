@@ -37,6 +37,13 @@ const pages = [
     component: () => import('@/pages/ContactPage.vue'),
     meta: { metaKey: 'contact' },
   },
+  // TEMPORARY internal tool - drag & drop ordering for the /work grid. Not
+  // linked anywhere, noindex, excluded from prerender/sitemap. Sets its own title.
+  {
+    path: 'sort-templates',
+    name: 'sort-templates',
+    component: () => import('@/pages/SortTemplatesPage.vue'),
+  },
 ]
 
 const routes = [

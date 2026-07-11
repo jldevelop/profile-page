@@ -23,8 +23,20 @@ const CAT = '/images/catalog'
 // deep link, the prerendered pages and the sitemap on the next build/deploy.
 // Remove the entry to bring the template back.
 // ---------------------------------------------------------------------------
-const HIDDEN_TEMPLATES = ['WEB-68', 'WEB-27', 'WEB-28', 'WEB-20', 'WEB-37', 'WEB-03', 'WEB-26', 'WEB-64', 'WEB-11', 'WEB-18', 'WEB-01', '\n' +
-'SHOP-05']
+const HIDDEN_TEMPLATES = [
+  'WEB-01',
+  'WEB-03',
+  'WEB-11',
+  'WEB-18',
+  'WEB-20',
+  'WEB-26',
+  'WEB-27',
+  'WEB-28',
+  'WEB-37',
+  'WEB-64',
+  'WEB-68',
+  'SHOP-05',
+]
 
 // Live demo sites - deployed to Cloudflare Pages from ../websites-portfolio/templates-wrapper.
 // Folder names match each template's slug; simple sites and storefronts live under
@@ -258,11 +270,102 @@ const toTemplate = (kind, group) => ([slug, title, industry, blurb]) => ({
 const hidden = new Set(HIDDEN_TEMPLATES.map((s) => s.trim().toUpperCase()))
 const isHidden = (tpl) => hidden.has(tpl.code) || hidden.has(tpl.id.toUpperCase())
 
+// Fixed display order for the /work grid (hand-picked with the /sort-templates
+// tool, 2026-07-11). Templates missing from this list - e.g. ones unhidden
+// later - simply follow at the end in catalog order.
+const DISPLAY_ORDER = [
+  '30-saas-product',
+  '21-personal-profile-portfolio',
+  '13-construction-company',
+  '09-dental-clinic',
+  '40-musician-band',
+  '31-mobile-app',
+  '36-online-course-e-learning',
+  '23-personal-trainer',
+  '22-freelancer-consultant',
+  '55-developer-tool-api-platform',
+  '10-medical-practice',
+  '08-nail-salon',
+  '38-podcast',
+  '56-cybersecurity-software',
+  '33-digital-marketing-agency',
+  '69-fashion-boutique',
+  '05-hair-salon',
+  '59-sports-club-team',
+  '52-project-management-saas',
+  '14-home-services-plumbing-electric',
+  '15-cleaning-service',
+  'e06-activewear-athleisure',
+  '19-photography-studio',
+  '24-gym-fitness-studio',
+  '06-barbershop',
+  '25-yoga-pilates-studio',
+  '29-tour-operator',
+  '04-single-property-listing',
+  '12-financial-advisor',
+  '39-author-book-launch',
+  '07-beauty-spa-wellness',
+  '32-tech-startup',
+  '16-landscaping-gardening',
+  '45-auto-repair-shop',
+  'nc01-beton',
+  'nc02-volt',
+  '35-single-product-dtc',
+  '41-nonprofit-charity',
+  '42-church-faith-community',
+  '53-ai-productivity-saas',
+  '43-pet-grooming',
+  '60-esports-team-org',
+  '17-interior-design-studio',
+  '44-veterinary-clinic',
+  '54-analytics-dashboard-saas',
+  '58-desktop-creative-software',
+  '46-car-dealership',
+  '47-bakery',
+  '48-florist',
+  '49-catering-service',
+  '50-daycare-preschool',
+  '51-crm-saas',
+  '57-video-game-game-studio',
+  '61-sports-academy-coaching',
+  'e03-streetwear',
+  '62-marathon-sporting-event',
+  '63-insurance-agency',
+  '65-recruitment-staffing-agency',
+  '66-coworking-space',
+  '67-conference-summit',
+  '70-brewery-winery',
+  '34-online-store-multi-product',
+  'nc03-aurora',
+  'e01-womens-fashion-boutique',
+  'e02-mens-tailored-clothing',
+  'e04-luxury-fashion-house',
+  'e07-lingerie-intimates',
+  'e08-premium-denim',
+  'e09-vintage-thrift',
+  'e10-kids-clothing',
+  'e11-sneakers-footwear',
+  'e12-eyewear-sunglasses',
+  'e13-handbags-leather-goods',
+  '02-coffee-shop',
+  'e14-swimwear',
+  'e15-eco-sneakers',
+  'e16-accessories-scarves-hats',
+  'e17-skincare',
+  'e18-makeup',
+  'e19-natural-organic-beauty',
+  'e20-perfume-fragrance',
+]
+const orderIndex = new Map(DISPLAY_ORDER.map((id, i) => [id, i]))
+
 const templatesBase = [
   ...sites.map(toTemplate('simple')),
   ...nightclubs.map(toNightclub),
   ...stores.map(toTemplate('ecommerce', 'ecommerce')),
-].filter((tpl) => !isHidden(tpl))
+]
+  .filter((tpl) => !isHidden(tpl))
+  // stable sort: ids not in DISPLAY_ORDER keep their relative catalog order at the end
+  .sort((a, b) => (orderIndex.get(a.id) ?? Infinity) - (orderIndex.get(b.id) ?? Infinity))
 
 export const templates = computed(() => {
   if (lang.value !== 'hr') return templatesBase
@@ -283,13 +386,16 @@ export const templates = computed(() => {
 })
 
 // A small, varied set shown on the homepage "templates" teaser.
+// (2026-07-11: swapped out 18-architecture-firm, 01-restaurant and
+// 27-boutique-hotel - now in HIDDEN_TEMPLATES - for top picks from the
+// hand-sorted DISPLAY_ORDER, keeping the mix varied.)
 const FEATURED_IDS = [
   '30-saas-product',
-  '18-architecture-firm',
+  '21-personal-profile-portfolio',
   'e01-womens-fashion-boutique',
-  '01-restaurant',
+  '13-construction-company',
   '53-ai-productivity-saas',
-  '27-boutique-hotel',
+  '09-dental-clinic',
 ]
 export const featuredTemplates = computed(() =>
   FEATURED_IDS.map((id) => templates.value.find((t) => t.id === id)).filter(Boolean),
