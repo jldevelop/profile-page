@@ -36,6 +36,7 @@ const HIDDEN_TEMPLATES = [
   'WEB-64',
   'WEB-68',
   'SHOP-05',
+  'WEB-17'
 ]
 
 // Live demo sites - deployed to Cloudflare Pages from ../websites-portfolio/templates-wrapper.
