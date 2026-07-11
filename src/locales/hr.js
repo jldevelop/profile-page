@@ -29,10 +29,10 @@ export default {
   },
 
   company: {
-    eyebrow: 'Softverski studio · Zagreb · Barcelona + EU, na daljinu',
+    eyebrow: 'Softverski studio · Zagreb · Barcelona',
     tagline: 'Web stranice, e-trgovina, mobilne aplikacije i AI automatizacija za tvrtke u razvoju.',
     lede: 'Iskusan softverski studio. Dizajniramo i izrađujemo web stranice, online trgovine, mobilne aplikacije i AI automatizacije za male i srednje tvrtke - od prve skice do lansiranja.',
-    location: 'Zagreb · Barcelona · EU, na daljinu',
+    location: 'Zagreb · Barcelona',
   },
 
   services: {
