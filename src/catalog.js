@@ -172,6 +172,8 @@ const sites = [
   ['69-fashion-boutique', 'Fashion Boutique', 'Retail', 'Present collections and pull shoppers in.'],
   ['70-brewery-winery', 'Brewery & Winery', 'Food & Drink', 'Tell the craft story and drive tastings.'],
   ['71-hairdressing-salon', 'Hair Atelier', 'Beauty & Wellness', 'Flagship salon site: gallery, Instagram feed & online booking.'],
+  ['72-hair-colour-studio', 'Hair Colour Studio', 'Beauty & Wellness', 'Loud colour-studio site: before/after slider & price estimator.'],
+  ['73-nail-studio', 'Nail Studio', 'Beauty & Wellness', 'Playful nail-studio site: shape picker, gallery filters & slot booking.'],
 ]
 
 // Full multi-page e-commerce storefronts (home · collection · product · cart).
@@ -295,6 +297,8 @@ const DISPLAY_ORDER = [
   '69-fashion-boutique',
   '05-hair-salon',
   '71-hairdressing-salon',
+  '72-hair-colour-studio',
+  '73-nail-studio',
   '57-video-game-game-studio',
   '59-sports-club-team',
   '52-project-management-saas',

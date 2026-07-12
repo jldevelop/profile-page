@@ -161,6 +161,8 @@ export default {
     '69-fashion-boutique': { title: 'Modni butik', blurb: 'Predstavite kolekcije i privucite kupce.' },
     '70-brewery-winery': { title: 'Pivovara i vinarija', blurb: 'Ispričajte priču o zanatu i povećajte broj degustacija.' },
     '71-hairdressing-salon': { title: 'Frizerski atelje', blurb: 'Vrhunski salon: galerija, Instagram i online rezervacije.' },
+    '72-hair-colour-studio': { title: 'Studio za boju kose', blurb: 'Glasni studio za boju: prije/poslije klizač i procjena cijene.' },
+    '73-nail-studio': { title: 'Studio za nokte', blurb: 'Razigrana stranica za nokte: birač oblika, filtri galerije i rezervacija termina.' },
 
     'e01-womens-fashion-boutique': { title: 'Butik ženske mode', blurb: 'Potpuna online trgovina za brend ženske mode.' },
     'e02-mens-tailored-clothing': { title: 'Muška krojena odjeća', blurb: 'Prodajte krojenu mušku odjeću uz elegantnu trgovinu.' },
