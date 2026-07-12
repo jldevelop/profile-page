@@ -160,6 +160,7 @@ export default {
     '68-jewelry-store': { title: 'Zlatarnica', blurb: 'Prikažite komade nakita i povećajte upite i posjete.' },
     '69-fashion-boutique': { title: 'Modni butik', blurb: 'Predstavite kolekcije i privucite kupce.' },
     '70-brewery-winery': { title: 'Pivovara i vinarija', blurb: 'Ispričajte priču o zanatu i povećajte broj degustacija.' },
+    '71-hairdressing-salon': { title: 'Frizerski atelje', blurb: 'Vrhunski salon: galerija, Instagram i online rezervacije.' },
 
     'e01-womens-fashion-boutique': { title: 'Butik ženske mode', blurb: 'Potpuna online trgovina za brend ženske mode.' },
     'e02-mens-tailored-clothing': { title: 'Muška krojena odjeća', blurb: 'Prodajte krojenu mušku odjeću uz elegantnu trgovinu.' },

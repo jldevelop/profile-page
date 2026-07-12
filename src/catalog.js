@@ -171,6 +171,7 @@ const sites = [
   ['68-jewelry-store', 'Jewelry Store', 'Retail', 'Showcase pieces and drive enquiries & visits.'],
   ['69-fashion-boutique', 'Fashion Boutique', 'Retail', 'Present collections and pull shoppers in.'],
   ['70-brewery-winery', 'Brewery & Winery', 'Food & Drink', 'Tell the craft story and drive tastings.'],
+  ['71-hairdressing-salon', 'Hair Atelier', 'Beauty & Wellness', 'Flagship salon site: gallery, Instagram feed & online booking.'],
 ]
 
 // Full multi-page e-commerce storefronts (home · collection · product · cart).
@@ -293,6 +294,7 @@ const DISPLAY_ORDER = [
   '33-digital-marketing-agency',
   '69-fashion-boutique',
   '05-hair-salon',
+  '71-hairdressing-salon',
   '57-video-game-game-studio',
   '59-sports-club-team',
   '52-project-management-saas',
