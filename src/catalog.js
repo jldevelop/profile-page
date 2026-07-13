@@ -178,6 +178,7 @@ const sites = [
   ['75-startup-law', 'Startup Law', 'Professional Services', 'Modern startup-law site: stage selector, flat fees & deal list.'],
   ['76-corporate-law', 'Corporate Law Firm', 'Professional Services', 'Institutional firm site: practice explorer, deal sheet & timeline.'],
   ['77-luxury-real-estate', 'Luxury Real Estate', 'Real Estate', 'Quiet-luxury atelier site: cinematic listings & private viewings.'],
+  ['78-fine-dining-restaurant', 'Fine Dining Restaurant', 'Food & Drink', 'Seasonal tasting-menu site: menu tabs, wine cellar & table requests.'],
 ]
 
 // Full multi-page e-commerce storefronts (home · collection · product · cart).
@@ -291,6 +292,7 @@ const DISPLAY_ORDER = [
   '21-personal-profile-portfolio',
   '09-dental-clinic',
   '77-luxury-real-estate',
+  '78-fine-dining-restaurant',
   '30-saas-product',
   '40-musician-band',
   '31-mobile-app',

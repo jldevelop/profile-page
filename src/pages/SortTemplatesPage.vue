@@ -20,6 +20,7 @@ const DRAFT_ORDER = [
   '21-personal-profile-portfolio',
   '09-dental-clinic',
   '77-luxury-real-estate',
+  '78-fine-dining-restaurant',
   '30-saas-product',
   '40-musician-band',
   '31-mobile-app',

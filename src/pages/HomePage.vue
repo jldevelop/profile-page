@@ -703,4 +703,28 @@ const teamMembers = computed(() => team.value.filter((m) => !m.placeholder))
     align-items: flex-start;
   }
 }
+
+/* Wide screens (added 2026-07-13): keep the hero's presence on 27"+ displays.
+   Scoped styles out-specify the globals in main.css, so the steps live here. */
+@media (min-width: 1600px) {
+  .hero h1 {
+    font-size: clamp(38px, 5.6vw, 70px);
+  }
+  .hero .lede {
+    font-size: 21px;
+    max-width: 600px;
+  }
+  .cta-band h2 {
+    font-size: clamp(28px, 4.4vw, 50px);
+  }
+}
+
+@media (min-width: 2000px) {
+  .hero h1 {
+    font-size: 76px;
+  }
+  .hero .lede {
+    font-size: 22px;
+  }
+}
 </style>
