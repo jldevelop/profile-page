@@ -174,6 +174,9 @@ const sites = [
   ['71-hairdressing-salon', 'Hair Atelier', 'Beauty & Wellness', 'Flagship salon site: gallery, Instagram feed & online booking.'],
   ['72-hair-colour-studio', 'Hair Colour Studio', 'Beauty & Wellness', 'Loud colour-studio site: before/after slider & price estimator.'],
   ['73-nail-studio', 'Nail Studio', 'Beauty & Wellness', 'Playful nail-studio site: shape picker, gallery filters & slot booking.'],
+  ['74-law-firm', 'Law Chambers', 'Professional Services', 'Boutique law-firm site: legal compass, track record & clear fees.'],
+  ['75-startup-law', 'Startup Law', 'Professional Services', 'Modern startup-law site: stage selector, flat fees & deal list.'],
+  ['76-corporate-law', 'Corporate Law Firm', 'Professional Services', 'Institutional firm site: practice explorer, deal sheet & timeline.'],
 ]
 
 // Full multi-page e-commerce storefronts (home · collection · product · cart).
@@ -299,6 +302,9 @@ const DISPLAY_ORDER = [
   '71-hairdressing-salon',
   '72-hair-colour-studio',
   '73-nail-studio',
+  '74-law-firm',
+  '75-startup-law',
+  '76-corporate-law',
   '57-video-game-game-studio',
   '59-sports-club-team',
   '52-project-management-saas',

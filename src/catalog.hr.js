@@ -163,6 +163,9 @@ export default {
     '71-hairdressing-salon': { title: 'Frizerski atelje', blurb: 'Vrhunski salon: galerija, Instagram i online rezervacije.' },
     '72-hair-colour-studio': { title: 'Studio za boju kose', blurb: 'Glasni studio za boju: prije/poslije klizač i procjena cijene.' },
     '73-nail-studio': { title: 'Studio za nokte', blurb: 'Razigrana stranica za nokte: birač oblika, filtri galerije i rezervacija termina.' },
+    '74-law-firm': { title: 'Odvjetničko društvo', blurb: 'Stranica butik odvjetničkog društva: pravni kompas, predmeti i jasne cijene.' },
+    '75-startup-law': { title: 'Pravo za startupe', blurb: 'Moderna stranica za startup pravo: birač faze, fiksne cijene i popis poslova.' },
+    '76-corporate-law': { title: 'Poslovna odvjetnička kuća', blurb: 'Etablirana odvjetnička kuća: pregled praksi, veliki poslovi i vremenska crta.' },
 
     'e01-womens-fashion-boutique': { title: 'Butik ženske mode', blurb: 'Potpuna online trgovina za brend ženske mode.' },
     'e02-mens-tailored-clothing': { title: 'Muška krojena odjeća', blurb: 'Prodajte krojenu mušku odjeću uz elegantnu trgovinu.' },
