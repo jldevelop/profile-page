@@ -4,97 +4,102 @@
 // array of ids to hardcode as the fixed grid order. Delete when done.
 // Progress persists to localStorage on every drop, so the page can be
 // refreshed / revisited mid-sort without losing the order.
-import { onMounted, onUnmounted, ref } from 'vue'
-import { templates } from '@/catalog.js'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { templates, simpleGroups } from '@/catalog.js'
 
 const STORAGE_KEY = 'jcode-sort-templates-order'
 
-// The final order (hardcoded in catalog.js on 2026-07-11) - the tool now
+// The final order (hardcoded in catalog.js on 2026-07-13) - the tool now
 // starts from the live order, in case another pass is ever needed.
 const DRAFT_ORDER = [
   '56-cybersecurity-software',
   '21-personal-profile-portfolio',
   '30-saas-product',
   '55-developer-tool-api-platform',
-  '09-dental-clinic',
+  '72-hair-colour-studio',
   '40-musician-band',
   '31-mobile-app',
-  '36-online-course-e-learning',
-  '23-personal-trainer',
-  '22-freelancer-consultant',
-  '13-construction-company',
-  '10-medical-practice',
-  '08-nail-salon',
-  '38-podcast',
   '33-digital-marketing-agency',
-  '69-fashion-boutique',
-  '05-hair-salon',
-  '59-sports-club-team',
-  '52-project-management-saas',
-  '14-home-services-plumbing-electric',
-  '15-cleaning-service',
-  'e06-activewear-athleisure',
-  '19-photography-studio',
-  '24-gym-fitness-studio',
+  '73-nail-studio',
+  '41-nonprofit-charity',
+  '13-construction-company',
+  '09-dental-clinic',
   '06-barbershop',
-  '25-yoga-pilates-studio',
-  '29-tour-operator',
-  '04-single-property-listing',
-  '12-financial-advisor',
-  '39-author-book-launch',
-  '07-beauty-spa-wellness',
+  '38-podcast',
+  '52-project-management-saas',
   '32-tech-startup',
-  '16-landscaping-gardening',
-  '45-auto-repair-shop',
+  '10-medical-practice',
+  '59-sports-club-team',
+  '50-daycare-preschool',
+  '14-home-services-plumbing-electric',
+  '46-car-dealership',
+  'e03-streetwear',
+  '19-photography-studio',
+  '08-nail-salon',
+  '05-hair-salon',
+  '23-personal-trainer',
+  '70-brewery-winery',
+  '15-cleaning-service',
+  '66-coworking-space',
+  '39-author-book-launch',
+  '43-pet-grooming',
+  '35-single-product-dtc',
+  '76-corporate-law',
+  '65-recruitment-staffing-agency',
   'nc01-beton',
   'nc02-volt',
-  '35-single-product-dtc',
-  '41-nonprofit-charity',
-  '42-church-faith-community',
   '53-ai-productivity-saas',
-  '43-pet-grooming',
-  '60-esports-team-org',
-  '44-veterinary-clinic',
+  '22-freelancer-consultant',
+  'e08-premium-denim',
+  '42-church-faith-community',
   '54-analytics-dashboard-saas',
-  '58-desktop-creative-software',
-  '46-car-dealership',
-  '47-bakery',
-  '48-florist',
-  '49-catering-service',
-  '50-daycare-preschool',
-  '51-crm-saas',
+  '24-gym-fitness-studio',
+  '60-esports-team-org',
+  '25-yoga-pilates-studio',
   '57-video-game-game-studio',
+  '58-desktop-creative-software',
   '61-sports-academy-coaching',
-  'e03-streetwear',
+  'e17-skincare',
+  '36-online-course-e-learning',
+  '45-auto-repair-shop',
+  '29-tour-operator',
+  '47-bakery',
+  '51-crm-saas',
+  '69-fashion-boutique',
   '62-marathon-sporting-event',
+  '75-startup-law',
   '63-insurance-agency',
-  '65-recruitment-staffing-agency',
-  '66-coworking-space',
+  '04-single-property-listing',
   '67-conference-summit',
-  '70-brewery-winery',
+  '49-catering-service',
   '34-online-store-multi-product',
   'nc03-aurora',
-  'e01-womens-fashion-boutique',
-  'e02-mens-tailored-clothing',
-  'e04-luxury-fashion-house',
-  'e07-lingerie-intimates',
-  'e08-premium-denim',
-  'e09-vintage-thrift',
-  'e10-kids-clothing',
   'e11-sneakers-footwear',
+  'e07-lingerie-intimates',
+  'e14-swimwear',
+  'e02-mens-tailored-clothing',
+  'e01-womens-fashion-boutique',
+  'e04-luxury-fashion-house',
+  'e09-vintage-thrift',
+  'e06-activewear-athleisure',
+  'e10-kids-clothing',
+  '02-coffee-shop',
   'e12-eyewear-sunglasses',
   'e13-handbags-leather-goods',
-  '02-coffee-shop',
-  'e14-swimwear',
   'e15-eco-sneakers',
   'e16-accessories-scarves-hats',
-  'e17-skincare',
   'e18-makeup',
   'e19-natural-organic-beauty',
   'e20-perfume-fragrance',
+  '07-beauty-spa-wellness',
+  '44-veterinary-clinic',
+  '71-hairdressing-salon',
+  '16-landscaping-gardening',
+  '12-financial-advisor',
+  '74-law-firm',
 ]
 
-const pick = ({ id, code, title, card, kind }) => ({ id, code, title, card, kind })
+const pick = ({ id, code, title, card, kind, group }) => ({ id, code, title, card, kind, group })
 
 // Order of precedence: localStorage (work in progress) → the saved draft
 // above → catalog order. Ids that no longer exist (e.g. newly hidden) are
@@ -127,20 +132,75 @@ function persist() {
   } catch { /* storage full/blocked - dragging still works, just no persistence */ }
 }
 
+/* ---------- Category filter ----------
+   "All" behaves exactly as before. A category view shows only that group and
+   reordering inside it is SLOT-STABLE: the group's members swap around the
+   global positions the group already occupies, so templates from other
+   categories never move. E-commerce is matched by kind (its group is 'all'). */
+const filter = ref('all')
+
+const chips = computed(() => [
+  { key: 'all', label: 'All' },
+  ...simpleGroups.value.filter((g) => g.key !== 'all'),
+  { key: 'ecommerce', label: 'E-commerce' },
+])
+
+function matches(t, key) {
+  if (key === 'all') return true
+  if (key === 'ecommerce') return t.kind === 'ecommerce'
+  return t.group === key && t.kind !== 'ecommerce'
+}
+
+const chipCounts = computed(() => {
+  const counts = {}
+  for (const c of chips.value) counts[c.key] = list.value.filter((t) => matches(t, c.key)).length
+  return counts
+})
+
+const view = computed(() =>
+  filter.value === 'all' ? list.value : list.value.filter((t) => matches(t, filter.value)),
+)
+
+function setFilter(key) {
+  filter.value = key
+  dragIndex.value = null
+}
+
+/* Global 1-based position of a tile, shown on the badge even when filtered. */
+function globalPos(item) {
+  return list.value.indexOf(item) + 1
+}
+
 const dragIndex = ref(null)
 
 function onDragStart(i, e) {
   dragIndex.value = i
   e.dataTransfer.effectAllowed = 'move'
   e.dataTransfer.setData('text/plain', String(i))
+  startAutoScroll()
 }
 
 function onDragOver(i, e) {
   e.preventDefault()
   if (dragIndex.value === null || dragIndex.value === i) return
   const l = list.value
-  const [moved] = l.splice(dragIndex.value, 1)
-  l.splice(i, 0, moved)
+  if (filter.value === 'all') {
+    const [moved] = l.splice(dragIndex.value, 1)
+    l.splice(i, 0, moved)
+  } else {
+    // Reorder within the filtered subset, then write the subset back into
+    // the same global slots it already occupied.
+    const slots = []
+    l.forEach((t, gi) => {
+      if (matches(t, filter.value)) slots.push(gi)
+    })
+    const subset = slots.map((gi) => l[gi])
+    const [moved] = subset.splice(dragIndex.value, 1)
+    subset.splice(i, 0, moved)
+    slots.forEach((gi, k) => {
+      l[gi] = subset[k]
+    })
+  }
   dragIndex.value = i
 }
 
@@ -150,7 +210,43 @@ function onDrop(e) {
 
 function onDragEnd() {
   dragIndex.value = null
+  stopAutoScroll()
   persist()
+}
+
+/* ---------- Edge auto-scroll while dragging ----------
+   Native HTML5 drag blocks wheel scrolling, so the page scrolls itself when
+   the pointer nears the top or bottom edge of the viewport. */
+const EDGE = 140
+const MAX_SPEED = 26
+let rafId = null
+let lastClientY = null
+
+function onDocDragOver(e) {
+  lastClientY = e.clientY
+}
+
+function autoScrollTick() {
+  if (lastClientY !== null) {
+    const vh = window.innerHeight
+    let dy = 0
+    if (lastClientY < EDGE) dy = -MAX_SPEED * (1 - lastClientY / EDGE)
+    else if (lastClientY > vh - EDGE) dy = MAX_SPEED * (1 - (vh - lastClientY) / EDGE)
+    if (dy) window.scrollBy(0, dy)
+  }
+  rafId = requestAnimationFrame(autoScrollTick)
+}
+
+function startAutoScroll() {
+  document.addEventListener('dragover', onDocDragOver)
+  if (rafId === null) rafId = requestAnimationFrame(autoScrollTick)
+}
+
+function stopAutoScroll() {
+  document.removeEventListener('dragover', onDocDragOver)
+  if (rafId !== null) cancelAnimationFrame(rafId)
+  rafId = null
+  lastClientY = null
 }
 
 const output = ref('')
@@ -189,6 +285,7 @@ onMounted(() => {
 onUnmounted(() => {
   robotsMeta?.remove()
   clearTimeout(copiedTimer)
+  stopAutoScroll()
 })
 </script>
 
@@ -199,9 +296,16 @@ onUnmounted(() => {
         <div class="bar-copy">
           <h1>Template ordering</h1>
           <p>
-            Drag any thumbnail to reorder. {{ list.length }} templates. Progress autosaves in this
-            browser on every drop<span v-if="savedFlash" class="savedflash"> - saved ✓</span>.
-            When you're happy, copy the array and send it over.
+            <template v-if="filter === 'all'">
+              Drag any thumbnail to reorder. {{ list.length }} templates.
+            </template>
+            <template v-else>
+              Showing {{ view.length }} of {{ list.length }}. Reordering here swaps templates
+              within this category's existing slots; everything else stays put.
+            </template>
+            Progress autosaves in this browser on every
+            drop<span v-if="savedFlash" class="savedflash"> - saved ✓</span>.
+            The copied array is always the full order.
           </p>
         </div>
         <div class="bar-actions">
@@ -210,6 +314,18 @@ onUnmounted(() => {
             {{ copied ? 'Copied ✓' : 'Copy final order' }}
           </button>
         </div>
+      </div>
+      <div class="chips" role="group" aria-label="Filter by category">
+        <button
+          v-for="c in chips"
+          :key="c.key"
+          class="chip"
+          :class="{ active: filter === c.key }"
+          type="button"
+          @click="setFilter(c.key)"
+        >
+          {{ c.label }} <span class="chip-n">{{ chipCounts[c.key] }}</span>
+        </button>
       </div>
     </div>
 
@@ -224,7 +340,7 @@ onUnmounted(() => {
 
     <ol class="grid">
       <li
-        v-for="(item, i) in list"
+        v-for="(item, i) in view"
         :key="item.id"
         class="tile"
         :class="{ dragging: dragIndex === i }"
@@ -234,7 +350,7 @@ onUnmounted(() => {
         @drop="onDrop"
         @dragend="onDragEnd"
       >
-        <span class="pos">{{ i + 1 }}</span>
+        <span class="pos">{{ globalPos(item) }}</span>
         <img :src="item.card" :alt="item.title" loading="lazy" draggable="false" />
         <span class="meta">
           <span class="code">{{ item.code }}</span>
@@ -290,6 +406,41 @@ onUnmounted(() => {
 .bar-actions {
   display: flex;
   gap: 10px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0 0 12px;
+}
+
+.chip {
+  padding: 6px 13px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.chip:hover {
+  border-color: var(--accent);
+}
+
+.chip.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.chip-n {
+  opacity: 0.65;
+  font-weight: 500;
+  font-size: 12px;
+  margin-left: 2px;
 }
 
 .btn {
