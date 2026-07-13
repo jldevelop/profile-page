@@ -177,6 +177,7 @@ const sites = [
   ['74-law-firm', 'Law Chambers', 'Professional Services', 'Boutique law-firm site: legal compass, track record & clear fees.'],
   ['75-startup-law', 'Startup Law', 'Professional Services', 'Modern startup-law site: stage selector, flat fees & deal list.'],
   ['76-corporate-law', 'Corporate Law Firm', 'Professional Services', 'Institutional firm site: practice explorer, deal sheet & timeline.'],
+  ['77-luxury-real-estate', 'Luxury Real Estate', 'Real Estate', 'Quiet-luxury atelier site: cinematic listings & private viewings.'],
 ]
 
 // Full multi-page e-commerce storefronts (home · collection · product · cart).
@@ -283,6 +284,7 @@ const isHidden = (tpl) => hidden.has(tpl.code) || hidden.has(tpl.id.toUpperCase(
 // later - simply follow at the end in catalog order.
 const DISPLAY_ORDER = [
   '56-cybersecurity-software',
+  '77-luxury-real-estate',
   '73-nail-studio',
   '13-construction-company',
   '52-project-management-saas',

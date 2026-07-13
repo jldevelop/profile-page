@@ -166,6 +166,7 @@ export default {
     '74-law-firm': { title: 'Odvjetničko društvo', blurb: 'Stranica butik odvjetničkog društva: pravni kompas, predmeti i jasne cijene.' },
     '75-startup-law': { title: 'Pravo za startupe', blurb: 'Moderna stranica za startup pravo: birač faze, fiksne cijene i popis poslova.' },
     '76-corporate-law': { title: 'Poslovna odvjetnička kuća', blurb: 'Etablirana odvjetnička kuća: pregled praksi, veliki poslovi i vremenska crta.' },
+    '77-luxury-real-estate': { title: 'Luksuzne nekretnine', blurb: 'Stranica butik agencije: filmske rezidencije, brzi pregled i privatni razgledi.' },
 
     'e01-womens-fashion-boutique': { title: 'Butik ženske mode', blurb: 'Potpuna online trgovina za brend ženske mode.' },
     'e02-mens-tailored-clothing': { title: 'Muška krojena odjeća', blurb: 'Prodajte krojenu mušku odjeću uz elegantnu trgovinu.' },
