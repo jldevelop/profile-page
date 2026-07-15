@@ -159,7 +159,7 @@ export default {
     '67-conference-summit': { title: 'Konferencija / Summit', blurb: 'Prodajte ulaznice i predstavite govornike.' },
     '68-jewelry-store': { title: 'Zlatarnica', blurb: 'Prikažite komade nakita i povećajte upite i posjete.' },
     '69-fashion-boutique': { title: 'Modni butik', blurb: 'Predstavite kolekcije i privucite kupce.' },
-    '70-brewery-winery': { title: 'Pivovara i vinarija', blurb: 'Ispričajte priču o zanatu i povećajte broj degustacija.' },
+    '70-brewery-winery': { title: 'Craft pivovara', blurb: 'Ispričaj priču o zanatu i napuni točionicu gostima.' },
     '71-hairdressing-salon': { title: 'Frizerski atelje', blurb: 'Vrhunski salon: galerija, Instagram i online rezervacije.' },
     '72-hair-colour-studio': { title: 'Studio za boju kose', blurb: 'Glasni studio za boju: prije/poslije klizač i procjena cijene.' },
     '73-nail-studio': { title: 'Studio za nokte', blurb: 'Razigrana stranica za nokte: birač oblika, filtri galerije i rezervacija termina.' },

@@ -170,7 +170,7 @@ const sites = [
   ['67-conference-summit', 'Conference / Summit', 'Events', 'Sell tickets and showcase the speakers.'],
   ['68-jewelry-store', 'Jewelry Store', 'Retail', 'Showcase pieces and drive enquiries & visits.'],
   ['69-fashion-boutique', 'Fashion Boutique', 'Retail', 'Present collections and pull shoppers in.'],
-  ['70-brewery-winery', 'Brewery & Winery', 'Food & Drink', 'Tell the craft story and drive tastings.'],
+  ['70-brewery-winery', 'Craft Brewery', 'Food & Drink', 'Tell the craft story and drive tastings.'],
   ['71-hairdressing-salon', 'Hair Atelier', 'Beauty & Wellness', 'Flagship salon site: gallery, Instagram feed & online booking.'],
   ['72-hair-colour-studio', 'Hair Colour Studio', 'Beauty & Wellness', 'Loud colour-studio site: before/after slider & price estimator.'],
   ['73-nail-studio', 'Nail Studio', 'Beauty & Wellness', 'Playful nail-studio site: shape picker, gallery filters & slot booking.'],
