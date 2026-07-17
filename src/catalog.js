@@ -180,6 +180,7 @@ const sites = [
   ['77-luxury-real-estate', 'Luxury Real Estate', 'Real Estate', 'Quiet-luxury atelier site: cinematic listings & private viewings.'],
   ['78-fine-dining-restaurant', 'Fine Dining Restaurant', 'Food & Drink', 'Seasonal tasting-menu site: menu tabs, wine cellar & table requests.'],
   ['79-caffe-bar', 'Caffe Bar', 'Food & Drink', 'Dark caffe bar concept: priced drinks card, events & table requests.'],
+  ['80-tattoo-studio', 'Tattoo Studio', 'Beauty & Wellness', 'Gallery-grade ink atelier: artist rows, flash drops & bookings.'],
 ]
 
 // Full multi-page e-commerce storefronts (home · collection · product · cart).
@@ -295,6 +296,7 @@ const DISPLAY_ORDER = [
   '77-luxury-real-estate',
   '78-fine-dining-restaurant',
   '79-caffe-bar',
+  '80-tattoo-studio',
   '30-saas-product',
   '40-musician-band',
   '31-mobile-app',

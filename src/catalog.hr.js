@@ -169,6 +169,7 @@ export default {
     '77-luxury-real-estate': { title: 'Luksuzne nekretnine', blurb: 'Stranica butik agencije: filmske rezidencije, brzi pregled i privatni razgledi.' },
     '78-fine-dining-restaurant': { title: 'Fine dining restoran', blurb: 'Restoran s degustacijskim menijem: meniji, vinski podrum i rezervacije stola.' },
     '79-caffe-bar': { title: 'Caffe bar', blurb: 'Koncept za stvarni zagrebački caffe bar: cjenik, događanja i rezervacije.' },
+    '80-tattoo-studio': { title: 'Tattoo studio', blurb: 'Atelijerski studio za tetovaže: artisti, flash dropovi i rezervacije.' },
 
     'e01-womens-fashion-boutique': { title: 'Butik ženske mode', blurb: 'Potpuna online trgovina za brend ženske mode.' },
     'e02-mens-tailored-clothing': { title: 'Muška krojena odjeća', blurb: 'Prodajte krojenu mušku odjeću uz elegantnu trgovinu.' },

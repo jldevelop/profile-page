@@ -22,6 +22,7 @@ const DRAFT_ORDER = [
   '77-luxury-real-estate',
   '78-fine-dining-restaurant',
   '79-caffe-bar',
+  '80-tattoo-studio',
   '30-saas-product',
   '40-musician-band',
   '31-mobile-app',
