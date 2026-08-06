@@ -82,6 +82,8 @@ const DRAFT_ORDER = [
   'e07-lingerie-intimates',
   'e14-swimwear',
   'e02-mens-tailored-clothing',
+  'e21-fashion-design-house',
+  'e22-fashion-design-house-dark',
   'e01-womens-fashion-boutique',
   'e04-luxury-fashion-house',
   'e09-vintage-thrift',

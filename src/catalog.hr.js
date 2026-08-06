@@ -191,6 +191,8 @@ export default {
     'e18-makeup': { title: 'Šminka', blurb: 'Živopisna trgovina za brend dekorativne kozmetike.' },
     'e19-natural-organic-beauty': { title: 'Prirodna i organska kozmetika', blurb: 'Prodajte prirodnu kozmetiku uz botaničku trgovinu vođenu pričom.' },
     'e20-perfume-fragrance': { title: 'Parfemi i mirisi', blurb: 'Sugestivna trgovina za parfemsku kuću.' },
+    'e21-fashion-design-house': { title: 'Kuća modnog dizajna', blurb: 'Smjela trgovina za lokalnu kuću modnog dizajna.' },
+    'e22-fashion-design-house-dark': { title: 'Kuća modnog dizajna Dark', blurb: 'Noćna verzija: tamna trgovina za istu modnu kuću.' },
 
     'nc01-beton': { title: 'Klub BETON', blurb: 'Underground techno klub - sirov, brutalistički identitet koji klub čini vidljivim na Googleu. (Tier 1)' },
     'nc02-volt': { title: 'Klub VOLT', blurb: 'Energičan komercijalni klub - rezervacije stolova, guestlist i ulaznice koje donose zaradu. (Tier 2)' },

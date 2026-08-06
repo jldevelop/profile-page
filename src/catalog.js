@@ -205,6 +205,8 @@ const stores = [
   ['e18-makeup', 'Makeup', 'Makeup', 'A vibrant store for a colour-cosmetics brand.'],
   ['e19-natural-organic-beauty', 'Natural & Organic Beauty', 'Natural beauty', 'Sell natural beauty with a botanical, story-led shop.'],
   ['e20-perfume-fragrance', 'Perfume & Fragrance', 'Fragrance', 'An evocative store for a perfume house.'],
+  ['e21-fashion-design-house', 'Fashion Design House', "Women's fashion", 'A bold store for a local fashion design house.'],
+  ['e22-fashion-design-house-dark', 'Fashion Design House Dark', "Women's fashion", 'The night version: a dark store for the same fashion house.'],
 ]
 
 // Nightclub tier demos (premium single-page sales demos). Deployed under
@@ -356,6 +358,8 @@ const DISPLAY_ORDER = [
   'e07-lingerie-intimates',
   'e14-swimwear',
   'e02-mens-tailored-clothing',
+  'e21-fashion-design-house',
+  'e22-fashion-design-house-dark',
   'e01-womens-fashion-boutique',
   'e04-luxury-fashion-house',
   'e09-vintage-thrift',
