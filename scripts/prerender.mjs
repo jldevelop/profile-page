@@ -1,7 +1,7 @@
 // Prerenders every route of the SPA into static HTML for SEO.
 //
-// Runs after `vite build` (see package.json "build"). For each URL - English at
-// the root and Croatian under /hr - it writes dist/<path>/index.html with:
+// Runs after `vite build` (see package.json "build"). For each URL - Croatian at
+// the root and English under /en - it writes dist/<path>/index.html with:
 //   • a unique <title>, meta description, canonical and hreflang pair,
 //   • per-page Open Graph/Twitter tags (template pages use their screenshot),
 //   • real, crawlable body content + internal links inside <div id="app">

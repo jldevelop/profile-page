@@ -5,10 +5,9 @@ import { t } from '@/i18n.js'
 import { localePath } from '@/lang.js'
 
 const year = new Date().getFullYear()
+// Company accounts only - jCode's own channels, not anyone's personal profile.
 const socials = computed(() =>
   Object.entries({
-    LinkedIn: company.value.socials.linkedin,
-    GitHub: company.value.socials.github,
     Instagram: company.value.socials.instagram,
   }).filter(([, url]) => url),
 )

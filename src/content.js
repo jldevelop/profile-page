@@ -30,9 +30,7 @@ const companyFacts = {
   phone: '',
   email: 'info@jcode.hr',
   socials: {
-    linkedin: 'https://www.linkedin.com/in/jlukacevic/',
-    github: 'https://github.com/jldevelop',
-    instagram: '', // optional - add a handle URL to show it
+    instagram: 'https://www.instagram.com/jcode.hr/',
   },
   // Legal / registration - shown in the footer only when filled. EU clients
   // expect this from a real company; add your real values.
@@ -160,8 +158,6 @@ const josip = {
     `${YEARS.josip}+ years in web engineering - first as a developer, then as an engineering manager leading a web team, most recently as co-founder & CTO of a startup. Through jCode I take on websites, web apps and mobile apps end-to-end.`,
   photo: '/images/josip-lukacevic.webp',
   email: 'info@jcode.hr',
-  linkedin: 'https://www.linkedin.com/in/jlukacevic/',
-  github: 'https://github.com/jldevelop',
   years: `${YEARS.josip}+`,
   bio: 'jCode’s founder. Josip has run web engineering at scale - leading the team behind a global esports brand’s platform and merch store, then co-founding an AI SaaS as its CTO. He stays hands-on across the whole stack and owns delivery end to end.',
   stack: [tech('Vue.js', 'vuejs'), tech('Node.js', 'nodejs'), tech('Laravel', 'laravel'), tech('JavaScript', 'javascript'), tech('AWS', 'aws'), tech('Shopify', 'shopify'), tech('MongoDB', 'mongodb')],

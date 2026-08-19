@@ -22,7 +22,7 @@ watch(
 )
 
 // Share the preview's deep link (/work/<id>) to a specific network via a small
-// dropdown: WhatsApp, Instagram, Facebook, Copy URL. Instagram has no web
+// dropdown: WhatsApp, Instagram, Facebook, X, Copy URL. Instagram has no web
 // share-intent, so that option copies the link and opens Instagram to paste it.
 const shareOpen = ref(false)
 const shareRoot = ref(null)
@@ -56,8 +56,6 @@ function shareTo(target) {
   } else if (target === 'instagram') {
     copyUrl() // no web share-intent - copy the link, then open Instagram to paste
     window.open('https://www.instagram.com/', '_blank', 'noopener')
-  } else if (target === 'linkedin') {
-    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank', 'noopener,width=640,height=560')
   } else if (target === 'x') {
     window.open(`https://x.com/intent/post?text=${encodeURIComponent(`${props.item.title} (${props.item.code})`)}&url=${encodeURIComponent(url)}`, '_blank', 'noopener')
   } else if (target === 'copy') {
@@ -199,18 +197,6 @@ onUnmounted(() => {
                           <path d="M14.5 8.5V7c0-.8.7-1.5 1.5-1.5h1.5V2.8h-2.3a4 4 0 0 0-4 4v1.7H8.9V12h2.3v9h3.3v-9h2.4l.6-3.5h-3z" />
                         </svg>
                         Facebook
-                      </button>
-                    </li>
-                    <li>
-                      <button type="button" role="menuitem" @click="shareTo('linkedin')">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                          <rect x="3.5" y="3.5" width="17" height="17" rx="3" />
-                          <path d="M8 11v5.5" />
-                          <path d="M8 7.6v.1" />
-                          <path d="M12 16.5V13a2.2 2.2 0 0 1 4.4 0v3.5" />
-                          <path d="M12 11v5.5" />
-                        </svg>
-                        LinkedIn
                       </button>
                     </li>
                     <li>

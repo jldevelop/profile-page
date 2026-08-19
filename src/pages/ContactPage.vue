@@ -59,9 +59,8 @@ async function submit(event) {
 
 const whatsappHref = company.value.whatsapp ? `https://wa.me/${company.value.whatsapp}` : null
 const phoneHref = company.value.phone ? `tel:${company.value.phone}` : null
+// Company accounts only - jCode's own channels, not anyone's personal profile.
 const socials = Object.entries({
-  LinkedIn: company.value.socials.linkedin,
-  GitHub: company.value.socials.github,
   Instagram: company.value.socials.instagram,
 }).filter(([, url]) => url)
 </script>
