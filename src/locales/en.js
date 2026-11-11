@@ -12,7 +12,7 @@ export default {
     work: 'Work',
     team: 'Team',
     contact: 'Contact',
-    cta: 'Start a project',
+    cta: 'Get a free quote',
     brandLabel: 'jCode - home',
     openMenu: 'Open menu',
     closeMenu: 'Close menu',
@@ -21,7 +21,7 @@ export default {
   footer: {
     pagesHeading: 'Pages',
     contactHeading: 'Get in touch',
-    ctaLink: 'Start a project →',
+    ctaLink: 'Get a free quote →',
   },
 
   langSwitcher: {
@@ -89,8 +89,8 @@ export default {
   home: {
     hero: {
       h1: 'Websites, apps & automation for growing businesses.',
-      lede: 'jCode is a senior software studio. We design and build websites, online stores, mobile apps and AI automations for small and medium businesses - from first sketch to launch.',
-      ctaStart: 'Start a project',
+      lede: 'jCode is a senior software studio. We design and build websites, online stores, mobile apps and AI automations for small and medium businesses - from first sketch to launch. Send us your project and we reply within one day.',
+      ctaStart: 'Get a free website or app quote',
       ctaWork: 'See our work',
     },
     clients: { lead: 'Brands we’ve worked with' },
@@ -103,7 +103,7 @@ export default {
       headingHtml: 'A small <em class="text-accent">team</em> - big <em class="text-accent">experience</em>',
       meetAll: 'Meet everyone →',
     },
-    cta: { h2: 'Have a project in mind?', p: 'Tell us what you’re building. We’ll tell you how we’d ship it.' },
+    cta: { h2: 'Planning a website or web app?', p: 'Tell us what you’re building. We’ll reply within one day with how we’d ship it - and a free quote.' },
   },
 
   team: {
@@ -144,7 +144,7 @@ export default {
     emailLabel: 'Email',
     messageLabel: 'Tell us about your project',
     sending: 'Sending…',
-    send: 'Send message',
+    send: 'Request my free quote',
     errorPrefix: 'Something went wrong - please email us directly at',
     sentTitle: 'Thanks - message sent.',
     sentBody: 'We’ll get back to you within a day.',
