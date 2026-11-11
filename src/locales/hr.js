@@ -11,7 +11,7 @@ export default {
     work: 'Web stranice',
     team: 'Ekipa',
     contact: 'Kontakt',
-    cta: 'Pokrenimo projekt',
+    cta: 'Zatražite ponudu',
     brandLabel: 'jCode - početna',
     openMenu: 'Otvori meni',
     closeMenu: 'Zatvori meni',
@@ -20,7 +20,7 @@ export default {
   footer: {
     pagesHeading: 'Stranice',
     contactHeading: 'Kontaktirajte nas',
-    ctaLink: 'Pokrenimo projekt →',
+    ctaLink: 'Zatražite besplatnu ponudu →',
   },
 
   langSwitcher: {
@@ -84,8 +84,8 @@ export default {
   home: {
     hero: {
       h1: 'Web stranice, aplikacije i automatizacija za tvrtke u razvoju.',
-      lede: 'jCode je softverski studio sa iskustvom. Dizajniramo i izrađujemo web stranice, online trgovine, mobilne aplikacije i AI automatizacije za male i srednje tvrtke - od prve skice do lansiranja.',
-      ctaStart: 'Pokrenimo projekt',
+      lede: 'jCode je softverski studio sa iskustvom. Dizajniramo i izrađujemo web stranice, online trgovine, mobilne aplikacije i AI automatizacije za male i srednje tvrtke - od prve skice do lansiranja. Pošaljite nam projekt, a mi odgovaramo u roku od jednog dana.',
+      ctaStart: 'Zatražite besplatnu ponudu za web ili aplikaciju',
       ctaWork: 'Pogledajte naše web stranice',
     },
     clients: { lead: 'Brendovi s kojima smo radili' },
@@ -98,7 +98,7 @@ export default {
       headingHtml: 'Mali <em class="text-accent">tim</em> - veliko <em class="text-accent">iskustvo</em>',
       meetAll: 'Upoznajte cijeli tim →',
     },
-    cta: { h2: 'Imate projekt na umu?', p: 'Recite nam što gradite. Mi ćemo vam reći kako bismo to isporučili.' },
+    cta: { h2: 'Planirate web stranicu ili web aplikaciju?', p: 'Recite nam što gradite. U roku od jednog dana javljamo se s prijedlogom kako bismo to isporučili - i besplatnom ponudom.' },
   },
 
   team: {
@@ -139,7 +139,7 @@ export default {
     emailLabel: 'Email',
     messageLabel: 'Ispričajte nam o svom projektu',
     sending: 'Slanje…',
-    send: 'Pošalji poruku',
+    send: 'Zatraži besplatnu ponudu',
     errorPrefix: 'Nešto je pošlo po zlu - pišite nam izravno na',
     sentTitle: 'Hvala - poruka je poslana.',
     sentBody: 'Odgovorit ćemo vam isti dan.',
